@@ -1,6 +1,6 @@
 # Consultora RR.HH.
 - [Sintaxis elegante para esta documentación](https://docs.github.com/es/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
-- [Repositorio en GITHUB](https://github.com/sergioarieljuarez/rrhh-pp3-2022)
+- [Repositorio en GITHUB](https://github.com/sergioarieljuarez/ei-pp3-2022)
 
 ## Proyecto para materia PRACTICA PROFESIONAL 3 IFTS 12
 Integrantes:

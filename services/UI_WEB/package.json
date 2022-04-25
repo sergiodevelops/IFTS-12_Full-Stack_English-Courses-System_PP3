@@ -1,6 +1,6 @@
 {
-  "name": "ui_rrhh-pp3-2022",
-  "description": "ui rrhh pp3 2022",
+  "name": "ui_ei-pp3-2022",
+  "description": "ui ei pp3 2022",
   "type": "module",
   "version": "0.1.0",
   "proxy": "http://localhost:4005",
@@ -48,11 +48,11 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "docker:build": "docker build . -t sergioarieljuarez/rrhh-react",
-    "docker:run": "docker run -p 8080:80 sergioarieljuarez/rrhh-client --name rrhh-react",
-    "docker:stop": "docker rm -f rrhh-react"
+    "docker:build": "docker build . -t sergioarieljuarez/ei-react",
+    "docker:run": "docker run -p 8080:80 sergioarieljuarez/ei-client --name ei-react",
+    "docker:stop": "docker rm -f ei-react"
   },
-  "repository": "https://github.com/sergioarieljuarez/rrhh-pp3-2022",
+  "repository": "https://github.com/sergioarieljuarez/ei-pp3-2022",
   "eslintConfig": {
     "extends": [
       "react-app",

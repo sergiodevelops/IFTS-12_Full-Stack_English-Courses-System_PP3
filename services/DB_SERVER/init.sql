@@ -1,5 +1,5 @@
-CREATE DATABASE `rrhh1`;
-USE `rrhh1`;
+CREATE DATABASE `ei1`;
+USE `ei1`;
 
 CREATE TABLE IF NOT EXISTS `administrativos` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `solicitudes_postulantes` (
     `fecha_sugerencia` date NOT NULL COMMENT 'Fecha en la que se registró la sugerencia\n',
     `estado_solicitante` tinyint(3) unsigned NOT NULL COMMENT '1 = Sugerido, 2 = Aceptado, 3 Rechazado',
     `fecha_respuesta_solicitante` date DEFAULT NULL COMMENT 'Fecha en la que se registró la respuesta del Solicitante',
-    `estado_postulante` tinyint(3) unsigned NOT NULL COMMENT '1 = Sugerido (por RRHH), 2 = Aceptado (por solicitante) , 3 = Rechazado (por solicitante)',
+    `estado_postulante` tinyint(3) unsigned NOT NULL COMMENT '1 = Sugerido (por ei), 2 = Aceptado (por solicitante) , 3 = Rechazado (por solicitante)',
     `fecha_resp_postulante` date DEFAULT NULL COMMENT 'Fecha en la que se registró la respuesta del P\nostulante',
     PRIMARY KEY (`id`),
     KEY `fk_solitpos_solitud_idx` (`id_solicitud`),
