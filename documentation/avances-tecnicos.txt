@@ -1,0 +1,52 @@
+nota sobre cada avance técnico del proyecto
+
+-------------
+al 22/04/2022
+--------------------------
+Nodejs y Mysql, Aplicación Completa (Login, Registro, CRUD, ES6+ y Más )
+https://www.youtube.com/watch?v=qJ5R9WTW0_E
+
+How to Create a Express/Node + React Project | Node Backend + React Frontend
+https://www.youtube.com/watch?v=w3vs4a03y3I
+
+MANEJA LOS ESTADOS DE LOS COMPONENTES CON FUNCTIONAL COMPONENTS en React
+https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-react-function-hooks-component
+
+COMANDOS PARA YML DE DOCKER-COMPOSE
+https://jsitech1.gitbooks.io/meet-docker/content/archivo_docker-compose_en_detalle.html
+
+TUTORIL node-js-express-y-mysql-con-sequelize
+https://tomasmalio.medium.com/node-js-express-y-mysql-con-sequelize-ec0a7c0ae292
+Sequelize --> es un ORM para Postgres, MySQL, MariaDB, SQLite y SQL Server.
+
+SEQUELIZE INIT
+https://ichi.pro/es/cree-su-primera-api-con-generador-rapido-sequelize-y-cli-52177759129979
+
+./node_modules/sequelize-auto/bin/sequelize-auto \
+-h <host> \
+-d <database> \
+-u <user> \
+-x [password] \
+-p [port]  \
+--dialect [dialect] \
+-c [/path/to/config] \
+-o [/path/to/models] \
+-t [tableName1] \
+-t [tableName2] \
+-t [tableName3]
+
+-------------
+al xx/xx/2022
+--------------------------
+
+-------------
+al xx/xx/2022
+--------------------------
+
+-------------
+al xx/xx/2022
+--------------------------
+
+-------------
+al xx/xx/2022
+--------------------------

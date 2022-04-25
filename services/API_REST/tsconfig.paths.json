@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./src",
+		"paths": {
+			"@domain/*": [
+				"domain/*"
+			],
+			"@application/*": [
+				"application/*"
+			],
+			"@configuration/*": [
+				"application/*"
+			],
+			"@infraestructure/*": [
+				"application/*"
+			],
+			"@constants/*": [
+				"constants/*"
+			],
+		}
+	}
+}
