@@ -9,7 +9,7 @@ Integrantes:
     Nahuel Tarello
     Juan Pablo Alvarez Piñero
     Sebastian Vargas
-    Uriel
+    Uriel Carvallo
 
 ## Ambiente de DESARROLLO
 
