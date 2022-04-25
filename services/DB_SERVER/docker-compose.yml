@@ -1,0 +1,20 @@
+version: '3.2'
+
+services:
+  # DB - MYSQL server
+  db_mysql_local:
+    container_name: 'db_mysql_local'
+    build:
+      dockerfile: 'Dockerfile'
+      context: '.'
+    cap_add:
+      - SYS_NICE
+    volumes:
+      - './init.sql:/docker-entrypoint-initdb.d/init.sql'
+      - './my-datavolume:/var/lib/mysql'
+    hostname: 'localhost'
+    env_file:
+      - '.env'
+    ports:
+      - ${DOCKER_DB_PORT}:${DOCKER_DB_PORT}
+    restart: 'always'
