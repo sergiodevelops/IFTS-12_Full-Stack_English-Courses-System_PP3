@@ -3,7 +3,6 @@ services:
 
   # DB_SERVER - MYSQL server engine
   DB_SERVER:
-    container_name: 'DB_SERVER'
     image: 'mysql:5.7.35'
     command: '--init-file /docker-entrypoint-initdb.d/init.sql'
     volumes:
@@ -11,8 +10,8 @@ services:
       - './DB_SERVER/my-datavolume:/var/lib/mysql'
     hostname: 'localhost'
     env_file:
-      - '.env'
-      - 'DB_SERVER/.env'
+      - './.env'
+      - './DB_SERVER/.env'
     ports:
       - ${OS_DB_PORT}:${DOCKER_DB_PORT}
     restart: 'always'
@@ -21,20 +20,18 @@ services:
   DB_ADMINER:
     depends_on:
       - 'DB_SERVER'
-    container_name: 'DB_ADMINER'
     image: 'adminer:latest'
     hostname: 'localhost'
     ports:
       - ${OS_ADMINER_PORT}:${DOCKER_ADMINER_PORT}
     env_file:
-      - 'DB_ADMINER/.env'
+      - './DB_ADMINER/.env'
     restart: 'unless-stopped'
 
   # API_REST - EXPRESS JS
   API_REST:
     depends_on:
       - 'DB_SERVER'
-    container_name: 'API_REST'
     image: 'node:14'
     working_dir: '/var/www/html'
     volumes:
@@ -47,8 +44,8 @@ services:
     ports:
       - ${OS_API_PORT}:${DOCKER_API_PORT}
     env_file:
-      - '.env'
-      - 'API_REST/.env'
+      - './.env'
+      - './API_REST/.env'
     tty: true
     restart: 'always'
 
@@ -56,7 +53,6 @@ services:
   UI_WEB:
     depends_on:
       - 'API_REST'
-    container_name: 'UI_WEB'
     image: 'node:14'
     working_dir: '/var/www/html'
     volumes:
@@ -69,8 +65,8 @@ services:
     ports:
       - ${OS_UI_PORT}:${DOCKER_UI_PORT}
     env_file:
-      - '.env'
-      - 'UI_WEB/.env'
+      - './.env'
+      - './UI_WEB/.env'
     tty: true
     stdin_open: true
     restart: 'always'
