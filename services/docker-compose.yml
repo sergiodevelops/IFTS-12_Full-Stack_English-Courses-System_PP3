@@ -11,7 +11,7 @@ services:
     hostname: 'localhost'
     env_file:
       - './.env'
-      - './DB_SERVER/.env'
+      - 'DATABASE/.env'
     ports:
       - ${OS_DB_PORT}:${DOCKER_DB_PORT}
     restart: 'always'
@@ -25,7 +25,7 @@ services:
     ports:
       - ${OS_ADMINER_PORT}:${DOCKER_ADMINER_PORT}
     env_file:
-      - './DB_ADMINER/.env'
+      - 'ADMINER/.env'
     restart: 'unless-stopped'
 
   # API_REST - EXPRESS JS
@@ -45,7 +45,7 @@ services:
       - ${OS_API_PORT}:${DOCKER_API_PORT}
     env_file:
       - './.env'
-      - './API_REST/.env'
+      - 'API/.env'
     tty: true
     restart: 'always'
 
@@ -66,7 +66,7 @@ services:
       - ${OS_UI_PORT}:${DOCKER_UI_PORT}
     env_file:
       - './.env'
-      - './UI_WEB/.env'
+      - 'UI/.env'
     tty: true
     stdin_open: true
     restart: 'always'
