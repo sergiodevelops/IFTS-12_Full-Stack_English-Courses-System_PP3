@@ -1,13 +1,13 @@
 version: '3'
 services:
 
-  # DB_SERVER - MYSQL server engine
-  DB_SERVER:
+  # DATABASE - MYSQL server engine
+  DATABASE:
     image: 'mysql:5.7.35'
     command: '--init-file /docker-entrypoint-initdb.d/init.sql'
     volumes:
-      - './DB_SERVER/init.sql:/docker-entrypoint-initdb.d/init.sql'
-      - './DB_SERVER/my-datavolume:/var/lib/mysql'
+      - './DATABASE/init.sql:/docker-entrypoint-initdb.d/init.sql'
+      - './DATABASE/my-datavolume:/var/lib/mysql'
     hostname: 'localhost'
     env_file:
       - './.env'
@@ -16,10 +16,10 @@ services:
       - ${OS_DB_PORT}:${DOCKER_DB_PORT}
     restart: 'always'
 
-  # DB_ADMINER - database adminer
-  DB_ADMINER:
+  # ADMINER - database adminer
+  ADMINER:
     depends_on:
-      - 'DB_SERVER'
+      - 'DATABASE'
     image: 'adminer:latest'
     hostname: 'localhost'
     ports:
@@ -28,14 +28,14 @@ services:
       - 'ADMINER/.env'
     restart: 'unless-stopped'
 
-  # API_REST - EXPRESS JS
-  API_REST:
+  # API - EXPRESS JS
+  API:
     depends_on:
-      - 'DB_SERVER'
+      - 'DATABASE'
     image: 'node:14'
     working_dir: '/var/www/html'
     volumes:
-      - './API_REST:/var/www/html'
+      - './API:/var/www/html'
     command: 'bash -c "yarn && yarn dev"'
     dns:
       - '8.8.8.8'
@@ -49,14 +49,14 @@ services:
     tty: true
     restart: 'always'
 
-  # UI_WEB - REACT JS
-  UI_WEB:
+  # UI - REACT JS
+  UI:
     depends_on:
-      - 'API_REST'
+      - 'API'
     image: 'node:14'
     working_dir: '/var/www/html'
     volumes:
-      - './UI_WEB:/var/www/html'
+      - './UI:/var/www/html'
     command: 'bash -c "yarn && yarn dev"'
     dns:
       - '8.8.8.8'

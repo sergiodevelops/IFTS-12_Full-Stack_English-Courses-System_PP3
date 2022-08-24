@@ -15,10 +15,10 @@ Integrantes:
 
 #### Puertos de conexión utilizados para "localhost" (127.0.0.1)
 **OS PORT**:DOCKER PORT
-1. **9906**:3306 <-- MySQL db server - "DB_SERVER"
-2. **8000**:8080 <-- MySQL db client - "DB_ADMINER"
-3. **4005**:4005 <-- API Express JS - "API_REST"
-4. **3005**:3005 <-- UI React JS - "UI_WEB"
+1. **9906**:3306 <-- MySQL db server - "DATABASE"
+2. **8000**:8080 <-- MySQL db client - "ADMINER"
+3. **4005**:4005 <-- API Express JS - "API"
+4. **3005**:3005 <-- UI React JS - "UI"
 
 
 #### Importar modelos de la DB ya creada al codigo fuente en desarrollo

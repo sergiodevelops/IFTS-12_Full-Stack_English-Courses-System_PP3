@@ -7,8 +7,8 @@
 ```
 APP SERVICES
  |
- |__DB_SERVER
- |__DB_ADMINER
- |__API_REST
- |__UI_WEB
+ |__DATABASE
+ |__ADMINER
+ |__API
+ |__UI
 ```
