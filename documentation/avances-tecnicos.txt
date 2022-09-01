@@ -36,12 +36,27 @@ https://ichi.pro/es/cree-su-primera-api-con-generador-rapido-sequelize-y-cli-521
 -t [tableName3]
 
 -------------
-al xx/xx/2022
+al 24/08/2022
 --------------------------
-
+inicio del modulo front end con typescript y node js
+https://www.digitalocean.com/community/tutorials/setting-up-a-node-project-with-typescript-es
+yarn add typescript tslint express @types/express
 -------------
-al xx/xx/2022
+al 31/08/2022
 --------------------------
+https://stackoverflow.com/questions/69027206/how-to-solve-integrity-check-failed-for-websocket-driver-error-when-installi
+error https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001383.tgz: Integrity check failed for "caniuse-lite" (computed integrity doesn't match our records, got "sha512-swMpEoTp5vDoGBZsYZX7L7nXHe6dsHxi9o6/LKf/f0LukVtnrxly5GVb/fWdCDTqi/yw6Km6tiJ0pmBacm0gbg== sha1-rs8xfM2UBpByWuOuTygpPF+4BQ4=")
+solución:
+yarn cache clean
+yarn install --update-checksums
+You could also try deleting the yarn.lock file altogether and re-run yarn install.
+problema "TS2307: Cannot find module '@usecases/applicant/create/IApplicantCreateResDto' or its corresponding type declarations."
+solución"Path Aliases o Alias de Ruta es una manera de renombrar una ruta para hacer más fácil su uso,"
+https://blog.nubecolectiva.com/como-usar-path-aliases-alias-de-ruta-con-typescript-en-node-js-13-7/
+
+npm tsc -v para ver la version de typescript instalada en el proyecto
+yarn global add --save typescript
+
 
 -------------
 al xx/xx/2022

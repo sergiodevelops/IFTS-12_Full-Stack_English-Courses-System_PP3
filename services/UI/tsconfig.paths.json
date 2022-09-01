@@ -2,44 +2,39 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"@domain/*": [
-				"src/domain/*"
-			],
 			"@application/*": [
 				"src/application/*"
 			],
-			"@configuration/*": [
-				"src/application/*"
+			"@src/*": [
+				"src/*"
 			],
-			"@infraestructure/*": [
-				"src/application/*"
+			"@assets/*": [
+				"src/assets/*"
 			],
-
-			"@container-inversify": [
-				"src/inversify.config.ts"
+			"@components/*": [
+				"src/components/*"
 			],
 			"@constants/*": [
 				"src/constants/*"
 			],
-
-			"@entrypoint/*": [
-				"src/entrypoint/*"
-			],
-			"@web/*": [
-				"src/entrypoint/presenters/web/*"
-			],
-			"@components/*": [
-				"src/entrypoint/presenters/web/components/*"
+			"@domain/*": [
+				"src/domain/*"
 			],
 			"@redux/*": [
-				"src/entrypoint/presenters/web/redux/*"
+				"src/redux/*"
+			],
+			"@services/*": [
+				"src/services/*"
 			],
 			"@store/*": [
-				"src/entrypoint/presenters/web/store/*"
+				"src/store/*"
 			],
-			"@assets/*": [
-				"src/entrypoint/presenters/web/assets/*"
-			]
+			"@usecases/*": [
+				"src/usecases/*"
+			],
+			"@container-inversify": [
+				"src/inversify.config.ts"
+			],
 		}
 	}
 }
