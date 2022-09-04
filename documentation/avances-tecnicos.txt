@@ -59,8 +59,47 @@ yarn global add --save typescript
 
 
 -------------
-al xx/xx/2022
+al 04/09/2022
 --------------------------
+https://forum.huawei.com/enterprise/es/c%C3%B3mo-verificar-si-el-n%C3%BAmero-de-puerto-est%C3%A1-ocupado-linux/thread/499475-100253#:~:text=Ejecute%20el%20comando%20netstat%20%2Danp,8011%20para%20consultar%20el%20proceso.
+netstat -anp | grep 80
+ejemplo:
+tcp 0 0 192.168.8.249:40677 92.38.150.73:80 ESTABLISHED -
+unix  3      [ ]         STREAM     CONNECTED     9488075  1705338/java
+:::*4401/mysql_server
+ El proceso ID 1705338 es el del servicio java
+2. Ejecute el comando kill -9 4601 para detener el proceso.
+
+docker-compose up --remove-orphans
+
+WARNING: Image for service mysql_service was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
+
+ por el error de mysql
+mysql_container     | 2022-09-04T19:00:17.313393Z 0 [ERROR] [MY-000068] [Server] unknown option '--init-file /docker-entrypoint-initdb.d/init.sql'.
+mysql_container     | 2022-09-04T19:00:17.313477Z 0 [ERROR] [MY-010119] [Server] Aborting
+mysql_container     | 2022-09-04T19:00:18.992167Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.30)  MySQL Community Server - GPL.
+mysql_container exited with code 1
+solución
+Eliminamos el proceso que corre el contenedor creado.
+$ docker rm -f nombre-contenedor (si es que esta activo)
+para ver los activos
+$ docker ps
+Eliminamos todos los volúmenes ya que Docker crea volúmenes temporales sin pedirte permiso.
+$ docker volume prune <-- limpia todos los volumes
+persistir info con docker
+https://platzi.com/tutoriales/1432-docker/3268-como-crear-un-contenedor-con-docker-mysql-y-persistir-la-informacion/
+Error response from daemon: remove database_mysql_data: volume is in use
+docker-compose down --volumes
+
+si no se crea automatica la carpeta de volumen en ...DATABASE/carpeta_volumen se debe dar permisos para que docker pueda escribir alli con
+sudo chmod 777 -Rv ...DATABASE
+
+mysql_container1    | 2022-09-04T19:49:00.621467Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+
+Terminado el levantado de la base mysql 8
+con docker + adminer como administrador de la base
+[son dos servicios]
+-
 
 -------------
 al xx/xx/2022
