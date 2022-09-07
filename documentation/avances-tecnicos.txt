@@ -99,8 +99,54 @@ mysql_container1    | 2022-09-04T19:49:00.621467Z 6 [Warning] [MY-010453] [Serve
 Terminado el levantado de la base mysql 8
 con docker + adminer como administrador de la base
 [son dos servicios]
--
+
+download POSTMAN para testear la api-rest
+https://dl.pstmn.io/download/latest/linux64
+
+https://classic.yarnpkg.com/en/docs/cli/add
+
+Creating the first Model (and Migration)
+https://sequelize.org/docs/v6/other-topics/migrations/#creating-the-first-model-and-migration
+npx sequelize-cli \
+model:generate \
+--name User \
+--attributes \
+firstName:string,\
+lastName:string,\
+email:string
+
+./node_modules/sequelize-auto/bin/sequelize-auto \
+or
+npx sequelize-auto \
+-h "localhost" \
+-d "InstitutoIdiomas" \
+-u "root" \
+-x "root" \
+-p 3306  \
+--dialect "mysql" \
+-o "./src/models" \
+-t "Usuario" \
+-l "ts" \
+
+sobre el sistema de modulos (ficheros) funcionando en node js
+https://youtu.be/29iYdru2KUg
+https://www.typescriptlang.org/docs/handbook/esm-node.html
 
 -------------
-al xx/xx/2022
+al 05/09/2022
 --------------------------
+Example `init-models.ts`:
+https://unpkg.com/browse/sequelize-auto@0.8.1/README.md
+
+-------------
+al 06/09/2022
+--------------------------
+error
+TypeError: require(...) is not a function
+solución ??
+https://bobbyhadz.com/blog/javascript-typeerror-require-is-not-a-function
+https://www.youtube.com/watch?v=VyEKwp6Q4fY
+https://github.com/willjw3/sequelize-typescript-tutorial
+
+index.ts example in models sequelize
+https://github.com/MichalZalecki/sequelize-with-typescript-example/blob/master/src/db/models/index.ts
