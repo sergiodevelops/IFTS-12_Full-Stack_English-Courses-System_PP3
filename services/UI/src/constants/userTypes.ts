@@ -1,18 +1,18 @@
 const userTypes = [
-    { //selector
+    { //administrativo
         id: 1,
         name: "administrativo",
         description: "Administrativo",
     },
-    { //empresa
+    { //docente SOLICITANTE
         id: 2,
-        name: "solicitante",
-        description: "Solicitante",
+        name: "docente",
+        description: "Docente",
     },
-    { //postulante
+    { //alumno postulante
         id: 3,
-        name: "postulante",
-        description: "Postulante",
+        name: "alumno",
+        description: "Alumno",
     },
 ];
 

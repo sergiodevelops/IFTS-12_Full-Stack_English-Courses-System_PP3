@@ -39,7 +39,7 @@ import BasicModal from "@components/BasicModal/BasicModal";
 import layoutActions from "@redux/actions/layoutActions";
 import Typography from "@mui/material/Typography";
 import Spinner from "@components/ModalSpinner/Spinner/Spinner";
-import PostulanteService from "@services/PostulanteService";
+import AlumnoService from "@services/AlumnoService";
 import AnuncioService from "@services/AnuncioService";
 import IApplicantFindResDto
     from "@usecases/applicant/find/IApplicantFindResDto";
@@ -134,14 +134,14 @@ export default function TableData() {
             });
     }
 
-    const getPostulantesByFilters = (
+    const getAlumnosByFilters = (
         pagination?: IPaginationSetDto,
         filters?: IFilterSetDto[],
     ) => {
-        const postulanteService = new PostulanteService();
+        const alumnoService = new AlumnoService();
         setQueryInProgress(true);
 
-        postulanteService
+        alumnoService
             .findAllByFilters(pagination, filters)
             .then((response: IApplicantFindResDto) => {
                 // console.log("response", response);
@@ -247,7 +247,7 @@ export default function TableData() {
             let newFilters;
             // CONSULTAS segun TAB VALUE (Administrativos)
             switch (currentQueryCase) {
-                // 0 CONSULTA Users --> filtra por Postulantes (applicants) (value:
+                // 0 CONSULTA Users --> filtra por Alumnos (applicants) (value:
                 // '3')
                 case (queriesEnum.applicantUsersList):
                     console.log("currentQueryCase",currentQueryCase)
@@ -256,7 +256,7 @@ export default function TableData() {
                     newFilters = [{key: 'tipo_usuario', value: '3'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
-                // 1 CONSULTA Users --> filtra por Solicitantes (clients) (value:
+                // 1 CONSULTA Users --> filtra por Docentes (clients) (value:
                 // '2')
                 case (queriesEnum.clientUsersList):
                     console.log("currentQueryCase",currentQueryCase)
@@ -265,23 +265,23 @@ export default function TableData() {
                     newFilters = [{key: 'tipo_usuario', value: '2'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
-                // 2 CONSULTA Users --> filtra por Administrativos (selectors)
+                // 2 CONSULTA Users --> filtra por Administrativos (administrativos)
                 // (value: '1')
-                case (queriesEnum.selectorUsersList):
+                case (queriesEnum.administrativoUsersList):
                     console.log("currentQueryCase",currentQueryCase)
                     setBackColor('#ffd5b5');
                     newPagination = {size: 3, page: currentPage};
                     newFilters = [{key: 'tipo_usuario', value: '1'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
-                // 3 CONSULTA Info de Postulantes (Applicants)
+                // 3 CONSULTA Info de Alumnos (Applicants)
                 case (queriesEnum.applicantUsersInfoList):
                     console.log("currentQueryCase",currentQueryCase)
-                    // CONSULTA segun TAB VALUE (Postulantes)
+                    // CONSULTA segun TAB VALUE (Alumnos)
                     setBackColor('#acfedc');
                     newPagination = {size: 5, page: currentPage};
                     // newFilters = [{key: 'tipo_usuario', value: '1'}];
-                    getPostulantesByFilters(newPagination, newFilters); //Applicants
+                    getAlumnosByFilters(newPagination, newFilters); //Applicants
                     break;
                 // 4 CONSULTA Info de Avisos (JobAds)
                 case (queriesEnum.jobAdsList):
@@ -309,7 +309,7 @@ export default function TableData() {
                     ||
                     currentQueryCase === queriesEnum.clientUsersList
                     ||
-                    currentQueryCase === queriesEnum.selectorUsersList
+                    currentQueryCase === queriesEnum.administrativoUsersList
                 )
                 &&
                 < UserUpdateDeleteForm row={clickedRow as IUserCreateResDto}/>}

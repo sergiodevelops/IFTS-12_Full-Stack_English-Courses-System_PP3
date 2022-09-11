@@ -150,7 +150,7 @@ export default function UserLoginForm() {
                             color={"primary"}
                             fullWidth type="submit"
                             variant="contained"
-                            disabled={!currentUser.username || !currentUser.password}
+                            // disabled={!currentUser.username || !currentUser.password}
                             onClick={handleLogIn}
                         >
                             ingresar

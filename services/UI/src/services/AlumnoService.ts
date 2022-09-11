@@ -1,9 +1,9 @@
 import BaseService from "./BaseService";
 
-export default class PostulanteService extends BaseService {
+export default class AlumnoService extends BaseService {
     private static API_RESOURCE = "applicants";
 
     constructor() {
-        super(PostulanteService.API_RESOURCE);
+        super(AlumnoService.API_RESOURCE);
     }
 }

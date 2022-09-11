@@ -11,7 +11,7 @@ import IApplicantCreateResDto
     from "@usecases/applicant/create/IApplicantCreateResDto";
 import IApplicantCreateReqDto
     from "@usecases/applicant/create/IApplicantCreateReqDto";
-import PostulanteService from "@services/PostulanteService";
+import AlumnoService from "@services/AlumnoService";
 // import { IsNumber, IsString, IsOptional, ValidateNested, IsNotEmpty, ArrayNotEmpty } from "class-validator";
 
 export default function ApplicantUpdateDeleteForm(props: { row: IApplicantCreateResDto }) {
@@ -27,7 +27,7 @@ export default function ApplicantUpdateDeleteForm(props: { row: IApplicantCreate
         email,
     } = props.row as IApplicantCreateResDto;
 
-    const postulanteService = new PostulanteService();
+    const alumnoService = new AlumnoService();
 
     const dispatch = useDispatch();
     // const applicantsListStore = useSelector((state) => state?.applicantReducers.applicantsList);
@@ -53,11 +53,11 @@ export default function ApplicantUpdateDeleteForm(props: { row: IApplicantCreate
             email: updateQueryApplicant?.email,
         };
 
-        postulanteService
+        alumnoService
             .replace(applicantToReplace, id)
             .then(createdApplicant => {
                 console.log("createdApplicant en FE ", createdApplicant);
-                alert(`La información del postulante "${updateQueryApplicant.apellido}" se MODIFICÓ correctamente`);
+                alert(`La información del alumno "${updateQueryApplicant.apellido}" se MODIFICÓ correctamente`);
                 dispatch(layoutActions.setOpenModal(false));
             })
             .catch(err => {
@@ -71,10 +71,10 @@ export default function ApplicantUpdateDeleteForm(props: { row: IApplicantCreate
     };
 
     const handleClickDeleteRow = async () => {
-        postulanteService
+        alumnoService
             .delete(id)
             .then(createdApplicant => {
-                alert(`La información del postulante "${updateQueryApplicant.apellido}" se ELIMINÓ correctamente`);
+                alert(`La información del alumno "${updateQueryApplicant.apellido}" se ELIMINÓ correctamente`);
                 dispatch(layoutActions.setOpenModal(false));
             })
             .catch(err => {

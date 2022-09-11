@@ -5,11 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import Container from "@material-ui/core/Container";
 import Typography from "@mui/material/Typography";
 import IApplicantCreateReqDto from "@usecases/applicant/create/IApplicantCreateReqDto";
-import PostulanteService from "@services/PostulanteService";
+import AlumnoService from "@services/AlumnoService";
 import useStyles from "./styles";
 
 export default function ApplicantAddForm(props: { title: string }) {
-    const postulanteService = new PostulanteService();
+    const alumnoService = new AlumnoService();
 
     const buttonRef = useRef<HTMLButtonElement>(null);
     const classes = useStyles();
@@ -54,11 +54,11 @@ export default function ApplicantAddForm(props: { title: string }) {
             tel: newApplicant.tel,
         };
 
-        postulanteService
+        alumnoService
             .create(newApplicantPost)
             .then(createdApplicant => {
                 console.log("createdApplicant en FE ", createdApplicant);
-                alert(`La información de postulante "${newApplicant.nombres} ${newApplicant.apellido}" se persistió correctamente`);
+                alert(`La información de alumno "${newApplicant.nombres} ${newApplicant.apellido}" se persistió correctamente`);
                 cleanInputValues();
             })
             .catch(err => {

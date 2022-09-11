@@ -1,9 +1,13 @@
-version: '3'
+version: '3.7'
 services:
 
+  # -------------------------------------------------------------
   # DATABASE - MYSQL server engine
-  DATABASE:
-    image: 'mysql:5.7.35'
+  # -------------------------------------------------------------
+
+  mysql_service_main:
+    container_name: 'mysql_container_main'
+    image: 'mysql:latest'
     command: '--init-file /docker-entrypoint-initdb.d/init.sql'
     volumes:
       - './DATABASE/init.sql:/docker-entrypoint-initdb.d/init.sql'
@@ -16,22 +20,30 @@ services:
       - ${OS_DB_PORT}:${DOCKER_DB_PORT}
     restart: 'always'
 
+  # -------------------------------------------------------------
   # ADMINER - database adminer
-  ADMINER:
+  # -------------------------------------------------------------
+
+  adminer_service_main:
+    container_name: 'adminer_container_main'
     depends_on:
-      - 'DATABASE'
+      - 'mysql_service_main'
     image: 'adminer:latest'
     hostname: 'localhost'
     ports:
       - ${OS_ADMINER_PORT}:${DOCKER_ADMINER_PORT}
     env_file:
-      - 'ADMINER/.env'
+      - 'DATABASE/.env'
     restart: 'unless-stopped'
 
+  # -------------------------------------------------------------
   # API - EXPRESS JS
-  API:
+  # -------------------------------------------------------------
+
+  api_service_main:
+    container_name: 'api_container_main'
     depends_on:
-      - 'DATABASE'
+      - 'mysql_service_main'
     image: 'node:14'
     working_dir: '/var/www/html'
     volumes:
@@ -49,10 +61,14 @@ services:
     tty: true
     restart: 'always'
 
+  # -------------------------------------------------------------
   # UI - REACT JS
-  UI:
+  # -------------------------------------------------------------
+
+  ui_service_main:
+    container_name: 'ui_container_main'
     depends_on:
-      - 'API'
+      - 'api_service_main'
     image: 'node:14'
     working_dir: '/var/www/html'
     volumes:
@@ -70,3 +86,7 @@ services:
     tty: true
     stdin_open: true
     restart: 'always'
+
+volumes:
+  my-datavolume:
+# -------------------------------------------------------------

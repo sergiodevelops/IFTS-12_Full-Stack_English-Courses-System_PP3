@@ -86,6 +86,7 @@ para ver los activos
 $ docker ps
 Eliminamos todos los volúmenes ya que Docker crea volúmenes temporales sin pedirte permiso.
 $ docker volume prune <-- limpia todos los volumes
+$ docker container prune <-- limpia todos los contenedores
 persistir info con docker
 https://platzi.com/tutoriales/1432-docker/3268-como-crear-un-contenedor-con-docker-mysql-y-persistir-la-informacion/
 Error response from daemon: remove database_mysql_data: volume is in use
@@ -126,7 +127,25 @@ npx sequelize-auto \
 --dialect "mysql" \
 -o "./src/models" \
 -t "Usuario" \
--l "ts" \
+-t "Alumno" \
+-t "Docente" \
+
+
+
+-l "esm" \
+
+si es en javascript hacer
+npx sequelize-auto \
+-h "localhost" \
+-d "InstitutoIdiomas" \
+-u "root" \
+-x "root" \
+-p 3306  \
+--dialect "mysql" \
+-c "./src/configuration" \
+-o "./src/models" \
+-t "Persona"
+
 
 sobre el sistema de modulos (ficheros) funcionando en node js
 https://youtu.be/29iYdru2KUg
@@ -150,3 +169,18 @@ https://github.com/willjw3/sequelize-typescript-tutorial
 
 index.ts example in models sequelize
 https://github.com/MichalZalecki/sequelize-with-typescript-example/blob/master/src/db/models/index.ts
+
+-------------
+al 08/09/2022
+--------------------------
+aun no solucionado este error
+https://stackoverflow.com/questions/72505297/typeerror-require-is-not-a-function-with-typescript
+
+https://stackoverflow.com/questions/46459778/cannot-read-property-use-env-variable-of-undefined
+https://shareablecode.com/snippets/solution-for-typeerror-require-is-not-a-function-while-using-sequelize-with-expr-vWFm-f34v
+
+-------------
+al 09/09/2022
+--------------------------
+https://sequelize.org/docs/v6/core-concepts/model-basics/
+

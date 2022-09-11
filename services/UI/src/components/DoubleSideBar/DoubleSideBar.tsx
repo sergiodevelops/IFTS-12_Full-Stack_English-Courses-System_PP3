@@ -281,7 +281,7 @@ export default function DoubleSideBar() {
                     <Divider/>
                     <div onClick={handleDrawerOpenRight}>
                         {
-                            (loggedUser?.tipo_usuario === 3 || loggedUser?.tipo_usuario === 2 /*postulante*/) &&
+                            (loggedUser?.tipo_usuario === 3 || loggedUser?.tipo_usuario === 2 /*alumno*/) &&
                             <List>
                                 {[
                                     'Datos Personales',
@@ -311,7 +311,7 @@ export default function DoubleSideBar() {
                         }
 
                         {
-                            (loggedUser?.tipo_usuario === 1 /* administrativo (selector) o solicitante */) &&
+                            (loggedUser?.tipo_usuario === 1 /* administrativo (administrativo) o docente */) &&
                             <List>
                                 {[
                                     'CONSULTAS',
