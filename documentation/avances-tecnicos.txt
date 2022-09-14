@@ -142,9 +142,8 @@ npx sequelize-auto \
 -x "root" \
 -p 3306  \
 --dialect "mysql" \
--c "./src/configuration" \
 -o "./src/models" \
--t "Persona"
+-t "Curso"
 
 
 sobre el sistema de modulos (ficheros) funcionando en node js

@@ -40,6 +40,11 @@ export const singlePageContentList = [
         moduleName: "ApplicantAddForm",
     },
     {
+        title: "Alta de Cursos",
+        body: "",
+        moduleName: "CourseAddForm",
+    },
+    {
         title: "Alta de Usuarios",
         body: "",
         moduleName: "UserAddForm",

@@ -1,18 +1,11 @@
-/*
- * Copyright (c) 2021.
- * All Rights Reserved
- * This product is protected by copyright and distributed under
- * licenses restricting copying, distribution, and decompilation.
- * @SergioArielJuárez (https://github.com/sergioarieljuarez)
- * @JoseLuisGlavic
- *
- */
+
 const {Sequelize} = require("sequelize");
 const dbConfig = require("../dbConfig");
 
 const UsuarioModel = require("./usuarios");
 const PostulanteModel = require("./postulantes");
 const AnuncioModel = require("./anuncios");
+const CursoModel = require("./Curso");
 
 const sequelize = new Sequelize(
     dbConfig.DB,
@@ -37,5 +30,6 @@ db.Sequelize = Sequelize;
 db.usuarios = UsuarioModel(sequelize, Sequelize);
 db.postulantes = PostulanteModel(sequelize, Sequelize);
 db.anuncios = AnuncioModel(sequelize, Sequelize);
+db.Curso = CursoModel(sequelize, Sequelize);
 
 module.exports = db;

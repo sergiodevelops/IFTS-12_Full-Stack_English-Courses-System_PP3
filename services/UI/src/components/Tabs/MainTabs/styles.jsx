@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import misionImage from '@assets/images/principal.jpeg';
 import visionImage from '@assets/images/vision.jpeg';
 import objetivoImage from '@assets/images/objetivo.jpeg';
-import nosotrosImage from '@assets/images/nosotros.jpg';
+import nosotrosImage from '@assets/images/english.jpeg';
 
 export default makeStyles(() => ({
     root:{
@@ -36,12 +36,12 @@ export default makeStyles(() => ({
     },
     nosotros:{
         height: "100vh",
-        backgroundImage: `url(${nosotrosImage})`,
+        // backgroundImage: `url(${nosotrosImage})`,
     },
     parrafo:{
         margin: '0% 10%',
         fontSize:'1.5rem',
-        color: 'black',
+        color: 'white',
     },
     backImage: {
         height: "100vh",

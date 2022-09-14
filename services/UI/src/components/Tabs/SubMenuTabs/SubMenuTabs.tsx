@@ -79,6 +79,7 @@ const colorCurrentButtonMenu = '#007bff26';
                                 'Usuario',
                                 'Anuncio',
                                 'Información de Alumno',
+                                'Cursos',
                             ].map((text: string, index: number) => (
                                 <ListItem
                                     button

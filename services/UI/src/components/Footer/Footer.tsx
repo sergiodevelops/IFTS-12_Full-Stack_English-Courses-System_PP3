@@ -33,18 +33,10 @@ export default function Footer(props: { openLeft: boolean, openRight: boolean, d
                 paddingRight: openRight ? `${drawerWidth + 25}px` : `25px`
             }}>
             <p className={`${classes.body}`}>
-                ¿Cómo lo hacemos? Diseñamos el mejor proceso de selección de
-                personal para nuestros clientes.
-                Aplicamos las últimas tendencias de reclutamiento en cada
-                proceso realizando un análisis directo y
-                parametrizado a través de los principales portales de empleo y
-                metabuscadores. Estamos tan seguros de nuestro método que nuestros servicios
-                cuentan con una garantía de 6 meses en
-                puestos técnicos y mandos intermedios, 9 meses en puestos
-                directivos y 1 año en perfiles Ejecutivos.
+
             </p>
             <p className={classes.copyright}>
-                Copyright 1999-2021 de Refsnes Data. Reservados todos los
+                Copyright 1999-2022 de Refsnes Data. Reservados todos los
                 derechos.
             </p>
         </footer>

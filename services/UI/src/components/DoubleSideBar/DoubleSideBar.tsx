@@ -264,6 +264,8 @@ export default function DoubleSideBar() {
                         width: drawerWidth,
                         flexShrink: 0,
                         '& .MuiDrawer-paper': {
+                            color: "white",
+                            background: "#50743d",
                             width: drawerWidth,
                             boxSizing: 'border-box',
                         },
@@ -365,6 +367,8 @@ export default function DoubleSideBar() {
                         width: drawerWidth,
                         flexShrink: 0,
                         '& .MuiDrawer-paper': {
+                            color: "white",
+                            background: "#50743d",
                             width: drawerWidth,
                         },
                     }}

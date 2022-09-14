@@ -11,7 +11,7 @@ export function ActionButton(props: { authMode: boolean }) {
     return (
         <Container className={classes.container} maxWidth="xs">
             <Grid container spacing={3}>
-                <Grid item xs={12}>
+                <Grid hidden item xs={12}>
                     <Button
                         style={{background: '#dd4895'}}
                         color="secondary"

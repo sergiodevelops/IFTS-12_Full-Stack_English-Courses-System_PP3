@@ -1,12 +1,4 @@
-/*
- * Copyright (c) 2021.
- * All Rights Reserved
- * This product is protected by copyright and distributed under
- * licenses restricting copying, distribution, and decompilation.
- * @SergioArielJuárez (https://github.com/sergioarieljuarez)
- * @JoseLuisGlavic
- *
- */
+
 const PostulanteModel = require('../models/allModels').postulantes;
 
 const getPagination = (size, page) => {

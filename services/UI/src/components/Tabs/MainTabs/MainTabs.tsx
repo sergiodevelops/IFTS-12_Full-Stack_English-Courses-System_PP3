@@ -18,6 +18,8 @@ import {ClassNameMap} from "@material-ui/styles";
 import JobAdAddForm from '@components/Forms/JobAdForms/JobAdAddForm/JobAdAddForm';
 import ApplicantAddForm
     from "@components/Forms/ApplicantForms/ApplicantAddForm/ApplicantAddForm";
+import CourseAddForm
+    from "@components/Forms/CourseForms/CourseAddForm/CourseAddForm";
 
 function MainTitle(props: { classes: ClassNameMap<"objetivo" | "singlePageContentList" | "vision" | "parrafo" | "welcomeTitle" | "root" | "nosotros" | "spaTitle" | "mision" | "backImage">, content: ISinglePageContentDto }) {
     return <Typography variant={"h4"}
@@ -54,11 +56,11 @@ export default function MainTabs(props: { isWelcomePage: boolean }) {
                             component={"div"}
                             textAlign={'center'}
                             color={'grey'}
-                            marginY={'2vh'}
+                            // marginY={'2vh'}
                 >
                     Hola {props.fullnameUserAuth?.toUpperCase()}
                     <br/>
-                    Tu oportunidad esta aquí !
+                    Bienvenidos al portal del Instituto !
                 </Typography>
             </Grid>
         )
@@ -125,6 +127,14 @@ export default function MainTabs(props: { isWelcomePage: boolean }) {
                                                     <MainTitle classes={classes}
                                                                content={content}/>}
                                                     <ApplicantAddForm title={""}/>
+                                                </div>}
+
+                                                {content.moduleName === 'CourseAddForm' &&
+                                                <div>
+                                                    {!!content.title &&
+                                                    <MainTitle classes={classes}
+                                                               content={content}/>}
+                                                    <CourseAddForm title={""}/>
                                                 </div>}
 
                                                 {content.moduleName === 'Mision' &&
