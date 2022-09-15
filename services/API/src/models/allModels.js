@@ -2,9 +2,10 @@
 const {Sequelize} = require("sequelize");
 const dbConfig = require("../dbConfig");
 
-const UsuarioModel = require("./usuarios");
-const PostulanteModel = require("./postulantes");
-const AnuncioModel = require("./anuncios");
+const UsuarioModel = require("./Usuario");
+const PersonaModel = require("./Persona");
+// const PostulanteModel = require("./postulantes");
+// const AnuncioModel = require("./anuncios");
 const CursoModel = require("./Curso");
 
 const sequelize = new Sequelize(
@@ -27,9 +28,10 @@ const db = {};
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.usuarios = UsuarioModel(sequelize, Sequelize);
-db.postulantes = PostulanteModel(sequelize, Sequelize);
-db.anuncios = AnuncioModel(sequelize, Sequelize);
+db.Usuario = UsuarioModel(sequelize, Sequelize);
+db.Persona = PersonaModel(sequelize, Sequelize);
+// db.postulantes = PostulanteModel(sequelize, Sequelize);
+// db.anuncios = AnuncioModel(sequelize, Sequelize);
 db.Curso = CursoModel(sequelize, Sequelize);
 
 module.exports = db;
