@@ -7,53 +7,60 @@ const getPagination = (size, page) => {
 };
 
 const getPagingData = (data, page, limit) => {
-    const {count: totalItems, rows: users} = data;
+    const {count: totalItems, rows: courses} = data;
     const currentPage = page ? +page : 0;
     const totalPages = Math.ceil(totalItems / limit);
-    return {totalItems, users, totalPages, currentPage};
+    return {totalItems, courses, totalPages, currentPage};
 };
 
 // ALTA (crea nuevo curso)
 exports.create = (req, res) => {
-    // Validate "CodCurso"
-    if (!req.body.CodCurso) {
-        res.status(400).send({
-            message: "Debe enviar un 'CodCurso' para crear el Curso!"
-        });
-        return;
-    }
-    // Validate "CodDocente"
-    if (!req.body.CodDocente) {
-        res.status(400).send({
-            message: "Debe enviar un 'CodDocente' para crear el Curso!"
-        });
-        return;
-    }
-    // Validate "CodNivel"
+    console.log("req.body",req.body)
+
+    // if (!req.body.CodCurso) {
+    //     res.status(400).send({
+    //         message: "Debe enviar un 'CodCurso' para crear el Curso!"
+    //     });
+    //     return;
+    // }
+    // if (!req.body.CodDocente) {
+    //     res.status(400).send({
+    //         message: "Debe enviar un 'CodDocente' para crear el Curso!"
+    //     });
+    //     return;
+    // }
     if (!req.body.CodNivel) {
         res.status(400).send({
             message: "Debe enviar un 'CodNivel' para crear el Curso!"
         });
         return;
     }
+    if (!req.body.comision) {
+        res.status(400).send({
+            message: "Debe enviar un 'comision' para crear el Curso!"
+        });
+        return;
+    }
 
     // Create a Curso
     const newCourse = {
-        CodCurso: req.body.CodCurso,
-        CodDocente: req.body.CodDocente,
+        // CodCurso: req.body.CodCurso,
+        comision: req.body.comision,
+        // CodDocente: req.body.CodDocente,
         CodNivel: req.body.CodNivel
     };
 
     // Save Curso in the database if "CodCurso" not exist
     CursoModel
-        .create(newCourse, {CodCurso: req.body.CodCurso})
+        .create(newCourse)
         .then(data => {
             res.status(201).send(data);
         })
         .catch(err => {
             res.status(409).send({
                 name: "Duplicate Course Entry",
-                message: `El CodNivel "${req.body.CodNivel}" ya existe, intente con uno diferente.`
+                message: `${err}`
+                // message: `El CodCurso "${req.body.CodNivel}" ya existe, intente con uno diferente.`
             });
         });
 };
@@ -125,7 +132,7 @@ exports.findAllByFilters = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving users."
+                    err.message || "Some error occurred while retrieving courses."
             });
         });
 };
