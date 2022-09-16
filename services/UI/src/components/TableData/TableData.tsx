@@ -43,10 +43,10 @@ import AlumnoService from "@services/AlumnoService";
 import AnuncioService from "@services/AnuncioService";
 import IApplicantFindResDto
     from "@usecases/applicant/find/IApplicantFindResDto";
-import IJobAdFindResDto
-    from "@usecases/jobad/find/IJobAdFindResDto";
-import IJobAdCreateResDto
-    from "@usecases/jobad/create/IJobAdCreateResDto";
+import INewsFindResDto
+    from "@usecases/jobad/find/INewsFindResDto";
+import INewCreateResDto
+    from "@usecases/jobad/create/INewCreateResDto";
 import IApplicantCreateResDto
     from "@usecases/applicant/create/IApplicantCreateResDto";
 import UserUpdateDeleteForm
@@ -85,7 +85,7 @@ export default function TableData() {
         |
         IApplicantCreateResDto
         |
-        IJobAdCreateResDto)[]>([]);
+        INewCreateResDto)[]>([]);
 
     const paginationDefault = {size: 1, page: 0};
     const [pagination, setPagination] = useState<IPaginationSetDto>(paginationDefault);
@@ -101,7 +101,7 @@ export default function TableData() {
         |
         IApplicantCreateResDto
         |
-        IJobAdCreateResDto)>();
+        INewCreateResDto)>();
     const [currentForm, setCurrentForm] = useState();
     const [queryInProgress, setQueryInProgress] = useState<boolean>(false);
     const [backColor, setBackColor] = useState<string>('#2a77d263');
@@ -176,11 +176,15 @@ export default function TableData() {
 
         anuncioService
             .findAllByFilters(pagination, filters)
-            .then((response: IJobAdFindResDto) => {
+            .then((response: INewsFindResDto) => {
                 // console.log("response", response);
-                const {jobads, totalPages, totalItems, currentPage} = response;
-                // if (!!jobads.length) {
-                    setRows(jobads as IJobAdCreateResDto[]);
+                const {
+                    news,
+                    totalPages,
+                    totalItems
+                } = response;
+                // if (!!news.length) {
+                    setRows(news as INewCreateResDto[]);
                     setTotalPages(totalPages);
                     setTotalItems(totalItems);
                     setCurrentPage(currentPage);
@@ -283,8 +287,8 @@ export default function TableData() {
                     // newFilters = [{key: 'tipo_usuario', value: '1'}];
                     getAlumnosByFilters(newPagination, newFilters); //Applicants
                     break;
-                // 4 CONSULTA Info de Avisos (JobAds)
-                case (queriesEnum.jobAdsList):
+                // 4 CONSULTA Info de Avisos (NewsPosts)
+                case (queriesEnum.newsPostsList):
                     console.log("currentQueryCase",currentQueryCase)
                     // CONSULTA segun TAB VALUE (Anuncios)
                     setBackColor('#fdffb5');
@@ -321,10 +325,10 @@ export default function TableData() {
                         row={clickedRow as IApplicantCreateResDto}/>}
 
                 { // si es consulta de JobAds Info by Filters
-                    currentQueryCase === queriesEnum.jobAdsList
+                    currentQueryCase === queriesEnum.newsPostsList
                     &&
                     < JobAdUpdateDeleteForm
-                        row={clickedRow as IJobAdCreateResDto}/>}
+                        row={clickedRow as INewCreateResDto}/>}
             </>
         )
     }

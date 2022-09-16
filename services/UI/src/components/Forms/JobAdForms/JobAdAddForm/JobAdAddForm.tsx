@@ -5,8 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import Container from "@material-ui/core/Container";
 import useStyles from "./styles";
 import Typography from "@mui/material/Typography";
-import IJobAdCreateReqDto
-    from "@usecases/jobad/create/IJobAdCreateReqDto";
+import INewsCreateReqDto
+    from "@usecases/jobad/create/INewsCreateReqDto";
 import AnuncioService from "@services/AnuncioService";
 
 export default function ApplicantAddForm(props: { title: string }) {
@@ -14,13 +14,12 @@ export default function ApplicantAddForm(props: { title: string }) {
 
     const buttonRef = useRef<HTMLButtonElement>(null);
     const classes = useStyles();
-    const emptyApplicant: IJobAdCreateReqDto = {
-        descripcion_tareas: "",
-        estudios: "",
-        experiencia: "",
-        puesto_vacante: "",
+    const emptyApplicant: INewsCreateReqDto = {
+        titulo: "",
+        descripcion: "",
+        fecha_alta: "",
     };
-    const [newJobAd, setNewJobAd] = useState<IJobAdCreateReqDto>(emptyApplicant);
+    const [newJobAd, setNewJobAd] = useState<INewsCreateReqDto>(emptyApplicant);
 
     useEffect(() => {
         const listener = (event: KeyboardEvent) => {
@@ -40,27 +39,25 @@ export default function ApplicantAddForm(props: { title: string }) {
     const saveApplicant = async () => {
         let message;
         if (
-            !newJobAd.puesto_vacante ||
-            !newJobAd.descripcion_tareas ||
-            !newJobAd.experiencia ||
-            !newJobAd.estudios
+            !newJobAd.titulo ||
+            !newJobAd.descripcion ||
+            !newJobAd.fecha_alta
         ) {
             message = "Por favor complete los campos requeridos";
             alert(message);
             return;
         }
-        const newJobAdPost: IJobAdCreateReqDto = {
-            puesto_vacante: newJobAd.puesto_vacante,
-            descripcion_tareas: newJobAd.descripcion_tareas,
-            estudios: newJobAd.estudios,
-            experiencia: newJobAd.experiencia,
+        const newJobAdPost: INewsCreateReqDto = {
+            titulo: newJobAd.titulo,
+            descripcion: newJobAd.descripcion,
+            fecha_alta: newJobAd.fecha_alta,
         };
 
         jobAdService
             .create(newJobAdPost)
             .then(createdApplicant => {
                 console.log("createdApplicant en FE ", createdApplicant);
-                alert(`El anuncio para "${newJobAd.puesto_vacante}" se persistió correctamente`);
+                alert(`El anuncio para "${newJobAd.titulo}" se persistió correctamente`);
                 cleanInputValues();
             })
             .catch(err => {
@@ -90,100 +87,52 @@ export default function ApplicantAddForm(props: { title: string }) {
             <Container className={classes.root} maxWidth="xs">
                 <Grid item xs={12}>
                     <Grid container spacing={2}>
-                        {/*puesto_vacante*/}
+                        {/*titulo*/}
                         <Grid item xs={12}>
                             <TextField
-                                className={`puesto_vacante`}
-                                style={{background: newJobAd.puesto_vacante ? '#e8ffe9' : 'inherit'}}
+                                className={`titulo`}
+                                style={{background: newJobAd.titulo ? '#e8ffe9' : 'inherit'}}
                                 autoComplete={"off"}
                                 fullWidth
-                                value={newJobAd?.puesto_vacante || ""}
-                                error={!newJobAd?.puesto_vacante}
+                                value={newJobAd?.titulo || ""}
+                                error={!newJobAd?.titulo}
 
                                 onChange={(e) => {
                                     setNewJobAd({
                                         ...newJobAd,
-                                        puesto_vacante: e.target.value,
+                                        titulo: e.target.value,
                                     });
                                 }}
                                 label="Puesto vacante"
                                 type="text"
-                                name="puesto_vacante"
+                                name="titulo"
                                 size="small"
                                 variant="outlined"
                                 multiline
                             />
                         </Grid>
 
-                        {/*descripcion_tareas*/}
+                        {/*descripcion*/}
                         <Grid item xs={12}>
                             <TextField
                                 className={`descripcion_tareas`}
-                                style={{background: newJobAd.descripcion_tareas ? '#e8ffe9' : 'inherit'}}
+                                style={{background: newJobAd.descripcion ? '#e8ffe9' : 'inherit'}}
                                 autoComplete={"off"}
                                 fullWidth
-                                disabled={!newJobAd.puesto_vacante}
-                                value={!!newJobAd?.puesto_vacante && newJobAd?.descripcion_tareas || ""}
-                                error={!!newJobAd?.puesto_vacante && !newJobAd?.descripcion_tareas}
+                                disabled={!newJobAd.titulo}
+                                value={!!newJobAd?.titulo && newJobAd?.descripcion || ""}
+                                error={!!newJobAd?.titulo && !newJobAd?.descripcion}
 
                                 onChange={(e) => {
                                     setNewJobAd({
                                         ...newJobAd,
-                                        descripcion_tareas: e.target.value,
+                                        descripcion: e.target.value,
                                     });
                                 }}
                                 label="Descripción de tareas"
                                 type="text"
                                 name="descripcion_tareas"
                                 size="small"
-                                variant="outlined"
-                                multiline
-                            />
-                        </Grid>
-
-                        {/*experiencia*/}
-                        <Grid item xs={12}>
-                            <TextField
-                                className={`experiencia`}
-                                style={{background: newJobAd.experiencia ? '#e8ffe9' : 'inherit'}}
-                                autoComplete={"off"}
-                                fullWidth
-                                disabled={!newJobAd?.descripcion_tareas}
-                                value={!!newJobAd?.descripcion_tareas && newJobAd?.experiencia || ""}
-                                error={!!newJobAd?.descripcion_tareas && !newJobAd?.experiencia}
-
-                                onChange={(e) => {
-                                    setNewJobAd({
-                                        ...newJobAd,
-                                        experiencia: e.target.value,
-                                    });
-                                }}
-                                label="Experiencia"
-                                name="apellido"
-                                size="small"
-                                variant="outlined"
-                                multiline
-                            />
-                        </Grid>
-
-                        {/*estudios*/}
-                        <Grid item xs={12}>
-                            <TextField
-                                className={`estudios`}
-                                style={{background: newJobAd.estudios ? '#e8ffe9' : 'inherit'}}
-                                autoComplete={"off"}
-                                fullWidth
-                                disabled={!newJobAd?.experiencia}
-                                value={!!newJobAd?.experiencia && newJobAd?.estudios || ""}
-                                error={!!newJobAd?.experiencia && !newJobAd?.estudios}
-                                onChange={(e) => setNewJobAd({
-                                    ...newJobAd,
-                                    estudios: e.target.value,
-                                })}
-                                label="Estudios"
-                                name="email"
-                                size="small"
-                                type="text"
                                 variant="outlined"
                                 multiline
                             />
@@ -199,10 +148,8 @@ export default function ApplicantAddForm(props: { title: string }) {
                             color={"primary"}
                             fullWidth type="submit" variant="contained"
                             disabled={
-                                !newJobAd.puesto_vacante ||
-                                !newJobAd.descripcion_tareas ||
-                                !newJobAd.experiencia ||
-                                !newJobAd.estudios
+                                !newJobAd.titulo ||
+                                !newJobAd.descripcion
                             }
                             onClick={saveApplicant}
                         >

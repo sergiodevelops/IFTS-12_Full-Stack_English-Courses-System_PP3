@@ -13,8 +13,8 @@ import IApplicantCreateResDto
     from "@usecases/applicant/create/IApplicantCreateResDto";
 import IApplicantCreateReqDto
     from "@usecases/applicant/create/IApplicantCreateReqDto";
-import IJobAdCreateReqDto
-    from "@usecases/jobad/create/IJobAdCreateReqDto";
+import INewsCreateReqDto
+    from "@usecases/jobad/create/INewsCreateReqDto";
 
 type ApiResponse = {
     name: string;
@@ -46,7 +46,7 @@ export default class BaseService {
         return this.headers;
     }
 
-    async create(baseModel: IUserCreateReqDto | IApplicantCreateReqDto | IJobAdCreateReqDto) {
+    async create(baseModel: IUserCreateReqDto | IApplicantCreateReqDto | INewsCreateReqDto) {
         const url = `${this.api_url}/${this.getResource()}/create`;
 
         const params = {
@@ -151,7 +151,7 @@ export default class BaseService {
     }
 
     async replace(
-        baseModel:  IUserCreateReqDto | IApplicantCreateReqDto | IJobAdCreateReqDto,
+        baseModel:  IUserCreateReqDto | IApplicantCreateReqDto | INewsCreateReqDto,
         userId: number) {
         let url = new URL(`${this.api_url}/${this.getResource()}`);
         url.searchParams.append('id', userId.toString());

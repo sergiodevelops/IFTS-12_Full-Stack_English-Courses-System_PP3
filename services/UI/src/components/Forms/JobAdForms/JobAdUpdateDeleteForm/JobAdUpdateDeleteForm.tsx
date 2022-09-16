@@ -6,49 +6,47 @@ import TextField from '@material-ui/core/TextField';
 import Container from "@material-ui/core/Container";
 import useStyles from "./styles";
 import layoutActions from "@redux/actions/layoutActions";
-import IJobAdCreateResDto
-    from "@usecases/jobad/create/IJobAdCreateResDto";
+import INewCreateResDto
+    from "@usecases/jobad/create/INewCreateResDto";
 import AnuncioService from "@services/AnuncioService";
-import IJobAdCreateReqDto
-    from "@usecases/jobad/create/IJobAdCreateReqDto";
+import INewsCreateReqDto
+    from "@usecases/jobad/create/INewsCreateReqDto";
 
-export default function JobAdUpdateDeleteForm(props: { row: IJobAdCreateResDto }) {
+export default function JobAdUpdateDeleteForm(props: { row: INewCreateResDto }) {
     const title = "Modificar o eliminar";
     const row = props;
     const {
-        id, descripcion_tareas, experiencia, puesto_vacante, estudios
-    } = props.row as IJobAdCreateResDto;
+        id, titulo, descripcion, fecha_alta
+    } = props.row as INewCreateResDto;
 
     const anuncioService = new AnuncioService();
 
     const dispatch = useDispatch();
 
     const classes = useStyles();
-    const emptyJobAdModify: IJobAdCreateReqDto = {
-        descripcion_tareas: "",
-        estudios: "",
-        experiencia: "",
-        puesto_vacante: "",
+    const emptyJobAdModify: INewsCreateReqDto = {
+        titulo: "",
+        descripcion: "",
+        fecha_alta: "",
     }
 
-    const [updateQueryJobAd, setUpdateQueryJobAd] = useState<IJobAdCreateReqDto>(emptyJobAdModify);
+    const [updateQueryJobAd, setUpdateQueryJobAd] = useState<any>(emptyJobAdModify);
 
     const [updateButtonDisable, setUpdateButtonDisable] = useState(false);
 
     const handleClickReplaceRow = async () => {
 
-        const jobAdToReplace: IJobAdCreateReqDto = {
-            descripcion_tareas: updateQueryJobAd?.descripcion_tareas, // mapeo para la base, envia un number
-            estudios: updateQueryJobAd?.estudios,
-            experiencia: updateQueryJobAd?.experiencia,
-            puesto_vacante: updateQueryJobAd?.puesto_vacante,
+        const jobAdToReplace: any = {
+            titulo,
+            descripcion,
+            fecha_alta
         };
 
         anuncioService
             .replace(jobAdToReplace, id)
             .then(createdJobAd => {
                 console.log("createdJobAd en FE ", createdJobAd);
-                alert(`El anuncio para "${updateQueryJobAd.puesto_vacante}" se MODIFICÓ correctamente`);
+                alert(`El anuncio para "${updateQueryJobAd.titulo}" se MODIFICÓ correctamente`);
                 dispatch(layoutActions.setOpenModal(false));
             })
             .catch(err => {
@@ -66,7 +64,7 @@ export default function JobAdUpdateDeleteForm(props: { row: IJobAdCreateResDto }
             .delete(id)
             .then(createdJobAd => {
                 // console.log("createdJobAd en FE ", createdJobAd);
-                alert(`El anuncio para "${updateQueryJobAd.puesto_vacante}" se ELIMINÓ correctamente`);
+                alert(`El anuncio para "${updateQueryJobAd.titulo}" se ELIMINÓ correctamente`);
                 dispatch(layoutActions.setOpenModal(false));
             })
             .catch(err => {
@@ -82,10 +80,9 @@ export default function JobAdUpdateDeleteForm(props: { row: IJobAdCreateResDto }
     useEffect(() => {
         // !!currentOriginalJobAd && setOriginalJobAd(currentOriginalJobAd);
         setUpdateQueryJobAd({
-            descripcion_tareas,
-            estudios,
-            experiencia,
-            puesto_vacante,
+            titulo,
+            descripcion,
+            fecha_alta,
         });
     }, [row])
 
@@ -97,81 +94,41 @@ export default function JobAdUpdateDeleteForm(props: { row: IJobAdCreateResDto }
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container spacing={2}>
-                        {/*puesto_vacante*/}
+                        {/*titulo*/}
                         <Grid item xs={12}>
                             <TextField
-                                className={`puesto_vacante`}
-                                // style={{background: updateQueryJobAd.puesto_vacante !== puesto_vacante ? '#e8ffe9' : 'inherit'}}
+                                className={`titulo`}
+                                // style={{background: updateQueryJobAd.titulo !== titulo ? '#e8ffe9' : 'inherit'}}
                                 autoComplete={"off"}
                                 fullWidth
-                                value={updateQueryJobAd?.puesto_vacante || ""}
-                                error={!updateQueryJobAd?.puesto_vacante}
+                                value={updateQueryJobAd?.titulo || ""}
+                                error={!updateQueryJobAd?.titulo}
                                 onChange={(e) => setUpdateQueryJobAd({
                                     ...updateQueryJobAd,
-                                    puesto_vacante: e.target.value === "" ? puesto_vacante : e.target.value,
+                                    titulo: e.target.value === "" ? titulo : e.target.value,
                                 })}
-                                label="Puesto vacante"
-                                name="puesto_vacante"
+                                label="Titulo"
+                                name="titulo"
                                 size="small"
                                 type="text"
                                 variant="outlined"
                             />
                         </Grid>
-                        {/*descripcion_tareas*/}
+                        {/*descripcion*/}
                         <Grid item xs={12}>
                             <TextField
-                                className={`descripcion_tareas`}
-                                // style={{background: updateQueryJobAd.descripcion_tareas !== descripcion_tareas ? '#e8ffe9' : 'inherit'}}
+                                className={`descripcion`}
+                                // style={{background: updateQueryJobAd.descripcion !== descripcion ? '#e8ffe9' : 'inherit'}}
                                 autoComplete={"off"}
                                 fullWidth
-                                value={updateQueryJobAd?.descripcion_tareas || ""}
-                                error={!updateQueryJobAd?.descripcion_tareas}
+                                value={updateQueryJobAd?.descripcion || ""}
+                                error={!updateQueryJobAd?.descripcion}
                                 onChange={(e) => setUpdateQueryJobAd({
                                     ...updateQueryJobAd,
-                                    descripcion_tareas: e.target.value === "" ? descripcion_tareas : e.target.value,
+                                    descripcion: e.target.value === "" ? descripcion : e.target.value,
                                 })}
                                 label="Descripcion tareas"
-                                name="descripcion_tareas"
-                                size="small"
-                                type="text"
-                                variant="outlined"
-                            />
-                        </Grid>
-                        {/*experiencia*/}
-                        <Grid item xs={12}>
-                            <TextField
-                                className={`experiencia`}
-                                // style={{background: updateQueryJobAd.experiencia !== experiencia ? '#e8ffe9' : 'inherit'}}
-                                autoComplete={"off"}
-                                fullWidth
-                                value={updateQueryJobAd?.experiencia || ""}
-                                error={!updateQueryJobAd?.experiencia}
-                                onChange={(e) => setUpdateQueryJobAd({
-                                    ...updateQueryJobAd,
-                                    experiencia: e.target.value === "" ? experiencia : e.target.value,
-                                })}
-                                label="Experiencia"
-                                name="experiencia"
-                                size="small"
-                                type="text"
-                                variant="outlined"
-                            />
-                        </Grid>
-                        {/*estudios*/}
-                        <Grid item xs={12}>
-                            <TextField
-                                className={`estudios`}
-                                // style={{background: updateQueryJobAd.estudios !== estudios ? '#e8ffe9' : 'inherit'}}
-                                autoComplete={"off"}
-                                fullWidth
-                                value={updateQueryJobAd?.estudios || ""}
-                                error={!updateQueryJobAd?.estudios}
-                                onChange={(e) => setUpdateQueryJobAd({
-                                    ...updateQueryJobAd,
-                                    estudios: e.target.value === "" ? estudios : e.target.value,
-                                })}
-                                label="Estudios"
-                                name="estudios"
+                                name="descripcion"
                                 size="small"
                                 type="text"
                                 variant="outlined"

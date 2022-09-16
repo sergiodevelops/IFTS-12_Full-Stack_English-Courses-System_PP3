@@ -4,7 +4,7 @@ const dbConfig = require("../dbConfig");
 
 const UsuarioModel = require("./usuarios");
 const PostulanteModel = require("./postulantes");
-const AnuncioModel = require("./anuncios");
+const AnuncioModel = require("./Anuncio");
 const CursoModel = require("./Curso");
 
 const sequelize = new Sequelize(
@@ -29,7 +29,8 @@ db.Sequelize = Sequelize;
 
 db.usuarios = UsuarioModel(sequelize, Sequelize);
 db.postulantes = PostulanteModel(sequelize, Sequelize);
-db.anuncios = AnuncioModel(sequelize, Sequelize);
+// db.anuncios = AnuncioModel(sequelize, Sequelize);
+db.Anuncio = AnuncioModel(sequelize, Sequelize);
 db.Curso = CursoModel(sequelize, Sequelize);
 
 module.exports = db;
