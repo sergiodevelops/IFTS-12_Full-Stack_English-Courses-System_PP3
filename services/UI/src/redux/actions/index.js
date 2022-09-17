@@ -8,4 +8,4 @@ const allActions = {
     // notificationActions: notificationActions,
 }
 
-exports = allActions;
+export default allActions;

@@ -189,9 +189,12 @@ al 17/09/2022
 https://es.stackoverflow.com/questions/13272/cu%C3%A1l-es-la-diferencia-entre-import-from-y-var-require#:~:text=La%20diferencia%20entre%20import%20y,en%20cualquier%20parte%20del%20c%C3%B3digo.
 https://github.com/KevinAlexanderSoto/APP_citas_gim/blob/main/db/usuario.js
 https://github.com/williampruden/sequelize-associations
-
+-------
 inner join de dos tablas con include en sequelize
 https://www.youtube.com/watch?v=hsfkkm3q8K4
+https://github.com/KevinAlexanderSoto/APP_citas_gim
+-------
+
 <Model1> =
 
 SELECT * <Model1> // registros a ser leidos inicialmente
