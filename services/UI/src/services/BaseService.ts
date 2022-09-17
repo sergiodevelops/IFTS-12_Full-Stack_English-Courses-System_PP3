@@ -22,7 +22,7 @@ type ApiResponse = {
 }
 
 export default class BaseService {
-    private static API_HOST = process.env.REACT_APP_API_HOST || "http://localhost:4005/api";
+    private static API_HOST = process.env.REACT_APP_API_HOST || "http://localhost:4005/apiFAFA";
     private readonly api_url;
     private readonly headers;
     private readonly resource;

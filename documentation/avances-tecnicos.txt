@@ -183,3 +183,22 @@ al 09/09/2022
 --------------------------
 https://sequelize.org/docs/v6/core-concepts/model-basics/
 
+-------------
+al 17/09/2022
+--------------------------
+https://es.stackoverflow.com/questions/13272/cu%C3%A1l-es-la-diferencia-entre-import-from-y-var-require#:~:text=La%20diferencia%20entre%20import%20y,en%20cualquier%20parte%20del%20c%C3%B3digo.
+https://github.com/KevinAlexanderSoto/APP_citas_gim/blob/main/db/usuario.js
+https://github.com/williampruden/sequelize-associations
+
+inner join de dos tablas con include en sequelize
+https://www.youtube.com/watch?v=hsfkkm3q8K4
+<Model1> =
+
+SELECT * <Model1> // registros a ser leidos inicialmente
+JOIN <Model2> // union de las dos tablas en una
+ON <Model1>.id = <Model2>.id // relación
+WHERE <Model1>.campo1 = '' //filtro
+monitorear por terminal contenedor corriendo
+https://diarioinforme.com/como-monitorear-los-registros-de-contenedores-de-docker/
+
+https://diarioinforme.com/como-monitorear-los-registros-de-contenedores-de-docker/

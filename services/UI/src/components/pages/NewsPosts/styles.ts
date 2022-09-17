@@ -6,7 +6,6 @@ export default makeStyles(theme => ({
         backgroundColor: "rgba(54,205,116,0.56)",
     },
     main: {
-
         height: "100vh",
         backgroundColor: "rgba(255,255,255,0.53)",
         backgroundRepeat: "no-repeat",
