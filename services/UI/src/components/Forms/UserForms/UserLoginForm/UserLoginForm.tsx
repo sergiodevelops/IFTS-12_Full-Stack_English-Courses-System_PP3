@@ -144,6 +144,7 @@ export default function UserLoginForm() {
                     </Grid>
                     <Grid item xs={12}>
                         <Button
+                            className={classes.loginButton}
                             ref={buttonRef}
                             autoFocus={true}
                             color={"primary"}

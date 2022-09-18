@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import misionImage from '@assets/images/principal.jpeg';
 import visionImage from '@assets/images/vision.jpeg';
-import objetivoImage from '@assets/images/objetivo.jpeg';
+import objetivoImage from '@assets/images/institute.jpeg';
 import nosotrosImage from '@assets/images/english.jpeg';
 
 export default makeStyles(() => ({

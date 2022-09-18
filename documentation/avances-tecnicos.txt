@@ -205,3 +205,10 @@ monitorear por terminal contenedor corriendo
 https://diarioinforme.com/como-monitorear-los-registros-de-contenedores-de-docker/
 
 https://diarioinforme.com/como-monitorear-los-registros-de-contenedores-de-docker/
+
+https://stackoverflow.com/questions/63124161/attempted-import-error-switch-is-not-exported-from-react-router-dom
+
+-------------
+al 18/09/2022
+--------------------------
+https://stackoverflow.com/questions/63690695/react-redirect-is-not-exported-from-react-router-dom

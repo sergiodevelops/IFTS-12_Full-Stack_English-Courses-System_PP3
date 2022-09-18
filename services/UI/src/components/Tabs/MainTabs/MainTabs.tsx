@@ -111,7 +111,7 @@ export default function MainTabs(props: { isWelcomePage: boolean }) {
                                                     {!!content.title &&
                                                     <MainTitle classes={classes}
                                                                content={content}/>}
-                                                    <NewsPosts/>
+                                                    {/*<NewsPosts/>*/}
                                                 </div>}
 
                                                 {content.moduleName === 'UserAddForm' &&

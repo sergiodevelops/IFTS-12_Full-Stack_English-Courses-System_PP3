@@ -4,6 +4,7 @@ export type Dimensions = {
 }
 
 export type LayoutReducersState = {
+    homePageTabValueStore: number,
     subMenuTabValueStore: string,
     mainTabValueStore: string,
     appBarDimensions: Dimensions,
@@ -14,6 +15,7 @@ export type LayoutReducersState = {
 export type ActionProps = {
     type: string,
     payload?: {
+        homePageTabValueStore?: number,
         subMenuTabValueStore?: string,
         mainTabValueStore?: string,
         appBarDimensions?: Dimensions,
@@ -24,6 +26,7 @@ export type ActionProps = {
 
 export default (
     state: LayoutReducersState = {
+        homePageTabValueStore: 0,
         subMenuTabValueStore: "0",
         mainTabValueStore: "0",
         appBarDimensions: {width:64,height:0},
@@ -32,6 +35,10 @@ export default (
     },
     action: ActionProps) => {
     switch (action.type) {
+        case "SET_HOME_TAB_VALUE":
+            console.log("action.payload",action.payload)
+            if (action.payload?.homePageTabValueStore === undefined) return state; // no hace nada
+            return {...state, homePageTabValueStore: action.payload.homePageTabValueStore};
         case "SET_SUBMENU_TAB_VALUE":
             if (!action.payload?.subMenuTabValueStore) return state; // no hace nada
             return {...state, subMenuTabValueStore: action.payload.subMenuTabValueStore};

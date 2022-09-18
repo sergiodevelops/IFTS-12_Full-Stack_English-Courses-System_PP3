@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import principalImage from "@assets/images/principal.jpeg";
+// import principalImage from "@assets/images/principal.jpeg";
 
 export default makeStyles(theme => ({
     root: {
@@ -25,6 +25,6 @@ export default makeStyles(theme => ({
     },
     nosotros:{
         height: "100vh",
-        backgroundImage: `url(${principalImage})`,
+        // backgroundImage: `url(${principalImage})`,
     },
 }));

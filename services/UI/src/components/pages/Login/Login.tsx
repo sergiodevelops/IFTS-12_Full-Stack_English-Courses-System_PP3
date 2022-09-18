@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import UserLoginForm
     from '@components/Forms/UserForms/UserLoginForm/UserLoginForm';
 import UserAddForm from '@components/Forms/UserForms/UserAddForm/UserAddForm';
-import DoubleSideBar from "@components/DoubleSideBar/DoubleSideBar";
+import PrivateCampus from "@components/DoubleSideBar/PrivateCampus";
 import {RootState} from "@redux/reducers/allReducers";
 import {ActionButton} from "@components/ActionButton/ActionButton";
 import UsuarioService from "@src/services/UsuarioService";
@@ -13,7 +13,7 @@ import IPaginationSetDto
 import IFilterSetDto from "@src/usecases/filter/add/IFilterSetDto";
 import useStyles from "./styles";
 
-export default function Home() {
+export default function Login() {
     const classes = useStyles();
     const userIsLoggedIn: boolean = !!useSelector((state: RootState) => state?.userReducers.currentUser);
     // usuario esta logueado o no?
@@ -62,7 +62,7 @@ export default function Home() {
                 classes.nosotros}`}
         >
             {sesionActiva ?
-                <DoubleSideBar/> :
+                <PrivateCampus/> :
                 <div>
                     <div onClick={handleClick}>
                         <ActionButton authMode={loginMode}/>
