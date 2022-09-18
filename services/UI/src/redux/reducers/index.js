@@ -3,7 +3,7 @@ import userReducers from "./userReducers";
 import layoutReducers from "./layoutReducers";
 // import notificationReducers from "./notificationReducers";
 
-exports = combineReducers({
+export default combineReducers({
     userReducers: userReducers,
     layoutReducers: layoutReducers,
     // notificationReducers: notificationReducers,
