@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles';
-import principalImage from "@assets/images/institute.jpeg";
-import nosotrosImage from "@assets/images/nosotros.jpg";
+// import principalImage from "@assets/images/institute.jpeg";
+// import nosotrosImage from "@assets/images/nosotros.jpg";
 
 export default makeStyles(theme => ({
     root: {
