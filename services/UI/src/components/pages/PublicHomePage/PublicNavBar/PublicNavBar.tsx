@@ -26,9 +26,11 @@ export function PublicNavBar() {
         };
     }
 
+
     useEffect(() => {
         dispatch(layoutActions.setHomeTabValue(homeTabValue));
     }, [homeTabValue])
+
 
     return <AppBar className={classes.root} position="static">
         <Toolbar className={classes.toolbar} >
@@ -40,10 +42,17 @@ export function PublicNavBar() {
 
             <Box className={classes.tabs} sx={{ borderBottom: 1, borderColor: 'divider', color: "white" }}>
                 <Tabs value={homeTabValue} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab style={{color: "white"}} tabIndex={0}  label="inicio" {...a11yProps(0)} />
-                    <Tab style={{color: "white"}} tabIndex={1} label="nosotros" {...a11yProps(1)} />
-                    <Tab style={{color: "white"}} tabIndex={2} label="novedades" {...a11yProps(2)} />
-                    <Tab style={{color: "white"}} tabIndex={3} label="contacto" {...a11yProps(3)} />
+                    <Tab style={{color: "white"}} tabIndex={0}
+                         label="inicio" {...a11yProps(0)} />
+
+                    <Tab style={{color: "white"}} tabIndex={1}
+                         label="nosotros" {...a11yProps(1)} />
+
+                    <Tab style={{color: "white"}} tabIndex={2}
+                         label="novedades" {...a11yProps(2)} />
+
+                    <Tab style={{color: "white"}} tabIndex={3}
+                         label="contacto" {...a11yProps(3)} />
                 </Tabs>
             </Box>
 
