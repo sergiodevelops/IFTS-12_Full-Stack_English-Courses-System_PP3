@@ -1,15 +1,11 @@
-const generalRoutes = require('../routes/api');
-const userRoutes = require('../routes/Usuario');
-const personRoutes = require('../routes/Persona');
-// const applicantsRoutes = require('../routes/postulantes');
-// const jobAdsRoutes = require('../routes/anuncios');
+const apiRoutes = require('../routes/api');
+const userRoutes = require('../routes/usuarios');
 const courseRoutes = require('../routes/Curso');
+const newsRoutes = require('../routes/Anuncio');
 
 module.exports = (app) => {
-    generalRoutes(app);
+    apiRoutes(app);
     userRoutes(app);
-    personRoutes(app);
-    // applicantsRoutes(app);
-    // jobAdsRoutes(app);
     courseRoutes(app);
+    newsRoutes(app);
 };

@@ -4,8 +4,11 @@ import {useDispatch} from "react-redux";
 import {useResizeDetector} from 'react-resize-detector';
 import useStyles from "./styles";
 
-
-export default function Footer(props: { openLeft: boolean, openRight: boolean, drawerWidth: number }) {
+export default function Footer(props: {
+    openLeft?: boolean,
+    openRight?: boolean,
+    drawerWidth?: number
+}) {
     const dispatch = useDispatch();
     const classes = useStyles();
     const {openLeft, openRight, drawerWidth} = props;
@@ -22,23 +25,15 @@ export default function Footer(props: { openLeft: boolean, openRight: boolean, d
             height: height ? height: newFooterDimensions.height,
         };
         dispatch(layoutActions.setFooterDimensions(newFooterDimensions));
-    },[width, height])
+    },[width, height]);
 
-    return (
-        <footer
-            ref={ref}
-            className={`${classes.root}`}
+    return <footer ref={ref} className={`${classes.root}`}
             style={{
-                paddingLeft: openLeft ? `${drawerWidth + 25}px` : `25px`,
-                paddingRight: openRight ? `${drawerWidth + 25}px` : `25px`
+                paddingLeft: openLeft && drawerWidth ? `${drawerWidth + 25}px` : `25px`,
+                paddingRight: openRight && drawerWidth ? `${drawerWidth + 25}px` : `25px`
             }}>
-            <p className={`${classes.body}`}>
-
-            </p>
             <p className={classes.copyright}>
-                Copyright 1999-2022 de Refsnes Data. Reservados todos los
-                derechos.
+                Copyright 1999-2022 de Refsnes Data. All rights reserved.
             </p>
         </footer>
-    );
 }

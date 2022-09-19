@@ -1,9 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-import misionImage from '@assets/images/principal.jpeg';
-import visionImage from '@assets/images/vision.jpeg';
-import objetivoImage from '@assets/images/objetivo.jpeg';
-import nosotrosImage from '@assets/images/english.jpeg';
+// import misionImage from '@assets/images/principal.jpeg';
+// import visionImage from '@assets/images/vision.jpeg';
+// import objetivoImage from '@assets/images/institute.jpeg';
+// import nosotrosImage from '@assets/images/english.jpeg';
 
 export default makeStyles(() => ({
     root:{
@@ -24,15 +24,15 @@ export default makeStyles(() => ({
     },
     mision:{
         height: "100vh",
-        backgroundImage: `url(${misionImage})`,
+        // backgroundImage: `url(${misionImage})`,
     },
     vision:{
         height: "100vh",
-        backgroundImage: `url(${visionImage})`,
+        // backgroundImage: `url(${visionImage})`,
     },
     objetivo:{
         height: "100vh",
-        backgroundImage: `url(${objetivoImage})`,
+        // backgroundImage: `url(${objetivoImage})`,
     },
     nosotros:{
         height: "100vh",

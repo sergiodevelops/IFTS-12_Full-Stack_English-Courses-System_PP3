@@ -30,10 +30,12 @@ import SubMenuTabs from "@components/Tabs/SubMenuTabs/SubMenuTabs";
 import MainTabs from "@components/Tabs/MainTabs/MainTabs";
 import useStyles from "./styles";
 import Footer from "@components/Footer/Footer";
+import chesterIcon from "@assets/images/chester-institute-icon.png";
+import Button from "@mui/material/Button";
 // import {useResizeDetector} from "react-resize-detector";
 
 
-export default function DoubleSideBar() {
+export default function PrivateCampus() {
 
     const theme = useTheme();
     const classes = useStyles();
@@ -68,6 +70,9 @@ export default function DoubleSideBar() {
 
     const [subMenuTabValue, setSubMenuTabValue] = React.useState("0");
     const drawerWidth = 240;
+
+    const homePageTabValueStore = useSelector((state: RootState) => state.layoutReducers.homePageTabValueStore || "0");
+    const [homeTabValue, setHomeTabValue] = React.useState(homePageTabValueStore);
 
     interface AppBarProps extends MuiAppBarProps {
         openLeft?: boolean;
@@ -147,11 +152,13 @@ export default function DoubleSideBar() {
     const handleClickMenu = (index: number) => {
         setSubMenuTabValue((index).toString());
         setIsWelcomePage(false);
-        // dispatch(layoutActions.setMainTabValue(index === 0 ? '0' : (index === 1 ? '5' : '9')));
+        // dispatch(layoutActions.setMainTabValue(index === 0 ? '0' : (index
+        // === 1 ? '5' : '9')));
     };
     const handleLogOut = () => {
         handleClose();
         dispatch(userActions.setCurrentAuthenticatedUser(null));
+        dispatch(layoutActions.setHomeTabValue(0));
     };
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -175,7 +182,7 @@ export default function DoubleSideBar() {
 
     return (
         <Box className={classes.root}>
-            <Box sx={{display: 'flex'}}>
+            <Box sx={{display: homeTabValue === 4 ? 'flex' : 'none'}}>
                 <CssBaseline/>
                 {/*<FormGroup>*/}
                 {/*    <FormControlLabel*/}
@@ -191,12 +198,13 @@ export default function DoubleSideBar() {
                 {/*</FormGroup>*/}
                 {/* BARRA AZUL DE ARRIBA*/}
                 <AppBar
+                    // className={classes.appBar}
                     // ref={ref}
                     position="fixed"
                     openLeft={openLeft}
                     openRight={openRight}
                 >
-                    <Toolbar>
+                    <Toolbar className={classes.toolbar}>
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
@@ -206,6 +214,15 @@ export default function DoubleSideBar() {
                         >
                             <MenuIcon/>
                         </IconButton>
+
+                        <div onClick={handleLogOut}
+                             className={classes.titleLogoContainer}>
+                            <img className={classes.logo}
+                                 alt={"logo chester institute"}
+                                 src={chesterIcon}/>
+                            <Button color="inherit">Chester Institute</Button>
+                        </div>
+
                         <Typography variant="h6" noWrap component="div">
                             {loggedUser?.nombre_completo} ({currentUserType})
                         </Typography>
@@ -219,7 +236,7 @@ export default function DoubleSideBar() {
                                     onClick={handleMenu}
                                     color="inherit"
                                 >
-                                    <AccountCircle/>
+                                    {/*<AccountCircle/>*/}
                                 </IconButton>
                                 <Menu
                                     id="menu-appbar"
@@ -237,11 +254,11 @@ export default function DoubleSideBar() {
                                     onClose={handleClose}
                                 >
                                     {/*<MenuItem onClick={handleClose}>Profile</MenuItem>*/}
-                                    <MenuItem
-                                        onClick={handleLogOut}
-                                    >
-                                        LogOut
-                                    </MenuItem>
+                                    {/*<MenuItem
+                                     onClick={handleLogOut}
+                                     >
+                                     LogOut
+                                     </MenuItem>*/}
                                 </Menu>
                             </div>
                         )}
@@ -254,7 +271,7 @@ export default function DoubleSideBar() {
                         >
                             <MenuIcon/>
                         </IconButton>
-
+                        <Button startIcon={<AccountCircle/>} onClick={handleLogOut}>logout</Button>
                     </Toolbar>
                 </AppBar>
 
@@ -265,7 +282,7 @@ export default function DoubleSideBar() {
                         flexShrink: 0,
                         '& .MuiDrawer-paper': {
                             color: "white",
-                            background: "#50743d",
+                            backgroundColor: "#3f51b5",
                             width: drawerWidth,
                             boxSizing: 'border-box',
                         },
@@ -368,7 +385,7 @@ export default function DoubleSideBar() {
                         flexShrink: 0,
                         '& .MuiDrawer-paper': {
                             color: "white",
-                            background: "#50743d",
+                            backgroundColor: "#3f51b5",
                             width: drawerWidth,
                         },
                     }}
@@ -411,7 +428,7 @@ export default function DoubleSideBar() {
                      </List>*/}
                 </Drawer>
             </Box>
-            <Footer {...{openLeft, openRight, drawerWidth}}/>
+            {/*<Footer {...{openLeft, openRight, drawerWidth}}/>*/}
         </Box>
     );
 }

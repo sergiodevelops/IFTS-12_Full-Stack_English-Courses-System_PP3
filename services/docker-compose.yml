@@ -1,6 +1,9 @@
 version: '3.7'
-services:
 
+volumes:
+  volume_pp3:
+
+services:
   # -------------------------------------------------------------
   # DATABASE - MYSQL server engine
   # -------------------------------------------------------------
@@ -11,11 +14,11 @@ services:
     command: '--init-file /docker-entrypoint-initdb.d/init.sql'
     volumes:
       - './DATABASE/init.sql:/docker-entrypoint-initdb.d/init.sql'
-      - './DATABASE/my-datavolume:/var/lib/mysql'
+      - 'volume_pp3:/var/lib/mysql'
     hostname: 'localhost'
     env_file:
       - './.env'
-      - 'DATABASE/.env'
+      - './DATABASE/.env'
     ports:
       - ${OS_DB_PORT}:${DOCKER_DB_PORT}
     restart: 'always'
@@ -30,10 +33,11 @@ services:
       - 'mysql_service_main'
     image: 'adminer:latest'
     hostname: 'localhost'
+    env_file:
+      - './.env'
+      - './DATABASE/.env'
     ports:
       - ${OS_ADMINER_PORT}:${DOCKER_ADMINER_PORT}
-    env_file:
-      - 'DATABASE/.env'
     restart: 'unless-stopped'
 
   # -------------------------------------------------------------
@@ -53,11 +57,11 @@ services:
       - '8.8.8.8'
       - '8.8.4.4'
     hostname: 'localhost'
-    ports:
-      - ${OS_API_PORT}:${DOCKER_API_PORT}
     env_file:
       - './.env'
-      - 'API/.env'
+      - './API/.env'
+    ports:
+      - ${OS_API_PORT}:${DOCKER_API_PORT}
     tty: true
     restart: 'always'
 
@@ -78,15 +82,13 @@ services:
       - '8.8.8.8'
       - '8.8.4.4'
     hostname: 'localhost'
-    ports:
-      - ${OS_UI_PORT}:${DOCKER_UI_PORT}
     env_file:
       - './.env'
-      - 'UI/.env'
+      - './UI/.env'
+    ports:
+      - ${OS_UI_PORT}:${DOCKER_UI_PORT}
     tty: true
     stdin_open: true
     restart: 'always'
 
-volumes:
-  my-datavolume:
 # -------------------------------------------------------------

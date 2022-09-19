@@ -22,7 +22,7 @@ export const singlePageContentList = [
     {
         title: "Consulta de Anuncios",
         body: "",
-        moduleName: "TableData",
+        moduleName: "NewsPosts",
     },
     {
         title: "Alta de Usuarios",

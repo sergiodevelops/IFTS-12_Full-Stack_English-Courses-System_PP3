@@ -1,6 +1,7 @@
 import {ActionProps, Dimensions} from "@redux/reducers/layoutReducers";
 
 export const TYPES = {
+    SET_HOME_TAB_VALUE: 'SET_HOME_TAB_VALUE',
     SET_SUBMENU_TAB_VALUE: 'SET_SUBMENU_TAB_VALUE',
     SET_MAIN_TAB_VALUE: 'SET_MAIN_TAB_VALUE',
     SET_APP_BAR_DIMENSIONS: 'SET_APP_BAR_DIMENSIONS',
@@ -8,6 +9,14 @@ export const TYPES = {
     SET_OPEN_MODAL: 'SET_OPEN_MODAL',
 }
 
+const setHomeTabValue = (homePageTabValueStore: number): ActionProps => {
+    return {
+        type: TYPES.SET_HOME_TAB_VALUE,
+        payload: {
+            homePageTabValueStore,
+        },
+    };
+}
 const setSubMenuTabValue = (subMenuTabValueStore: string): ActionProps => {
     return {
         type: TYPES.SET_SUBMENU_TAB_VALUE,
@@ -50,9 +59,10 @@ const setOpenModal = (openModal: boolean): ActionProps => {
 }
 
 export default {
-    setSubMenuTabValue: setSubMenuTabValue,
-    setMainTabValue: setMainTabValue,
-    setAppBarDimensions: setAppBarDimensions,
-    setFooterDimensions: setFooterDimensions,
-    setOpenModal: setOpenModal,
+    setHomeTabValue,
+    setSubMenuTabValue,
+    setMainTabValue,
+    setAppBarDimensions,
+    setFooterDimensions,
+    setOpenModal,
 };

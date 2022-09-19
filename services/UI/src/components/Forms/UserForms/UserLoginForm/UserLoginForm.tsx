@@ -10,7 +10,6 @@ import userActions from "@redux/actions/userActions";
 import Container from "@material-ui/core/Container";
 import UsuarioService from "@services/UsuarioService";
 import useStyles from "./styles";
-import allActions from "@redux/actions";
 
 export default function UserLoginForm() {
     const usuarioService = new UsuarioService();
@@ -75,7 +74,7 @@ export default function UserLoginForm() {
             .then(foundUser => {
                 // console.log("foundUser en FE ",foundUser)
                 // console.log("foundUser", foundUser);
-                dispatch(allActions.userActions.setCurrentAuthenticatedUser(foundUser));
+                dispatch(userActions.setCurrentAuthenticatedUser(foundUser));
             })
             .catch(err => {
                 console.error(err);
@@ -145,6 +144,7 @@ export default function UserLoginForm() {
                     </Grid>
                     <Grid item xs={12}>
                         <Button
+                            className={classes.loginButton}
                             ref={buttonRef}
                             autoFocus={true}
                             color={"primary"}

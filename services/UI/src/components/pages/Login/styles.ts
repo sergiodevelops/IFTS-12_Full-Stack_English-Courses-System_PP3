@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
-import principalImage from "@assets/images/objetivo.jpeg";
-import nosotrosImage from "@assets/images/nosotros.jpg";
+// import principalImage from "@assets/images/objetivo.jpeg";
+// import nosotrosImage from "@assets/images/nosotros.jpg";
 
 export default makeStyles(theme => ({
     container: {
@@ -12,10 +12,10 @@ export default makeStyles(theme => ({
         backgroundSize: "cover",
     },
     nosotros:{
-        backgroundImage: `url(${nosotrosImage})`,
+        // backgroundImage: `url(${nosotrosImage})`,
     },
     principal:{
-        backgroundImage: `url(${principalImage})`,
+        // backgroundImage: `url(${principalImage})`,
     },
 
 }));

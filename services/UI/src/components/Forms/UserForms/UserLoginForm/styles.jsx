@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import nosotrosImage from "@assets/images/nosotros.jpg";
+// import nosotrosImage from "@assets/images/nosotros.jpg";
 
 
 export default makeStyles(theme => ({
@@ -29,6 +29,11 @@ export default makeStyles(theme => ({
     },
     nosotros:{
         height: "100vh",
-        backgroundImage: `url(${nosotrosImage})`,
+        // backgroundImage: `url(${nosotrosImage})`,
+    },
+    loginButton:{
+        '& .MuiButton-containedPrimary':{
+            backgroundColor: "#3f51b5",
+        }
     },
 }));

@@ -1,14 +1,12 @@
 var DataTypes = require("sequelize").DataTypes;
-var _Usuario = require("./Usuario");
+var _Anuncio = require("./Anuncio");
 
 function initModels(sequelize) {
-  var Usuario = _Usuario(sequelize, DataTypes);
+  var Anuncio = _Anuncio(sequelize, DataTypes);
 
-  Usuario.belongsTo(Persona, { as: "IdPersona_Persona", foreignKey: "IdPersona"});
-  Persona.hasOne(Usuario, { as: "Usuario", foreignKey: "IdPersona"});
 
   return {
-    Usuario,
+    Anuncio,
   };
 }
 module.exports = initModels;

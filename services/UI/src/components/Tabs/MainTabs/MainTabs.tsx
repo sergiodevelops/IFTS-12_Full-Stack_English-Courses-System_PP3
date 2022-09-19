@@ -20,6 +20,7 @@ import ApplicantAddForm
     from "@components/Forms/ApplicantForms/ApplicantAddForm/ApplicantAddForm";
 import CourseAddForm
     from "@components/Forms/CourseForms/CourseAddForm/CourseAddForm";
+import NewsPosts from "@components/pages/NewsPosts/NewsPosts";
 
 function MainTitle(props: { classes: ClassNameMap<"objetivo" | "singlePageContentList" | "vision" | "parrafo" | "welcomeTitle" | "root" | "nosotros" | "spaTitle" | "mision" | "backImage">, content: ISinglePageContentDto }) {
     return <Typography variant={"h4"}
@@ -103,6 +104,14 @@ export default function MainTabs(props: { isWelcomePage: boolean }) {
                                                     <MainTitle classes={classes}
                                                                content={content}/>}
                                                     <TableData/>
+                                                </div>}
+
+                                                {content.moduleName === 'NewsPosts' &&
+                                                <div>
+                                                    {!!content.title &&
+                                                    <MainTitle classes={classes}
+                                                               content={content}/>}
+                                                    {/*<NewsPosts/>*/}
                                                 </div>}
 
                                                 {content.moduleName === 'UserAddForm' &&

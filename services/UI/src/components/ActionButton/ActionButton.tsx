@@ -1,4 +1,4 @@
-import useStyles from "@components/pages/Home/styles";
+import useStyles from "@components/pages/Login/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";

@@ -3,5 +3,5 @@ export enum queriesEnum {
     'clientUsersList',
     'administrativoUsersList',
     'applicantUsersInfoList',
-    'jobAdsList',
+    'newsPostsList',
 }
