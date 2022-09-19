@@ -17,7 +17,6 @@ export default function ApplicantAddForm(props: { title: string }) {
     const emptyApplicant: INewsCreateReqDto = {
         titulo: "",
         descripcion: "",
-        fecha_alta: "",
     };
     const [newJobAd, setNewJobAd] = useState<INewsCreateReqDto>(emptyApplicant);
 
@@ -40,8 +39,7 @@ export default function ApplicantAddForm(props: { title: string }) {
         let message;
         if (
             !newJobAd.titulo ||
-            !newJobAd.descripcion ||
-            !newJobAd.fecha_alta
+            !newJobAd.descripcion
         ) {
             message = "Por favor complete los campos requeridos";
             alert(message);
@@ -49,12 +47,11 @@ export default function ApplicantAddForm(props: { title: string }) {
         }
         const newJobAdPost: INewsCreateReqDto = {
             titulo: newJobAd.titulo,
-            descripcion: newJobAd.descripcion,
-            fecha_alta: newJobAd.fecha_alta,
+            descripcion: newJobAd.descripcion
         };
 
         jobAdService
-            .create(newJobAdPost)
+            .create(newJobAdPost as INewsCreateReqDto)
             .then(createdApplicant => {
                 console.log("createdApplicant en FE ", createdApplicant);
                 alert(`El anuncio para "${newJobAd.titulo}" se persistió correctamente`);
@@ -103,7 +100,7 @@ export default function ApplicantAddForm(props: { title: string }) {
                                         titulo: e.target.value,
                                     });
                                 }}
-                                label="Puesto vacante"
+                                label="Título"
                                 type="text"
                                 name="titulo"
                                 size="small"
@@ -129,7 +126,7 @@ export default function ApplicantAddForm(props: { title: string }) {
                                         descripcion: e.target.value,
                                     });
                                 }}
-                                label="Descripción de tareas"
+                                label="Descripción del anuncio"
                                 type="text"
                                 name="descripcion_tareas"
                                 size="small"

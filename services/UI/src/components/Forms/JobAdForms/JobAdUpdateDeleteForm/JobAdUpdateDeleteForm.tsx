@@ -16,7 +16,7 @@ export default function JobAdUpdateDeleteForm(props: { row: INewCreateResDto }) 
     const title = "Modificar o eliminar";
     const row = props;
     const {
-        id, titulo, descripcion, fecha_alta
+        id, titulo, descripcion
     } = props.row as INewCreateResDto;
 
     const anuncioService = new AnuncioService();
@@ -24,10 +24,9 @@ export default function JobAdUpdateDeleteForm(props: { row: INewCreateResDto }) 
     const dispatch = useDispatch();
 
     const classes = useStyles();
-    const emptyJobAdModify: INewsCreateReqDto = {
+    const emptyJobAdModify = {
         titulo: "",
         descripcion: "",
-        fecha_alta: "",
     }
 
     const [updateQueryJobAd, setUpdateQueryJobAd] = useState<any>(emptyJobAdModify);
@@ -37,9 +36,8 @@ export default function JobAdUpdateDeleteForm(props: { row: INewCreateResDto }) 
     const handleClickReplaceRow = async () => {
 
         const jobAdToReplace: any = {
-            titulo,
-            descripcion,
-            fecha_alta
+            titulo: updateQueryJobAd.titulo,
+            descripcion: updateQueryJobAd.descripcion,
         };
 
         anuncioService
@@ -82,9 +80,12 @@ export default function JobAdUpdateDeleteForm(props: { row: INewCreateResDto }) 
         setUpdateQueryJobAd({
             titulo,
             descripcion,
-            fecha_alta,
         });
     }, [row])
+
+    useEffect(() => {
+        console.log("updateQueryJobAd",updateQueryJobAd)
+    }, [updateQueryJobAd])
 
     return (
         <Container className={classes.container} maxWidth="xs">

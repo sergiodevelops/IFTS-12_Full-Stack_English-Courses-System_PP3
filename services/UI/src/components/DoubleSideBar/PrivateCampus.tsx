@@ -302,13 +302,8 @@ export default function PrivateCampus() {
                         {
                             (loggedUser?.tipo_usuario === 3 || loggedUser?.tipo_usuario === 2 /*alumno*/) &&
                             <List>
-                                {[
-                                    'Datos Personales',
-                                    'Experiencia',
-                                    'Estudios formales',
-                                    'Idiomas',
-                                    'Conocimientos',
-                                ].map((text: string, index: number) => (
+                                {['En construcción']
+                                    .map((text: string, index: number) => (
                                     <ListItem
                                         button
                                         key={`${text}-${index}`}
@@ -333,15 +328,17 @@ export default function PrivateCampus() {
                             (loggedUser?.tipo_usuario === 1 /* administrativo (administrativo) o docente */) &&
                             <List>
                                 {[
-                                    'CONSULTAS',
-                                    'ALTA',
-                                    'QUIENES SOMOS',
+                                    'GESTIÓN',
+                                    'ALTAS',
+                                    // 'QUIENES SOMOS',
                                 ].map((text: string, index: number) => (
                                     <ListItem
                                         button
                                         key={`${text}-${index}`}
                                         style={{
-                                            background: index === parseInt(subMenuTabValue) ? colorCurrentButtonMenu : 'inherit',
+                                            background: index === parseInt(subMenuTabValue) ?
+                                                colorCurrentButtonMenu :
+                                                'inherit',
                                         }}
                                         onClick={() => handleClickMenu(index)}
                                     >
