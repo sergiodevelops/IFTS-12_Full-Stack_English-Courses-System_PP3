@@ -1,29 +1,27 @@
 export const singlePageContentList = [
+    // 0 a 3
     {
-        title: "Usuarios Alumnos",
+        title: "Gestión de Alumnos",
         body: "",
         moduleName: "TableData",
     },
     {
-        title: "Usuarios Docentes",
+        title: "Gestión de Docentes",
         body: "",
         moduleName: "TableData",
     },
     {
-        title: "Usuarios Administrativos",
+        title: "Gestión de Administrativos",
         body: "",
         moduleName: "TableData",
     },
     {
-        title: "Consulta de Alumnos",
-        body: "",
-        moduleName: "TableData",
-    },
-    {
-        title: "Consulta de Anuncios",
+        title: "Gestión de Anuncios",
         body: "",
         moduleName: "NewsPosts",
     },
+
+    // 4 a 5
     {
         title: "Alta de Usuarios",
         body: "",
@@ -34,22 +32,8 @@ export const singlePageContentList = [
         body: "",
         moduleName: "JobAdAddForm",
     },
-    {
-        title: "Alta de Información de Alumnos",
-        body: "",
-        moduleName: "ApplicantAddForm",
-    },
-    {
-        title: "Alta de Cursos",
-        body: "",
-        moduleName: "CourseAddForm",
-    },
-    {
-        title: "Alta de Usuarios",
-        body: "",
-        moduleName: "UserAddForm",
-    },
-    {
+
+    /*{
         title: "Misión",
         body: "Brindar soluciones tecnológicas profesionales de innovación con el fin de ayudar a las empresas a alcanzar sus objetivos de negocio, con oportunismo, alcance y competitividad.\n" +
             "Agilizar los procesos de búsqueda y selección de personal con el fin de optimizar la comunicación con el cliente y consultora.\n" +
@@ -83,7 +67,7 @@ export const singlePageContentList = [
             "Nuestro proyecto consiste en la creación de un módulo de aplicación Web de RRHH enfocado a garantizar una efectiva comunicación entre la \n" +
             "Descubre cómo puedes delegar tus procesos de recursos humanos confiando en nuestro equipo de profesionales capacitados. consultora,  sus empresas clientes, los alumnos, las entrevistas y la presentación y confirmación de informes correspondientes.",
         moduleName: "Nosotros",
-    },
+    },*/
 ];
 
 export default singlePageContentList;

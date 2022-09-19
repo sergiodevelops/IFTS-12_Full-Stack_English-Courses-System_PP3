@@ -41,7 +41,7 @@ export default makeStyles(() => ({
     parrafo:{
         margin: '0% 10%',
         fontSize:'1.5rem',
-        color: 'white',
+        // color: 'white',
     },
     backImage: {
         height: "100vh",

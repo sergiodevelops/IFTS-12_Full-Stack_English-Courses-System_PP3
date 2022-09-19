@@ -1,26 +1,5 @@
 import * as React from 'react';
-// import {alpha} from '@mui/material/styles';
-// import Box from '@mui/material/Box';
-// import Table from '@mui/material/Table';
-// import TableBody from '@mui/material/TableBody';
-// import TableCell from '@mui/material/TableCell';
-// import TableContainer from '@mui/material/TableContainer';
-// import TableHead from '@mui/material/TableHead';
-// import TablePagination from '@mui/material/TablePagination';
-// import TableRow from '@mui/material/TableRow';
-// import TableSortLabel from '@mui/material/TableSortLabel';
-// import Toolbar from '@mui/material/Toolbar';
-// import Typography from '@mui/material/Typography';
-// import Paper from '@mui/material/Paper';
-// import Checkbox from '@mui/material/Checkbox';
-// import IconButton from '@mui/material/IconButton';
-// import Tooltip from '@mui/material/Tooltip';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Switch from '@mui/material/Switch';
-// import DeleteIcon from '@mui/icons-material/Delete';
-// import FilterListIcon from '@mui/icons-material/FilterList';
 import {useEffect, useState} from "react";
-// import {visuallyHidden} from '@mui/utils';
 import UsuarioService from "@services/UsuarioService";
 import IPaginationSetDto
     from "@usecases/pagination/set/IPaginationSetDto";
@@ -60,6 +39,8 @@ import JobAdUpdateDeleteForm
     from "@components/Forms/JobAdForms/JobAdUpdateDeleteForm/JobAdUpdateDeleteForm";
 import moment from "moment";
 
+
+
 export default function TableData() {
     const dispatch = useDispatch();
 
@@ -73,14 +54,6 @@ export default function TableData() {
 
     const currentMainTabHeight = useSelector((state: RootState) => state.layoutReducers);
     const [minHeightTable, setMinHeightTable] = useState<number>(600);
-    // const rowRef = useRef<HTMLDivElement>();
-
-    // const [order, setOrder] = useState<Order>('asc');
-    // const [orderBy, setOrderBy] = useState<string/*keyof Data*/>('calories');
-    // const [selected, setSelected] = useState<readonly string[]>([]);
-    // const [dense, setDense] = useState<boolean>(false);
-
-    // const [headCells, setHeadCells] = useState<HeadCell[] | undefined>();
     const [rows, setRows] = useState<(IUserCreateResDto
         |
         IApplicantCreateResDto
@@ -92,17 +65,14 @@ export default function TableData() {
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [arrowPage, setArrowPage] = useState<number>(0);
     const [intervalPage, setIntervalPage] = useState<number>(1);
-    // const [rowsPerPage, setRowsPerPage] = useState<number>(5);
     const [totalPages, setTotalPages] = useState<number>(0);
     const [totalItems, setTotalItems] = useState<number>(0);
     // const [filters, setFilters] = useState<IFilterSetDto[] | undefined>();
-    const [bodyComponent, setBodyComponent] = useState<React.ReactHTML>();
     const [clickedRow, setClickedRow] = useState<(IUserLoginResDto
         |
         IApplicantCreateResDto
         |
         INewCreateResDto)>();
-    const [currentForm, setCurrentForm] = useState();
     const [queryInProgress, setQueryInProgress] = useState<boolean>(false);
     const [backColor, setBackColor] = useState<string>('#2a77d263');
 
@@ -245,6 +215,8 @@ export default function TableData() {
     }, [queryNumber])
 
     useEffect(() => {
+        console.log("currentQueryCase",currentQueryCase)
+
         if (currentQueryCase !== undefined){
             // if (currentPage !== pagination.page && currentPage >= 0) {
             let newPagination;
@@ -260,8 +232,7 @@ export default function TableData() {
                     newFilters = [{key: 'tipo_usuario', value: '3'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
-                // 1 CONSULTA Users --> filtra por Docentes (clients) (value:
-                // '2')
+                // 1 CONSULTA
                 case (queriesEnum.clientUsersList):
                     console.log("currentQueryCase",currentQueryCase)
                     setBackColor('#d2e3fd');
@@ -269,7 +240,7 @@ export default function TableData() {
                     newFilters = [{key: 'tipo_usuario', value: '2'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
-                // 2 CONSULTA Users --> filtra por Administrativos (administrativos)
+                // 2 CONSULTA
                 // (value: '1')
                 case (queriesEnum.administrativoUsersList):
                     console.log("currentQueryCase",currentQueryCase)
@@ -278,21 +249,12 @@ export default function TableData() {
                     newFilters = [{key: 'tipo_usuario', value: '1'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
-                // 3 CONSULTA Info de Alumnos (Applicants)
-                case (queriesEnum.applicantUsersInfoList):
-                    console.log("currentQueryCase",currentQueryCase)
-                    // CONSULTA segun TAB VALUE (Alumnos)
-                    setBackColor('#acfedc');
-                    newPagination = {size: 5, page: currentPage};
-                    // newFilters = [{key: 'tipo_usuario', value: '1'}];
-                    getAlumnosByFilters(newPagination, newFilters); //Applicants
-                    break;
-                // 4 CONSULTA Info de Avisos (NewsPosts)
+                // 3 CONSULTA
                 case (queriesEnum.newsPostsList):
                     console.log("currentQueryCase",currentQueryCase)
                     // CONSULTA segun TAB VALUE (Anuncios)
                     setBackColor('#fdffb5');
-                    newPagination = {size: 5, page: currentPage};
+                    newPagination = {size: 100, page: currentPage};
                     // newFilters = [{key: 'tipo_usuario', value: '1'}];
                     getAnunciosByFilters(newPagination, newFilters); //JobAds
                     break;
@@ -318,11 +280,6 @@ export default function TableData() {
                 &&
                 < UserUpdateDeleteForm row={clickedRow as IUserCreateResDto}/>}
 
-                { // si es consulta de Applicants Info by Filters
-                    currentQueryCase === queriesEnum.applicantUsersInfoList
-                    &&
-                    < ApplicantUpdateDeleteForm
-                        row={clickedRow as IApplicantCreateResDto}/>}
 
                 { // si es consulta de JobAds Info by Filters
                     currentQueryCase === queriesEnum.newsPostsList

@@ -13,6 +13,7 @@ import {ListItem, ListItemText, Tabs/*, Tab*/} from "@material-ui/core";
 import {RootState} from "@redux/reducers/allReducers";
 import SwipeableViews from 'react-swipeable-views';
 import useStyles from './styles'
+import Typography from "@mui/material/Typography";
 
 export default function SubMenuTabs() {
     const classes = useStyles();
@@ -45,17 +46,17 @@ const colorCurrentButtonMenu = '#007bff26';
             }}
         >
             <TabContext value={subMenuTab}>
-                {/*SubMenues de CONSULTAS [0 a 4]*/}
+                {/*SubMenues de CONSULTAS [0 a 3]*/}
                 <SwipeableViews index={parseInt(subMenuTab)} className={classes.subMenuItems}>
 
-                    {/*SubMenues de ABM [0 a 4]*/}
+                    {/*SubMenues de GESTIÓN (edición y borrado) [0 a 3]*/}
                     <TabPanel tabIndex={parseInt(subMenuTab)} value="0">
+                        <Typography align={"center"}>GESTIÓN</Typography>
                         <List>
                             {[
-                                'Usuarios Alumnos',
-                                'Usuarios Docentes',
-                                'Usuarios Administrativos',
                                 'Alumnos',
+                                'Docentes',
+                                'Administrativos',
                                 'Anuncios',
                             ].map((text, index) => (
                                 <ListItem
@@ -72,23 +73,22 @@ const colorCurrentButtonMenu = '#007bff26';
                         </List>
                     </TabPanel>
 
-                    {/*SubMenues de ABM [5 a 8]*/}
+                    {/*SubMenues de ALTAS [4 a 5]*/}
                     <TabPanel tabIndex={parseInt(subMenuTab)} value="1">
+                        <Typography align={"center"}>ALTAS</Typography>
                         <List>
                             {[
-                                'Usuario',
-                                'Anuncio',
-                                'Información de Alumno',
-                                'Cursos',
+                                'Usuarios',
+                                'Anuncios',
                             ].map((text: string, index: number) => (
                                 <ListItem
                                     button
                                     key={`${text}-${index}`}
                                     style={{
-                                        background: mainTabValue && index+5 === parseInt(mainTabValue) ?
+                                        background: mainTabValue && index+4 === parseInt(mainTabValue) ?
                                             colorCurrentButtonMenu : 'inherit',
                                     }}
-                                    onClick={() => handleClickMenu(index+5)}
+                                    onClick={() => handleClickMenu(index+4)}
                                 >
                                     <ListItemText primary={text}/>
                                 </ListItem>
@@ -98,6 +98,7 @@ const colorCurrentButtonMenu = '#007bff26';
 
                     {/*SubMenues de ABM [9 a 12]*/}
                     <TabPanel tabIndex={parseInt(subMenuTab)} value="2">
+                        <Typography align={"center"}>GESTIÓN</Typography>
                         <List>
                             {[
                                 'MISIÓN',
