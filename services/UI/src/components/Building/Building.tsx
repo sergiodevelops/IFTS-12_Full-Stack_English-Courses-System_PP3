@@ -1,5 +1,5 @@
 import React from 'react';
-import buildingImg from '@assets/images/building.gif'
+import buildingImg from '@assets/images/building.png'
 import useStyles from "./styles";
 
 export default function Building() {

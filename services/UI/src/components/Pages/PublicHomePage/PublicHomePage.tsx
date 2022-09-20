@@ -1,18 +1,19 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Footer from "@components/Footer/Footer";
-import useStyles from "./styles";
 import {
     PublicNavBar
-} from "@components/pages/PublicHomePage/PublicNavBar/PublicNavBar";
+} from "@components/Pages/PublicHomePage/PublicNavBar/PublicNavBar";
 import Typography from '@mui/material/Typography';
-import Login from "@components/pages/Login/Login";
+import Login from "@components/Pages/Login/Login";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@redux/reducers/allReducers";
-import NewsPosts from "@components/pages/NewsPosts/NewsPosts";
+import NewsPosts from "@components/Pages/NewsPosts/NewsPosts";
 import {Grid} from "@mui/material";
-import PrivateCampus from "@components/DoubleSideBar/PrivateCampus";
+import PrivateCampus from "@components/PrivateCampus/PrivateCampus";
+import useStyles from "./styles";
+import Building from "@components/Building/Building";
 
 
 export default function ButtonAppBar() {
@@ -63,25 +64,34 @@ export default function ButtonAppBar() {
     }, [homePageTabValueStore]);
 
     return (
-        <Box className={classes.root} sx={{flexGrow: 1}}>
+        <Box className={`${classes.root} DangrekFont`} sx={{flexGrow: 1}}>
             {!sesionActiva && <PublicNavBar/>}
-            <Box className={classes.content} sx={{width: '100%'}}>
+            <Box  sx={{width: '100%'}}>
                 <TabPanel value={Number(homeTabValue)} index={0}>
-                    <Grid item xs={12} >
-                        <Typography align={"center"} variant={"h2"}>INICIO</Typography>
+                    <Grid className={`${classes.inicio} ${classes.content}`} item xs={12} >
+                        <Typography fontFamily={"DangrekFont"} align={"center"} variant={"h2"}>
+                            INICIO
+                        </Typography>
+                        <Building/>
                     </Grid>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={1}>
-                    <Grid item xs={12} >
-                        <Typography align={"center"} variant={"h2"}>NOSOTROS</Typography>
+                    <Grid className={`${classes.nosotros} ${classes.content}`} item xs={12} >
+                        <Typography fontFamily={"DangrekFont"} align={"center"} variant={"h2"}>
+                            NOSOTROS
+                        </Typography>
+                        <Building/>
                     </Grid>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={2}>
-                    <NewsPosts {...{getNews: homePageTabValueStore === 2}}/>
+                    <NewsPosts {...{tab: homePageTabValueStore === 2}}/>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={3}>
                     <Grid item xs={12} >
-                        <Typography align={"center"} variant={"h2"}>CONTACTO</Typography>
+                        <Typography fontFamily={"DangrekFont"} align={"center"} variant={"h2"}>
+                            CONTACTO
+                        </Typography>
+                        <Building/>
                     </Grid>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={4}>

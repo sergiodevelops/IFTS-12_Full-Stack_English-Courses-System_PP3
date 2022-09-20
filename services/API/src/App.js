@@ -4,9 +4,10 @@ const express = require("express");
 const logger = require("morgan");
 const bodyParser = require("body-parser"); //analiza la solicitud y crea req.body object
 const cors = require("cors"); // middleware Express que habilita CORS con varias opciones
+
+const DB = require("./models");
+const router = require("./routes");
 const app = express(); // para usar express
-const DB = require("./models/allModels");
-const router = require("./routes/allRoutes");
 
 //logger
 app.use(logger('dev'));

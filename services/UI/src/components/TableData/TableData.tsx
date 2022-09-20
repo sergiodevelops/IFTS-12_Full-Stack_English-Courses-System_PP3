@@ -204,6 +204,10 @@ export default function TableData() {
     }, [arrowPage])
 
     useEffect(() => {
+        console.log("totalPages", totalPages);
+    }, [totalPages])
+
+    useEffect(() => {
         setCurrentPage(pagination.page);
     }, [pagination.page])
 
@@ -221,43 +225,45 @@ export default function TableData() {
             // if (currentPage !== pagination.page && currentPage >= 0) {
             let newPagination;
             let newFilters;
-            // CONSULTAS segun TAB VALUE (Administrativos)
+            // GESTION (consulta, modificación, baja) (Administrativos)
             switch (currentQueryCase) {
-                // 0 CONSULTA Users --> filtra por Alumnos (applicants) (value:
-                // '3')
+
+                // 3 GESTION (consulta, modificación, baja) (alumnos-applic) (value:
                 case (queriesEnum.applicantUsersList):
                     console.log("currentQueryCase",currentQueryCase)
                     setBackColor('#ffb8b8');
-                    newPagination = {size: 3, page: currentPage};
+                    newPagination = {size: 1, page: currentPage};
                     newFilters = [{key: 'tipo_usuario', value: '3'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
-                // 1 CONSULTA
+
+                // 2 GESTION (consulta, modificación, baja) (docentes-clien)
                 case (queriesEnum.clientUsersList):
                     console.log("currentQueryCase",currentQueryCase)
                     setBackColor('#d2e3fd');
-                    newPagination = {size: 3, page: currentPage};
+                    newPagination = {size: 1, page: currentPage};
                     newFilters = [{key: 'tipo_usuario', value: '2'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
-                // 2 CONSULTA
-                // (value: '1')
+
+                // 1 GESTION (consulta, modificación, baja) (administrativos)
                 case (queriesEnum.administrativoUsersList):
                     console.log("currentQueryCase",currentQueryCase)
                     setBackColor('#ffd5b5');
-                    newPagination = {size: 3, page: currentPage};
+                    newPagination = {size: 1, page: currentPage};
                     newFilters = [{key: 'tipo_usuario', value: '1'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
-                // 3 CONSULTA
+
+                // GESTION (consulta, modificación, baja)(novedades-news)
                 case (queriesEnum.newsPostsList):
-                    console.log("currentQueryCase",currentQueryCase)
                     // CONSULTA segun TAB VALUE (Anuncios)
                     setBackColor('#fdffb5');
-                    newPagination = {size: 100, page: currentPage};
+                    newPagination = {size: 1, page: currentPage};
                     // newFilters = [{key: 'tipo_usuario', value: '1'}];
                     getAnunciosByFilters(newPagination, newFilters); //JobAds
                     break;
+
                 default:
                     console.log("other currentQueryCase",currentQueryCase)
                     // default
@@ -299,10 +305,13 @@ export default function TableData() {
                     className={`${classes.root}`}
                 >
                     <Grid
+                        item xs={1}
                         className={`${classes.arrowChangeQueryPage}`}
                         onClick={() => handleArrowChangePage(-intervalPage)}
-                        item xs={1}
-                        style={{opacity: currentPage > 0 ? '1' : '0.3'}}
+                        style={{
+                            display: totalPages === 1 ? "none":"inherit",
+                            opacity: currentPage > 0 ? '1' : '0.3'
+                    }}
                     >
                         <ArrowLeftIcon
                             fontSize={'large'}
@@ -311,7 +320,7 @@ export default function TableData() {
                     </Grid>
 
                     <Grid
-                        item xs={10}
+                        item xs={totalPages === 1 ? 12 : 10}
                         style={{
                             minHeight: viewportHeight && minHeightTable ?
                                 `${viewportHeight - minHeightTable - 64 * 2}px` :
@@ -376,10 +385,13 @@ export default function TableData() {
                         }
                     </Grid>
                     <Grid
+                        item xs={1} hidden={totalPages === 1}
                         className={`${classes.arrowChangeQueryPage}`}
                         onClick={() => handleArrowChangePage(+intervalPage)}
-                        item xs={1}
-                        style={{opacity: currentPage < totalPages - 1 ? '1' : '0.3'}}
+                        style={{
+                            display: totalPages === 1 ? "none":"inherit",
+                            opacity: currentPage < totalPages - 1 ? '1' : '0.3'
+                    }}
                     >
                         <ArrowRightIcon
                             fontSize={'large'}

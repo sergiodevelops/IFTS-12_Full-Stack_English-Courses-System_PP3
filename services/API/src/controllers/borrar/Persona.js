@@ -1,4 +1,4 @@
-const PersonaModel = require('../models/allModels').Persona;
+const PersonaModel = require('../models').Persona;
 
 function index(req,res) {
     PersonaModel.findAll()

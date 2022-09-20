@@ -36,7 +36,6 @@ export default (
     action: ActionProps) => {
     switch (action.type) {
         case "SET_HOME_TAB_VALUE":
-            console.log("action.payload",action.payload)
             if (action.payload?.homePageTabValueStore === undefined) return state; // no hace nada
             return {...state, homePageTabValueStore: action.payload.homePageTabValueStore};
         case "SET_SUBMENU_TAB_VALUE":

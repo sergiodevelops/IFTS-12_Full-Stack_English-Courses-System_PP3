@@ -36,7 +36,7 @@ export default function SubMenuTabs() {
         setMainTabValue((index).toString());
         // dispatch(layoutActions.setMainTabValue(index === 0 ? '0' : '5'));
     };
-const colorCurrentButtonMenu = '#007bff26';
+    const colorCurrentButtonMenu = '#d6001c';
 
     return (
         <Box

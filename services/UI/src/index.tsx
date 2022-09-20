@@ -5,6 +5,7 @@ import App from './App';
 import {Provider} from 'react-redux';
 // import * as serviceWorker from './serviceWorker';
 import store from "./store/store";
+import './assets/fonts/Dangrek/Dangrek-Regular.ttf';
 
 ReactDOM.render(
     <Provider {...{store}}>

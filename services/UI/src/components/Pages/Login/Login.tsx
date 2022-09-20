@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import UserLoginForm
     from '@components/Forms/UserForms/UserLoginForm/UserLoginForm';
 import UserAddForm from '@components/Forms/UserForms/UserAddForm/UserAddForm';
-import PrivateCampus from "@components/DoubleSideBar/PrivateCampus";
+import PrivateCampus from "@components/PrivateCampus/PrivateCampus";
 import {RootState} from "@redux/reducers/allReducers";
 import {ActionButton} from "@components/ActionButton/ActionButton";
 import UsuarioService from "@src/services/UsuarioService";

@@ -1,4 +1,4 @@
-const UsuarioModel = require('../models/allModels').Usuario;
+const UsuarioModel = require('../models').Usuario;
 
 const getPagination = (size, page) => {
     const limit = size ? +size : 10;

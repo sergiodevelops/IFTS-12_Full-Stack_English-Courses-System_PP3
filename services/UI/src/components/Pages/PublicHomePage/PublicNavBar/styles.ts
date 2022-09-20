@@ -55,7 +55,10 @@ export default makeStyles(theme => ({
     titleLogoContainer: {
         cursor: "pointer",
         display: "flex",
-        minHeight: "40px"
+        minHeight: "40px",
+        '& .css-1y942vo-MuiButtonBase-root-MuiButton-root':{
+            fontWeight: "bolder",
+        },
     },
     logo: {
         width: "40px"

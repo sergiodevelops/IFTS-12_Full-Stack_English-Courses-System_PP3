@@ -1,5 +1,5 @@
 
-const AnuncioModel = require('../models/allModels').Anuncio;
+const AnuncioModel = require('../models').Anuncio;
 
 const getPagination = (size, page) => {
     const limit = size ? +size : 10;

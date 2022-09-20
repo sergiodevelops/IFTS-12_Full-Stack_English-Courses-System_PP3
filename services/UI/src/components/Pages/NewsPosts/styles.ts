@@ -1,6 +1,9 @@
 import {makeStyles} from '@material-ui/core/styles';
 
 export default makeStyles(theme => ({
+    uppercase: {
+        textTransform: "uppercase",
+   },
     container: {
         margin: theme.spacing(1),
         backgroundColor: "#4a3bb60f",
@@ -10,5 +13,8 @@ export default makeStyles(theme => ({
         backgroundColor: "rgba(255,255,255,0.53)",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
+    },
+    msgQueryResults:{
+        color: '#ff000073',
     },
 }));

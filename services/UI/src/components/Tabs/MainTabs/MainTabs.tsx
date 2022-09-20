@@ -20,7 +20,7 @@ import ApplicantAddForm
     from "@components/Forms/ApplicantForms/ApplicantAddForm/ApplicantAddForm";
 import CourseAddForm
     from "@components/Forms/CourseForms/CourseAddForm/CourseAddForm";
-import NewsPosts from "@components/pages/NewsPosts/NewsPosts";
+import NewsPosts from "@components/Pages/NewsPosts/NewsPosts";
 
 function MainTitle(props: { classes: ClassNameMap<"objetivo" | "singlePageContentList" | "vision" | "parrafo" | "welcomeTitle" | "root" | "nosotros" | "spaTitle" | "mision" | "backImage">, content: ISinglePageContentDto }) {
     return <Typography variant={"h4"}
