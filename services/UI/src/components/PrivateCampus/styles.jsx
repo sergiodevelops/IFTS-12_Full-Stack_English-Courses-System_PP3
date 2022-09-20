@@ -2,6 +2,18 @@ import {makeStyles} from '@material-ui/core/styles';
 
 export default makeStyles(() => ({
     root: {
+        '& .css-1rmroxk-MuiPaper-root-MuiAppBar-root':{
+            backgroundColor: "#3f51b5",
+        },
+        '& .css-12vrudu-MuiPaper-root-MuiAppBar-root':{
+            backgroundColor: "#3f51b5",
+        },
+        '& .css-78trlr-MuiButtonBase-root-MuiIconButton-root':{
+            color: "white",
+        },
+        '& .css-78trlr-MuiButtonBase-root-MuiIconButton-root:hover':{
+            backgroundColor: "#5c6ab6",
+        },
         '& .css-1e6y48t-MuiButtonBase-root-MuiButton-root':{
           color: "white"
         },

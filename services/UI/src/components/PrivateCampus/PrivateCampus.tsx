@@ -59,8 +59,9 @@ export default function PrivateCampus() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const [openLeft, setOpenLeft] = React.useState(false);
-    const [isWelcomePage, setIsWelcomePage] = useState(true);
     const [openRight, setOpenRight] = React.useState(false);
+
+    const [isWelcomePage, setIsWelcomePage] = useState(true);
     const currentUserType = React.useState(userTypes.map(
         (userType) => {
             if (userType.id === loggedUser?.tipo_usuario && !!userType.description) return (userType.description);
@@ -69,7 +70,6 @@ export default function PrivateCampus() {
     ));
 
     const [subMenuTabValue, setSubMenuTabValue] = React.useState("0");
-    const drawerWidth = 240;
 
     const homePageTabValueStore = useSelector((state: RootState) => state.layoutReducers.homePageTabValueStore || "0");
     const [homeTabValue, setHomeTabValue] = React.useState(homePageTabValueStore);
@@ -79,6 +79,7 @@ export default function PrivateCampus() {
         openRight?: boolean;
     }
 
+    const drawerWidth = 140;
     const AppBar = styled(MuiAppBar, {
         // shouldForwardProp: (prop) => prop !== 'open',
     })<AppBarProps>(({theme, openLeft, openRight}) => ({
@@ -178,7 +179,7 @@ export default function PrivateCampus() {
     const handleDrawerCloseRight = () => {
         setOpenRight(false);
     };
-    const colorCurrentButtonMenu = '#007bff26';
+    const colorCurrentButtonMenu = '#d6001c';
 
     return (
         <Box className={classes.root}>
@@ -330,7 +331,6 @@ export default function PrivateCampus() {
                                 {[
                                     'GESTIÓN',
                                     'ALTAS',
-                                    // 'QUIENES SOMOS',
                                 ].map((text: string, index: number) => (
                                     <ListItem
                                         button
@@ -338,7 +338,7 @@ export default function PrivateCampus() {
                                         style={{
                                             background: index === parseInt(subMenuTabValue) ?
                                                 colorCurrentButtonMenu :
-                                                'inherit',
+                                                "inherit",
                                         }}
                                         onClick={() => handleClickMenu(index)}
                                     >
@@ -425,7 +425,6 @@ export default function PrivateCampus() {
                      </List>*/}
                 </Drawer>
             </Box>
-            {/*<Footer {...{openLeft, openRight, drawerWidth}}/>*/}
         </Box>
     );
 }

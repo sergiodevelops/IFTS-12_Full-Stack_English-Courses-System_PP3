@@ -56,7 +56,6 @@ export default function ApplicantUpdateDeleteForm(props: { row: IApplicantCreate
         alumnoService
             .replace(applicantToReplace, id)
             .then(createdApplicant => {
-                console.log("createdApplicant en FE ", createdApplicant);
                 alert(`La información del alumno "${updateQueryApplicant.apellido}" se MODIFICÓ correctamente`);
                 dispatch(layoutActions.setOpenModal(false));
             })

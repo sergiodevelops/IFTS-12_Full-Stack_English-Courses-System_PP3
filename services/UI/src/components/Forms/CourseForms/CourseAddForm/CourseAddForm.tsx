@@ -57,7 +57,6 @@ export default function CourseAddForm(props: { title: string }) {
         alumnoService
             .create(newApplicantPost)
             .then(createdApplicant => {
-                console.log("createdApplicant en FE ", createdApplicant);
                 alert(`La información de alumno "${newApplicant.nombres} ${newApplicant.apellido}" se persistió correctamente`);
                 cleanInputValues();
             })

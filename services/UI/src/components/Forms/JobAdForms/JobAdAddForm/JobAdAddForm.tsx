@@ -53,7 +53,6 @@ export default function ApplicantAddForm(props: { title: string }) {
         jobAdService
             .create(newJobAdPost as INewsCreateReqDto)
             .then(createdApplicant => {
-                console.log("createdApplicant en FE ", createdApplicant);
                 alert(`El anuncio para "${newJobAd.titulo}" se persistió correctamente`);
                 cleanInputValues();
             })

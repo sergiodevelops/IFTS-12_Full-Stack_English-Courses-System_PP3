@@ -43,7 +43,6 @@ export default function JobAdUpdateDeleteForm(props: { row: INewCreateResDto }) 
         anuncioService
             .replace(jobAdToReplace, id)
             .then(createdJobAd => {
-                console.log("createdJobAd en FE ", createdJobAd);
                 alert(`El anuncio para "${updateQueryJobAd.titulo}" se MODIFICÓ correctamente`);
                 dispatch(layoutActions.setOpenModal(false));
             })
@@ -61,7 +60,6 @@ export default function JobAdUpdateDeleteForm(props: { row: INewCreateResDto }) 
         anuncioService
             .delete(id)
             .then(createdJobAd => {
-                // console.log("createdJobAd en FE ", createdJobAd);
                 alert(`El anuncio para "${updateQueryJobAd.titulo}" se ELIMINÓ correctamente`);
                 dispatch(layoutActions.setOpenModal(false));
             })
@@ -82,10 +80,6 @@ export default function JobAdUpdateDeleteForm(props: { row: INewCreateResDto }) 
             descripcion,
         });
     }, [row])
-
-    useEffect(() => {
-        console.log("updateQueryJobAd",updateQueryJobAd)
-    }, [updateQueryJobAd])
 
     return (
         <Container className={classes.container} maxWidth="xs">

@@ -212,3 +212,8 @@ https://stackoverflow.com/questions/63124161/attempted-import-error-switch-is-no
 al 18/09/2022
 --------------------------
 https://stackoverflow.com/questions/63690695/react-redirect-is-not-exported-from-react-router-dom
+
+-------------
+al 20/09/2022
+--------------------------
+https://blog.greenroots.info/3-quick-ways-to-add-fonts-to-your-react-app

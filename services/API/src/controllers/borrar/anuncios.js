@@ -1,5 +1,5 @@
 
-const PostulanteModel = require('../models/allModels').postulantes;
+const AnuncioModel = require('../models').anuncios;
 
 const getPagination = (size, page) => {
     const limit = size ? +size : 10;
@@ -9,77 +9,61 @@ const getPagination = (size, page) => {
 };
 
 const getPagingData = (data, page, limit) => {
-    const {count: totalItems, rows: applicants} = data;
+    const {count: totalItems, rows: jobads} = data;
     const currentPage = page ? +page : 0;
     const totalPages = Math.ceil(totalItems / limit);
 
-    return {totalItems, applicants, totalPages, currentPage};
+    return {totalItems, jobads, totalPages, currentPage};
 };
 
-// CREA POSTULANTE (alta)
+// CREA ANUNCIO (alta)
 exports.create = (req, res) => {
-    // Validate "dni"
-    if (!req.body.dni) {
+    // Validate "puesto_vacante"
+    if (!req.body.puesto_vacante) {
         res.status(400).send({
-            message: "Debe enviar un 'dni' para crear el ApplicantInfo!"
+            message: "Debe enviar un 'puesto_vacante' para crear el JobAd!"
         });
         return;
     }
-    // Validate "apellido"
-    if (!req.body.apellido) {
+    // Validate "descripcion_tareas"
+    if (!req.body.descripcion_tareas) {
         res.status(400).send({
-            message: "Debe enviar un 'apellido' para crear el ApplicantInfo!"
+            message: "Debe enviar un 'descripcion_tareas' para crear el JobAd!"
         });
         return;
     }
-    // Validate "nombres"
-    if (!req.body.nombres) {
+    // Validate "experiencia"
+    if (!req.body.experiencia) {
         res.status(400).send({
-            message: "Debe enviar un 'nombres' para crear el ApplicantInfo!"
+            message: "Debe enviar un 'experiencia' para crear el JobAd!"
         });
         return;
     }
-    // Validate "tel"
-    if (!req.body.tel) {
+    // Validate "estudios"
+    if (!req.body.estudios) {
         res.status(400).send({
-            message: "Debe enviar un 'tel' para crear el ApplicantInfo!"
-        });
-        return;
-    }
-    // Validate "email"
-    if (!req.body.email) {
-        res.status(400).send({
-            message: "Debe enviar un 'email' para crear el ApplicantInfo!"
+            message: "Debe enviar un 'estudios' para crear el JobAd!"
         });
         return;
     }
 
-    // Create a ApplicantInfo
-    const newDbApplicantInfo = {
-        dni: req.body.dni,
-        apellido: req.body.apellido,
-        nombres: req.body.nombres,
-        tel: req.body.tel,
-        email: req.body.email,
+    // Create a JobAd
+    const newDbJobAd = {
+        puesto_vacante: req.body.puesto_vacante,
+        descripcion_tareas: req.body.descripcion_tareas,
+        experiencia: req.body.experiencia,
+        estudios: req.body.estudios,
     };
 
-    // Save ApplicantInfo in the database if "username" not exist
-    PostulanteModel
-        .create(
-            newDbApplicantInfo,
-            {
-                dni: req.body.dni,
-                email: req.body.email,
-            }
-        )
+    AnuncioModel
+        .create(newDbJobAd, {})
         .then(data => {
             res.status(201).send(data);
         })
         .catch(err => {
             res.status(409).send({
-                name: "Duplicate DNI or EMAIL Entry",
-                message: `El info de postulante "${req.body.dni} ${req.body.email}" ya existe, intente con uno diferente.`,
-                error: err,
+                name: "Duplicate JobAd Entry",
+                message: `${err}`
             });
         });
 };
@@ -88,50 +72,50 @@ exports.create = (req, res) => {
 exports.replace = (req, res) => {
     const {id} = req.query;
 
-    PostulanteModel
+    AnuncioModel
         .update(
             req.body,
             {where: {id: id}})
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "Applicant was updated successfully."
+                    message: "JobAd was updated successfully."
                 });
             } else {
                 res.send({
-                    message: `Cannot update Tutorial with id=${id}. Maybe Applicant was not found or req.body is empty!`
+                    message: `Cannot update Tutorial with id=${id}. Maybe JobAd was not found or req.body is empty!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error updating Applicant with id=" + id
+                message: "Error updating JobAd with id=" + id
             });
         });
 };
 
-// BAJA (elimina el info de postulante)
+// BAJA (elimina el usuario)
 exports.delete = (req, res) => {
     const {id} = req.query;
 
-    PostulanteModel
+    AnuncioModel
         .destroy({
-            where: {id: id}
-        })
+        where: {id: id}
+    })
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "Applicant was deleted successfully!" + id
+                    message: `JobAd was deleted successfully! ID=${id}`,
                 });
             } else {
                 res.send({
-                    message: `Cannot delete Applicant with id=${id}. Maybe Applicant was not found!`
+                    message: `Cannot delete JobAd with ID=${id}. Maybe JobAd was not found!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete Applicant with id=" + id
+                message: `Could not delete JobAd with ID=${id}`,
             });
         });
 };
@@ -142,7 +126,7 @@ exports.findAllByFilters = (req, res) => {
     const condition = tipo_usuario ? {tipo_usuario: userTypeIsValid ? tipo_usuario : null} : null;
     const {limit, offset} = getPagination(size, page);
 
-    PostulanteModel
+    AnuncioModel
         .findAndCountAll(/*{
                 where: condition,
                 limit,
@@ -155,7 +139,7 @@ exports.findAllByFilters = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving applicants."
+                    err.message || "Some error occurred while retrieving jobads."
             });
         });
 

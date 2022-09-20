@@ -1,4 +1,4 @@
-const CursoModel = require('../models/allModels').Curso;
+const CursoModel = require('../models').Curso;
 
 const getPagination = (size, page) => {
     const limit = size ? +size : 10;
@@ -15,20 +15,6 @@ const getPagingData = (data, page, limit) => {
 
 // ALTA (crea nuevo curso)
 exports.create = (req, res) => {
-    console.log("req.body",req.body)
-
-    // if (!req.body.CodCurso) {
-    //     res.status(400).send({
-    //         message: "Debe enviar un 'CodCurso' para crear el Curso!"
-    //     });
-    //     return;
-    // }
-    // if (!req.body.CodDocente) {
-    //     res.status(400).send({
-    //         message: "Debe enviar un 'CodDocente' para crear el Curso!"
-    //     });
-    //     return;
-    // }
     if (!req.body.CodNivel) {
         res.status(400).send({
             message: "Debe enviar un 'CodNivel' para crear el Curso!"

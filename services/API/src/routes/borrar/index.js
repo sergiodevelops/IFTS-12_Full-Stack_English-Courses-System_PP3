@@ -1,11 +1,12 @@
 const apiRoutes = require('./api');
-const userRoutes = require('./usuarios');
+const userRoutes = require('./Usuario');
+// const userRoutes = require('./usuarios');
+const courseRoutes = require('./Curso');
 const newsRoutes = require('./Anuncio');
-// const courseRoutes = require('./Curso');
 
 module.exports = (app) => {
     apiRoutes(app);
     userRoutes(app);
+    courseRoutes(app);
     newsRoutes(app);
-    // courseRoutes(app);
 };

@@ -6,6 +6,7 @@ export default makeStyles(() => ({
         textAlign: 'center',
     },
     tableHeaderRow:{
+        fontSize: "14px",
         fontWeight: 'bold',
     },
     tableBodyRow:{

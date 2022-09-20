@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import WebFont from 'webfontloader';
-import Login from "@components/pages/Login/Login";
-import PublicHomePage from "@components/pages/PublicHomePage/PublicHomePage";
+import Login from "@components/Pages/Login/Login";
+import PublicHomePage from "@components/Pages/PublicHomePage/PublicHomePage";
 import ReactDOM from "react-dom";
 import {
     Routes,
@@ -11,7 +11,7 @@ import {
 import {useSelector} from "react-redux";
 import {RootState} from "@redux/reducers/allReducers";
 import {Navigate} from 'react-router-dom';
-import PrivateCampus from "@components/DoubleSideBar/PrivateCampus";
+import PrivateCampus from "@components/PrivateCampus/PrivateCampus";
 
 function App() {
     // usuario esta logueado o no?
