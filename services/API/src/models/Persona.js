@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypess) {
+  const DataTypes = require('sequelize');
   const Persona = sequelize.define('Persona', {
     IdPersona: {
       autoIncrement: true,
@@ -83,15 +84,15 @@ module.exports = function(sequelize, DataTypes) {
     ]
   });
 
-  Persona.associate = (models) => {
-    Persona.hasOne(models.Usuario, {
-      foreignKey: {
-        name: 'IdUsuario',
-        allowNull: false
-      },
-      as: 'Persona'
-    });
-  };
+  // Persona.associate = (models) => {
+  //   Persona.hasOne(models.Usuario, {
+  //     foreignKey: {
+  //       name: 'IdUsuario',
+  //       allowNull: false
+  //     },
+  //     as: 'Persona'
+  //   });
+  // };
 
   return Persona;
 };

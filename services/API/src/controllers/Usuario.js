@@ -1,4 +1,4 @@
-const UsuarioModel = require('../models').Usuario;
+const {Usuario, Persona} = require('../models');
 
 const getPagination = (size, page) => {
     const limit = size ? +size : 10;
@@ -15,10 +15,10 @@ const getPagingData = (data, page, limit) => {
 
 // ALTA (crea nuevo usuario)
 exports.create = (req, res) => {
-    // Validate "tipo_usuario"
+    // Validate "es_admin"
     if (!req.body.es_admin) {
         res.status(400).send({
-            message: "Debe enviar un 'tipo_usuario' para crear el User!"
+            message: "Debe enviar un 'es_admin' para crear el User!"
         });
         return;
     }
@@ -46,14 +46,14 @@ exports.create = (req, res) => {
 
     // Create a User
     const newDbUser = {
-        tipo_usuario: req.body.tipo_usuario,
+        es_admin: req.body.es_admin,
         nombre_completo: req.body.nombre_completo,
         username: req.body.username,
         contrasenia: req.body.contrasenia,
     };
 
     // Save User in the database if "username" not exist
-    UsuarioModel
+    Usuario
         .create(newDbUser, {username: req.body.username})
         .then(data => {
             res.status(201).send(data);
@@ -70,7 +70,7 @@ exports.create = (req, res) => {
 exports.replace = (req, res) => {
     const {id} = req.query;
 
-    UsuarioModel
+    Usuario
         .update(
             req.body,
             {where: {id: id}})
@@ -96,7 +96,7 @@ exports.replace = (req, res) => {
 exports.delete = (req, res) => {
     const {id} = req.query;
 
-    UsuarioModel.destroy({
+    Usuario.destroy({
         where: {id: id}
     })
         .then(num => {
@@ -139,7 +139,7 @@ exports.login = (req, res) => {
     }
 
     // Find User in the database by "username" and "contrasenia"
-    UsuarioModel
+    Usuario
         .findOne({where: {username: req.body.username}})
         .then((user) => {
                 if (user && user.contrasenia === req.body.contrasenia) {
@@ -161,14 +161,31 @@ exports.login = (req, res) => {
 
 // CONSULTA (obtiene los usuarios segun filtros)
 exports.findAllByFilters = (req, res) => {
-    let {size, page, tipo_usuario} = req.query;
-    const userTypeIsValid = (tipo_usuario > 0 && tipo_usuario < 4);
-    const condition = tipo_usuario ? {tipo_usuario: userTypeIsValid ? tipo_usuario : null} : null;
-    const {limit, offset} = getPagination(size, page);
 
-    UsuarioModel
-        .findAndCountAll({where: condition, limit, offset})
+    let {size, page, es_admin} = req.query;
+    const userTypeIsValid = (es_admin > 0 && es_admin < 4);
+    const condition = es_admin ? {es_admin: userTypeIsValid ? es_admin : null} : null;
+    const {limit, offset} = getPagination(size, page);
+    // const {IdPersona} = Persona;
+
+    Usuario
+        .findAndCountAll({
+            where: condition,
+            include: [{
+                model : Persona,
+                required: true,
+                attributes :[
+                    "documento",
+                    "nombre",
+                    "apellido",
+                    "fecha_nac",
+                    "email",
+                ],
+            }],
+            offset, limit,
+        })
         .then(data => {
+            console.log("data");
             const response = getPagingData(data, page, limit);
             res.send(response);
         })
@@ -185,7 +202,7 @@ exports.findAllByFilters = (req, res) => {
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    UsuarioModel
+    Usuario
         .update(req.body, {where: {id: id}})
         .then(data => {
             if (data == 1) {

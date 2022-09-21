@@ -169,6 +169,9 @@ exports.login = (req, res) => {
 
 // CONSULTA (obtiene los usuarios segun filtros)
 exports.findAllByFilters = (req, res) => {
+    console.log("fafafa")
+
+
     let {size, page, tipo_usuario} = req.query;
     const userTypeIsValid = (tipo_usuario > 0 && tipo_usuario < 4);
     const condition = tipo_usuario ? {tipo_usuario: userTypeIsValid ? tipo_usuario : null} : null;

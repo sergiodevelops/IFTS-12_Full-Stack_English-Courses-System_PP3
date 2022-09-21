@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypess) {
+  const DataTypes = require('sequelize');
   const Usuario = sequelize.define('Usuario', {
     IdUsuario: {
       autoIncrement: true,
@@ -25,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     es_admin: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.TINYINT,
       allowNull: false
     },
     IdPersona: {
@@ -61,15 +62,15 @@ module.exports = function(sequelize, DataTypes) {
     ]
   });
 
-  Usuario.associate = (models) => {
-    Usuario.belongsTo(models.Persona, {
-      foreignKey: {
-        name: 'IdUsuario',
-        allowNull: false
-      },
-      as: 'Persona'
-    });
-  };
+  // Usuario.associate = (models) => {
+  //   Usuario.belongsTo(models.Persona, {
+  //     foreignKey: {
+  //       name: 'IdUsuario',
+  //       allowNull: false
+  //     },
+  //     as: 'Persona'
+  //   });
+  // };
 
   return Usuario;
 };
