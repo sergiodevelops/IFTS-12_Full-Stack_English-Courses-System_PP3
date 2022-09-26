@@ -91,7 +91,7 @@ export default function ButtonAppBar() {
                             {/*   INICIO */}
                         </Typography>
                         {/*     <Building /> */}
-                        <Carousel />
+                        {<Carousel />}
                         <ContentInicio
                             titulo={titulo}
                             descripcion={descripcion}
