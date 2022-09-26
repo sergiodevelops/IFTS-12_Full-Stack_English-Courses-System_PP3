@@ -14,6 +14,7 @@ import useStyles from './styles';
 import Building from '@components/Building/Building';
 import ContentInicio from '@src/components/ContentInicio/ContentInicio';
 import Carousel from '@src/components/Carousel/Carousel';
+
 // !import datos:
 import { presInicio, cardsInfo } from '../../../assets/ContentData';
 const { titulo, descripcion } = presInicio;

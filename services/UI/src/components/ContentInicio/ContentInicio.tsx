@@ -37,7 +37,7 @@ export default function ContentInicio({ titulo, descripcion, cardsInfo }: any) {
 
                     {cardsInfo.data.map((data: any) => {
                         const { titulo, descripcion, imageUrl } = data;
-                        console.log('data', data);
+
                         return (
                             <Grid item xs={6}>
                                 <CardActionArea>
@@ -55,7 +55,6 @@ export default function ContentInicio({ titulo, descripcion, cardsInfo }: any) {
                                         >
                                             {titulo}
                                         </Typography>
-
                                         <Typography
                                             variant="body2"
                                             color="text.secondary"
