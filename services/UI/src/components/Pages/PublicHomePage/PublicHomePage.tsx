@@ -1,30 +1,37 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Footer from "@components/Footer/Footer";
-import {
-    PublicNavBar
-} from "@components/Pages/PublicHomePage/PublicNavBar/PublicNavBar";
+import Footer from '@components/Footer/Footer';
+import { PublicNavBar } from '@components/Pages/PublicHomePage/PublicNavBar/PublicNavBar';
 import Typography from '@mui/material/Typography';
-import Login from "@components/Pages/Login/Login";
-import {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
-import {RootState} from "@redux/reducers/allReducers";
-import NewsPosts from "@components/Pages/NewsPosts/NewsPosts";
-import {Grid} from "@mui/material";
-import PrivateCampus from "@components/PrivateCampus/PrivateCampus";
-import useStyles from "./styles";
-import Building from "@components/Building/Building";
-
+import Login from '@components/Pages/Login/Login';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@redux/reducers/allReducers';
+import NewsPosts from '@components/Pages/NewsPosts/NewsPosts';
+import { Grid } from '@mui/material';
+import PrivateCampus from '@components/PrivateCampus/PrivateCampus';
+import useStyles from './styles';
+import Building from '@components/Building/Building';
+import ContentInicio from '@src/components/ContentInicio/ContentInicio';
+// !import datos:
+import { presInicio, cardsInfo } from '../../../assets/ContentData';
+const { titulo, descripcion } = presInicio;
 
 export default function ButtonAppBar() {
-    const homePageTabValueStore = useSelector((state: RootState) => state.layoutReducers.homePageTabValueStore || "0");
+    const homePageTabValueStore = useSelector(
+        (state: RootState) => state.layoutReducers.homePageTabValueStore || '0',
+    );
 
     // usuario esta logueado o no?
-    const userIsLoggedIn: boolean = !!useSelector((state: RootState) => state?.userReducers.currentUser);
+    const userIsLoggedIn: boolean = !!useSelector(
+        (state: RootState) => state?.userReducers.currentUser,
+    );
     const [sesionActiva, setSesionActiva] = useState<boolean>(userIsLoggedIn);
 
     const classes = useStyles();
-    const [homeTabValue, setHomeTabValue] = React.useState(homePageTabValueStore);
+    const [homeTabValue, setHomeTabValue] = React.useState(
+        homePageTabValueStore,
+    );
 
     interface TabPanelProps {
         children?: React.ReactNode;
@@ -33,7 +40,7 @@ export default function ButtonAppBar() {
     }
 
     function TabPanel(props: TabPanelProps) {
-        const {children, value, index, ...other} = props;
+        const { children, value, index, ...other } = props;
 
         return (
             <div
@@ -44,7 +51,7 @@ export default function ButtonAppBar() {
                 {...other}
             >
                 {value === index && (
-                    <Box sx={{p: 3}}>
+                    <Box sx={{ p: 3 }}>
                         <Typography>{children}</Typography>
                     </Box>
                 )}
@@ -52,53 +59,79 @@ export default function ButtonAppBar() {
         );
     }
 
-
-
     useEffect(() => {
-        setSesionActiva(userIsLoggedIn)
+        setSesionActiva(userIsLoggedIn);
     }, [userIsLoggedIn]);
 
     useEffect(() => {
-        console.log("llego de redux para mostrar contenido", homePageTabValueStore)
+        console.log(
+            'llego de redux para mostrar contenido',
+            homePageTabValueStore,
+        );
         setHomeTabValue(homePageTabValueStore);
     }, [homePageTabValueStore]);
 
     return (
-        <Box className={`${classes.root} DangrekFont`} sx={{flexGrow: 1}}>
-            {!sesionActiva && <PublicNavBar/>}
-            <Box  sx={{width: '100%'}}>
+        <Box className={`${classes.root} DangrekFont`} sx={{ flexGrow: 1 }}>
+            {!sesionActiva && <PublicNavBar />}
+            <Box sx={{ width: '100%' }}>
                 <TabPanel value={Number(homeTabValue)} index={0}>
-                    <Grid className={`${classes.inicio} ${classes.content}`} item xs={12} >
-                        <Typography fontFamily={"DangrekFont"} align={"center"} variant={"h2"}>
-                            INICIO
+                    <Grid
+                        className={`${classes.inicio} ${classes.content}`}
+                        item
+                        xs={12}
+                    >
+                        <Typography
+                            fontFamily={'DangrekFont'}
+                            align={'center'}
+                            variant={'h2'}
+                        >
+                            {/* INICIO */}
                         </Typography>
-                        <Building/>
+                        {/* <Building /> */}
+                        <ContentInicio
+                            titulo={titulo}
+                            descripcion={descripcion}
+                            cardsInfo={cardsInfo}
+                        />
                     </Grid>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={1}>
-                    <Grid className={`${classes.nosotros} ${classes.content}`} item xs={12} >
-                        <Typography fontFamily={"DangrekFont"} align={"center"} variant={"h2"}>
+                    <Grid
+                        className={`${classes.nosotros} ${classes.content}`}
+                        item
+                        xs={12}
+                    >
+                        <Typography
+                            fontFamily={'DangrekFont'}
+                            align={'center'}
+                            variant={'h2'}
+                        >
                             NOSOTROS
                         </Typography>
-                        <Building/>
+                        <Building />
                     </Grid>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={2}>
-                    <NewsPosts {...{tab: homePageTabValueStore === 2}}/>
+                    <NewsPosts {...{ tab: homePageTabValueStore === 2 }} />
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={3}>
-                    <Grid item xs={12} >
-                        <Typography fontFamily={"DangrekFont"} align={"center"} variant={"h2"}>
+                    <Grid item xs={12}>
+                        <Typography
+                            fontFamily={'DangrekFont'}
+                            align={'center'}
+                            variant={'h2'}
+                        >
                             CONTACTO
                         </Typography>
-                        <Building/>
+                        <Building />
                     </Grid>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={4}>
-                    {!sesionActiva ? <Login/> : <PrivateCampus/>}
+                    {!sesionActiva ? <Login /> : <PrivateCampus />}
                 </TabPanel>
             </Box>
-            <Footer/>
+            <Footer />
         </Box>
     );
 }

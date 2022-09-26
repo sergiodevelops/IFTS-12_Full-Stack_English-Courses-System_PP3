@@ -9,8 +9,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-// !import datos:
-import { presentacionInicio, cardsInfo } from './ContentData';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -19,14 +17,14 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
 }));
-// RowAndColumnSpacing:
-export default function ContentInicio() {
+
+export default function ContentInicio({ titulo, descripcion, cardsInfo }: any) {
     return (
         <Container maxWidth="xl">
             <br></br>
             <Item>
-                <h1>{presentacionInicio.titulo}</h1>
-                <p>{presentacionInicio.descripcion}</p>
+                <h1>{titulo}</h1>
+                <p>{descripcion}</p>
             </Item>
             <br></br>
             <Card sx={{ width: '100%' }}>
@@ -35,10 +33,10 @@ export default function ContentInicio() {
                     rowSpacing={3}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 >
-                    {/*content 1 */}
+                    {/* Tarjetas: */}
 
-                    {cardsInfo.data.map((card) => {
-                        const { titulo, descripcion, imageUrl } = card;
+                    {cardsInfo.data.map((data: any) => {
+                        const { titulo, descripcion, imageUrl } = data;
                         return (
                             <Grid item xs={6}>
                                 <CardActionArea>

@@ -1,4 +1,4 @@
-export const presentacionInicio = {
+export const presInicio = {
     titulo: `¡Bienvenidos a Chester Institute!`,
     descripcion: `Somos una institución educativa que brinda servicios de enseñanza y capacitación en el área de idiomas, con el objetivo de formar profesionales de excelencia, con una sólida formación académica y valores humanos, que contribuyan al desarrollo de la sociedad`,
 };
