@@ -13,7 +13,7 @@ import PrivateCampus from '@components/PrivateCampus/PrivateCampus';
 import useStyles from './styles';
 import Building from '@components/Building/Building';
 import ContentInicio from '@src/components/ContentInicio/ContentInicio';
-import Carousel from '@src/components/Carousel/Carousel';
+import Carousel from '@src/components/Carousel/CarouselInit';
 
 // !import datos:
 import { presInicio, cardsInfo } from '../../../assets/ContentData';
@@ -78,20 +78,13 @@ export default function ButtonAppBar() {
             {!sesionActiva && <PublicNavBar />}
             <Box sx={{ width: '100%' }}>
                 <TabPanel value={Number(homeTabValue)} index={0}>
+                    <Carousel />
+                    {/* cards: */}
                     <Grid
                         className={`${classes.inicio} ${classes.content}`}
                         item
                         xs={12}
                     >
-                        <Typography
-                            fontFamily={'DangrekFont'}
-                            align={'center'}
-                            variant={'h2'}
-                        >
-                            {/*   INICIO */}
-                        </Typography>
-                        {/*     <Building /> */}
-                        {<Carousel />}
                         <ContentInicio
                             titulo={titulo}
                             descripcion={descripcion}

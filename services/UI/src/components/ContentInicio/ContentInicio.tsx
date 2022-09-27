@@ -35,11 +35,11 @@ export default function ContentInicio({ titulo, descripcion, cardsInfo }: any) {
                 >
                     {/* Tarjetas: */}
 
-                    {cardsInfo.data.map((data: any) => {
+                    {cardsInfo.data.map((data: any, index: any) => {
                         const { titulo, descripcion, imageUrl } = data;
 
                         return (
-                            <Grid item xs={6}>
+                            <Grid item xs={6} key={index}>
                                 <CardActionArea>
                                     <CardMedia
                                         component="img"
