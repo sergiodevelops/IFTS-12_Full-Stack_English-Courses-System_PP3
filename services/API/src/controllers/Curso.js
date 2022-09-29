@@ -30,10 +30,8 @@ exports.create = (req, res) => {
 
     // Create a Curso
     const newCourse = {
-        // CodCurso: req.body.CodCurso,
-        comision: req.body.comision,
-        // CodDocente: req.body.CodDocente,
-        CodNivel: req.body.CodNivel
+        CodNivel: req.body.CodNivel,
+        comision: req.body.comision
     };
 
     // Save Curso in the database if "CodCurso" not exist
@@ -58,7 +56,7 @@ exports.replace = (req, res) => {
     CursoModel
         .update(
             req.body,
-            {where: {id: id}})
+            {where: {CodCurso: id}})
         .then(num => {
             if (num == 1) {
                 res.send({
@@ -82,7 +80,7 @@ exports.delete = (req, res) => {
     const {id} = req.query;
 
     CursoModel.destroy({
-        where: {id: id}
+        where: {CodCurso: id}
     })
         .then(num => {
             if (num == 1) {

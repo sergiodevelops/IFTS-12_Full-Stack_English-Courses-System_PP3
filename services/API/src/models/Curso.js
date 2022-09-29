@@ -1,6 +1,6 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Curso', {
+module.exports = function(sequelize, DataTypess) {
+  const DataTypes = require('sequelize');
+  const Curso = sequelize.define('Curso', {
     CodCurso: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -77,13 +77,16 @@ module.exports = function(sequelize, DataTypes) {
           { name: "CodIdioma" },
         ]
       },
-      {
-        name: "Nivel_IdiomaCurso",
-        using: "BTREE",
-        fields: [
-          { name: "CodNivel" },
-        ]
-      },
+
+      // {
+      //   name: "Nivel_IdiomaCurso",
+      //   using: "BTREE",
+      //   fields: [
+      //     { name: "CodNivel" },
+      //   ]
+      // },
     ]
   });
+
+  return Curso;
 };
