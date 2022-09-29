@@ -14,12 +14,22 @@ import useStyles from './styles';
 import Building from '@components/Building/Building';
 import ContentInicio from '@src/components/ContentInicio/ContentInicio';
 import Carousel from '@src/components/Carousel/CarouselInit';
+import Nosotros from '@src/components/Nosotros/Nosotros';
 
 // !import datos:
-import { presInicio, cardsInfo } from '../../../assets/ContentData';
+import {
+    presInicio,
+    cardsInfo,
+    nosotrosInfo,
+} from '../../../assets/ContentData';
+
+//!importar datos para  inicio:
 const { titulo, descripcion } = presInicio;
 
-export default function ButtonAppBar() {
+//!importar datos para  nosotros:
+const { presentacion, nosotros } = nosotrosInfo;
+
+export default function ButtonAppBar(): JSX.Element {
     const homePageTabValueStore = useSelector(
         (state: RootState) => state.layoutReducers.homePageTabValueStore || '0',
     );
@@ -98,14 +108,13 @@ export default function ButtonAppBar() {
                         item
                         xs={12}
                     >
-                        <Typography
-                            fontFamily={'DangrekFont'}
-                            align={'center'}
-                            variant={'h2'}
-                        >
-                            NOSOTROS
-                        </Typography>
-                        <Building />
+                        <Nosotros
+                            nosotrosInfo={nosotrosInfo}
+                            presentacion={presentacion}
+                            nosotros={nosotros}
+                        />
+
+                        {/*  <Building /> */}
                     </Grid>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={2}>
