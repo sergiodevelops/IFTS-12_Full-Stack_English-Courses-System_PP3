@@ -3,7 +3,7 @@ import {Grid, Paper} from '@mui/material';
 import AvisoService from "@services/AvisoService";
 import IPaginationSetDto from "@usecases/pagination/set/IPaginationSetDto";
 import IFilterSetDto from "@usecases/filter/add/IFilterSetDto";
-import INewCreateResDto from "@usecases/jobad/create/INewCreateResDto";
+import INewCreateResDto from "@usecases/new/create/INewCreateResDto";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
 import useStyles from "./styles";

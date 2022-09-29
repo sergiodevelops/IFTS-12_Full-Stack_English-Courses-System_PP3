@@ -14,7 +14,8 @@ import IApplicantCreateResDto
 import IApplicantCreateReqDto
     from "@usecases/applicant/create/IApplicantCreateReqDto";
 import INewsCreateReqDto
-    from "@usecases/jobad/create/INewsCreateReqDto";
+    from "@usecases/new/create/INewsCreateReqDto";
+import ICourseCreateReqDto from "@usecases/course/create/ICourseCreateReqDto";
 
 type ApiResponse = {
     name: string;
@@ -46,7 +47,7 @@ export default class BaseService {
         return this.headers;
     }
 
-    async create(baseModel: IUserCreateReqDto | IApplicantCreateReqDto | INewsCreateReqDto) {
+    async create(baseModel: IUserCreateReqDto | IApplicantCreateReqDto | INewsCreateReqDto | ICourseCreateReqDto) {
         const url = `${this.api_url}/${this.getResource()}/create`;
 
         const params = {
@@ -151,7 +152,7 @@ export default class BaseService {
     }
 
     async replace(
-        baseModel:  IUserCreateReqDto | IApplicantCreateReqDto | INewsCreateReqDto,
+        baseModel:  IUserCreateReqDto | IApplicantCreateReqDto | INewsCreateReqDto | ICourseCreateReqDto,
         userId: number) {
         let url = new URL(`${this.api_url}/${this.getResource()}`);
         url.searchParams.append('id', userId.toString());

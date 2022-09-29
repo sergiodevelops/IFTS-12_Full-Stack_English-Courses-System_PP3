@@ -6,7 +6,7 @@ import Container from "@material-ui/core/Container";
 import useStyles from "./styles";
 import Typography from "@mui/material/Typography";
 import INewsCreateReqDto
-    from "@usecases/jobad/create/INewsCreateReqDto";
+    from "@usecases/new/create/INewsCreateReqDto";
 import AnuncioService from "@services/AnuncioService";
 
 export default function ApplicantAddForm(props: { title: string }) {

@@ -20,12 +20,15 @@ import Typography from "@mui/material/Typography";
 import Spinner from "@components/ModalSpinner/Spinner/Spinner";
 import AlumnoService from "@services/AlumnoService";
 import AnuncioService from "@services/AnuncioService";
+import CursoService from "@services/CursoService";
 import IApplicantFindResDto
     from "@usecases/applicant/find/IApplicantFindResDto";
 import INewsFindResDto
-    from "@usecases/jobad/find/INewsFindResDto";
+    from "@usecases/new/find/INewsFindResDto";
+import ICoursesFindResDto
+    from "@usecases/course/find/ICoursesFindResDto";
 import INewCreateResDto
-    from "@usecases/jobad/create/INewCreateResDto";
+    from "@usecases/new/create/INewCreateResDto";
 import IApplicantCreateResDto
     from "@usecases/applicant/create/IApplicantCreateResDto";
 import UserUpdateDeleteForm
@@ -33,11 +36,10 @@ import UserUpdateDeleteForm
 import {queriesEnum} from "@constants/queriesEnum";
 import IUserCreateResDto
     from "@usecases/user/create/IUserCreateResDto";
-import ApplicantUpdateDeleteForm
-    from "@components/Forms/ApplicantForms/ApplicantUpdateDeleteForm/ApplicantUpdateDeleteForm";
 import JobAdUpdateDeleteForm
     from "@components/Forms/JobAdForms/JobAdUpdateDeleteForm/JobAdUpdateDeleteForm";
 import moment from "moment";
+import ICourseCreateResDto from "@usecases/course/create/ICourseCreateResDto";
 
 
 
@@ -57,6 +59,8 @@ export default function TableData() {
     const [rows, setRows] = useState<(IUserCreateResDto
         |
         IApplicantCreateResDto
+        |
+        ICourseCreateResDto
         |
         INewCreateResDto)[]>([]);
 
@@ -169,6 +173,38 @@ export default function TableData() {
             });
     }
 
+    const getCursosByFilters = (
+        pagination?: IPaginationSetDto,
+        filters?: IFilterSetDto[],
+    ) => {
+        const cursoService = new CursoService();
+        setQueryInProgress(true);
+
+        cursoService
+            .findAllByFilters(pagination, filters)
+            .then((response: ICoursesFindResDto) => {
+                // console.log("response", response);
+                const {
+                    courses,
+                    totalPages,
+                    totalItems
+                } = response;
+                // if (!!news.length) {
+                    setRows(courses as ICourseCreateResDto[]);
+                    setTotalPages(totalPages);
+                    setTotalItems(totalItems);
+                    setCurrentPage(currentPage);
+                // }
+                setQueryInProgress(false);
+            })
+            .catch((err: any) => {
+                // err.then((err: any) => {
+                console.error("ERROR en FE", err.message);
+                // });
+                setQueryInProgress(false);
+            });
+    }
+
     const handleTableBodyRowClick = (row: any) => {
         setClickedRow(row);
         // setCurrentForm(<UserUpdateDeleteForm row={clickedRow}/>);
@@ -262,6 +298,15 @@ export default function TableData() {
                     newPagination = {size: 1, page: currentPage};
                     // newFilters = [{key: 'tipo_usuario', value: '1'}];
                     getAnunciosByFilters(newPagination, newFilters); //JobAds
+                    break;
+
+                // GESTION (consulta, modificación, baja)(novedades-news)
+                case (queriesEnum.coursesPostsList):
+                    // CONSULTA segun TAB VALUE (Anuncios)
+                    setBackColor('#fdffb5');
+                    newPagination = {size: 1, page: currentPage};
+                    // newFilters = [{key: 'tipo_usuario', value: '1'}];
+                    getCursosByFilters(newPagination, newFilters); //JobAds
                     break;
 
                 default:

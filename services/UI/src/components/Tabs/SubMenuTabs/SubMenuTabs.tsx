@@ -49,7 +49,7 @@ export default function SubMenuTabs() {
                 {/*SubMenues de CONSULTAS [0 a 3]*/}
                 <SwipeableViews index={parseInt(subMenuTab)} className={classes.subMenuItems}>
 
-                    {/*SubMenues de GESTIÓN (edición y borrado) [0 a 3]*/}
+                    {/*SubMenues de GESTIÓN (edición y borrado) [0 a 5]*/}
                     <TabPanel tabIndex={parseInt(subMenuTab)} value="0">
                         <Typography align={"center"}>GESTIÓN</Typography>
                         <List>
@@ -58,6 +58,7 @@ export default function SubMenuTabs() {
                                 'Docentes',
                                 'Administrativos',
                                 'Anuncios',
+                                'Cursos',
                             ].map((text, index) => (
                                 <ListItem
                                     button
@@ -73,22 +74,23 @@ export default function SubMenuTabs() {
                         </List>
                     </TabPanel>
 
-                    {/*SubMenues de ALTAS [4 a 5]*/}
+                    {/*SubMenues de ALTAS [6 a 8]*/}
                     <TabPanel tabIndex={parseInt(subMenuTab)} value="1">
                         <Typography align={"center"}>ALTAS</Typography>
                         <List>
                             {[
                                 'Usuarios',
                                 'Anuncios',
+                                'Cursos',
                             ].map((text: string, index: number) => (
                                 <ListItem
                                     button
                                     key={`${text}-${index}`}
                                     style={{
-                                        background: mainTabValue && index+4 === parseInt(mainTabValue) ?
+                                        background: mainTabValue && index+5 === parseInt(mainTabValue) ?
                                             colorCurrentButtonMenu : 'inherit',
                                     }}
-                                    onClick={() => handleClickMenu(index+4)}
+                                    onClick={() => handleClickMenu(index+5)}
                                 >
                                     <ListItemText primary={text}/>
                                 </ListItem>
