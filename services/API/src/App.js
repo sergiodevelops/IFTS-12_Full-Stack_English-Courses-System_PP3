@@ -22,7 +22,7 @@ DB
     .then(()=> {
         DB
             .sequelize
-            .sync({force: true});
+            .sync({force: false});
     });
 
 

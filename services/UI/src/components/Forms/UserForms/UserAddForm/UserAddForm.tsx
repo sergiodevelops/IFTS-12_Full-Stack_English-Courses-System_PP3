@@ -94,7 +94,7 @@ export default function UserAddForm(props: { title: string }) {
         }
         const newUserPost: IUserCreateReqDto = {
             tipo_usuario: newUser?.userType, // mapeo para la base, envia un number
-            nombre_completo: newUser?.userFullname,
+            // nombre_completo: newUser?.userFullname,  // PENDIENTE: Separar en nombre y apellido
             username: newUser?.username,
             password: newUser?.password,
         };

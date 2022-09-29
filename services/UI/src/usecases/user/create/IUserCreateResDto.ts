@@ -1,6 +1,7 @@
 export default interface IUserCreateResDto {
-    id: number;
+    IdUsuario: number;
     tipo_usuario: number;
+    es_admin: number;
     nombre_completo: string;
     username: string;
     password: string;

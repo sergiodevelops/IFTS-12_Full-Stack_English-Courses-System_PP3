@@ -22,6 +22,10 @@ services:
     ports:
       - ${OS_DB_PORT}:${DOCKER_DB_PORT}
     restart: 'always'
+    healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 20s
+            retries: 10
 
   # -------------------------------------------------------------
   # ADMINER - database adminer
@@ -30,7 +34,8 @@ services:
   adminer_service_main:
     container_name: 'adminer_container_main'
     depends_on:
-      - 'mysql_service_main'
+      mysql_service_main:
+        condition: service_healthy
     image: 'adminer:latest'
     hostname: 'localhost'
     env_file:
@@ -47,12 +52,13 @@ services:
   api_service_main:
     container_name: 'api_container_main'
     depends_on:
-      - 'mysql_service_main'
+      mysql_service_main:
+        condition: service_healthy
     image: 'node:14'
     working_dir: '/var/www/html'
     volumes:
       - './API:/var/www/html'
-    command: 'bash -c "yarn && yarn dev"'
+    command: 'bash -c "yarn config set network-timeout 600000 -g && yarn && yarn dev"'
     dns:
       - '8.8.8.8'
       - '8.8.4.4'
@@ -77,7 +83,9 @@ services:
     working_dir: '/var/www/html'
     volumes:
       - './UI:/var/www/html'
-    command: 'bash -c "yarn && yarn dev"'
+    command: 'bash -c "yarn config set network-timeout 600000 -g && yarn && yarn dev"'
+    # command: 'bash -c "yarn --network-timeout 100000 && yarn --network-timeout 100000 dev"'
+    # command: 'bash -c "yarn config delete proxy -g && yarn && yarn dev"'
     dns:
       - '8.8.8.8'
       - '8.8.4.4'

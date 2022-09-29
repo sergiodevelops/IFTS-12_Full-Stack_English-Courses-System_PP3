@@ -229,29 +229,29 @@ export default function TableData() {
             switch (currentQueryCase) {
 
                 // 3 GESTION (consulta, modificación, baja) (alumnos-applic) (value:
-                case (queriesEnum.applicantUsersList):
-                    console.log("currentQueryCase",currentQueryCase)
-                    setBackColor('#ffb8b8');
-                    newPagination = {size: 1, page: currentPage};
-                    newFilters = [{key: 'tipo_usuario', value: '3'}];
-                    getUsersByFilters(newPagination, newFilters);
-                    break;
+                // case (queriesEnum.studentUsersList):
+                //     console.log("currentQueryCase",currentQueryCase)
+                //     setBackColor('#ffb8b8');
+                //     newPagination = {size: 1, page: currentPage};
+                //     newFilters = [{key: 'tipo_usuario', value: '3'}];
+                //     getUsersByFilters(newPagination, newFilters);
+                //     break;
 
                 // 2 GESTION (consulta, modificación, baja) (docentes-clien)
-                case (queriesEnum.clientUsersList):
-                    console.log("currentQueryCase",currentQueryCase)
-                    setBackColor('#d2e3fd');
-                    newPagination = {size: 1, page: currentPage};
-                    newFilters = [{key: 'tipo_usuario', value: '2'}];
-                    getUsersByFilters(newPagination, newFilters);
-                    break;
+                // case (queriesEnum.teacherUsersList):
+                //     console.log("currentQueryCase",currentQueryCase)
+                //     setBackColor('#d2e3fd');
+                //     newPagination = {size: 1, page: currentPage};
+                //     newFilters = [{key: 'tipo_usuario', value: '2'}];
+                //     getUsersByFilters(newPagination, newFilters);
+                //     break;
 
                 // 1 GESTION (consulta, modificación, baja) (administrativos)
-                case (queriesEnum.administrativoUsersList):
+                case (queriesEnum.adminUsersList):
                     console.log("currentQueryCase",currentQueryCase)
                     setBackColor('#ffd5b5');
                     newPagination = {size: 1, page: currentPage};
-                    newFilters = [{key: 'tipo_usuario', value: '1'}];
+                    newFilters = [{key: 'es_admin', value: '1'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
 
@@ -277,11 +277,11 @@ export default function TableData() {
         return (
             <>
                 {( // si es consulta de Users by Filters
-                    currentQueryCase === queriesEnum.applicantUsersList
+                    currentQueryCase === queriesEnum.studentUsersList
                     ||
-                    currentQueryCase === queriesEnum.clientUsersList
+                    currentQueryCase === queriesEnum.teacherUsersList
                     ||
-                    currentQueryCase === queriesEnum.administrativoUsersList
+                    currentQueryCase === queriesEnum.adminUsersList
                 )
                 &&
                 < UserUpdateDeleteForm row={clickedRow as IUserCreateResDto}/>}

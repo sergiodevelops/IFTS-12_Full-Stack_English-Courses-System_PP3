@@ -1,6 +1,6 @@
 export enum queriesEnum {
-    'applicantUsersList',
-    'clientUsersList',
-    'administrativoUsersList',
+    'studentUsersList',
+    'teacherUsersList',
+    'adminUsersList',
     'newsPostsList',
 }

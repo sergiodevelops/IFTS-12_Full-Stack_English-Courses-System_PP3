@@ -1,7 +1,10 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypess) {
-  const DataTypes = require('sequelize');
-  const Persona = sequelize.define('Persona', {
+// const db  = require('./index').db;
+// const sequelize = require("sequelize");
+// const DataTypes = require('mysql');
+// const sequelize = require('./index').sequelize;
+module.exports = function(sequelize, DataTypes) {
+  // const Sequelize = require('sequelize');
+  return sequelize.define('Persona', {
     IdPersona: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -62,6 +65,7 @@ module.exports = function(sequelize, DataTypess) {
     }
   }, {
     sequelize,
+    modelName: 'Persona',
     tableName: 'Persona',
     timestamps: false,
     indexes: [
@@ -83,16 +87,4 @@ module.exports = function(sequelize, DataTypess) {
       },
     ]
   });
-
-  // Persona.associate = (models) => {
-  //   Persona.hasOne(models.Usuario, {
-  //     foreignKey: {
-  //       name: 'IdUsuario',
-  //       allowNull: false
-  //     },
-  //     as: 'Persona'
-  //   });
-  // };
-
-  return Persona;
 };

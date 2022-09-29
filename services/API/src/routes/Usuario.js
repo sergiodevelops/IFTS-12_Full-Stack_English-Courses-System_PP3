@@ -5,6 +5,7 @@ module.exports = (app) => {
     router.post("/create", UsuarioController.create);
     router.post("/login", UsuarioController.login);
     router.get("/", UsuarioController.findAllByFilters);
+    router.get("/search", UsuarioController.findOneByFilters);
     router.put("/", UsuarioController.replace);
     router.delete("/", UsuarioController.delete);
 

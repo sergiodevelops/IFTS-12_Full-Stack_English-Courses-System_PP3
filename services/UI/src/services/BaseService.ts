@@ -110,6 +110,46 @@ export default class BaseService {
         return results;
     }
 
+    async findOneByFilters(filters?: IFilterSetDto[]) {
+        // console.log("pagination",pagination,"filters",filters);
+        let url = new URL(`${this.api_url}/${this.getResource()}/search`);
+        // pagination?.size && url.searchParams.append("size", pagination?.size.toString());
+        // pagination?.page && url.searchParams.append("page", pagination?.page.toString());
+        !!filters?.length && filters.map((filter: IFilterSetDto )=>{
+            if(!!filter.key && !!filter.value) {
+                // console.log("filter", filter);
+                url.searchParams.append(filter.key, filter.value);
+            }
+        })
+
+        const params = {
+            method: "GET",
+            headers: this.headers,
+        };
+
+        const checkResp = (resp: Response) => {
+            if (resp.status !== 200) throw resp.json();
+        }
+
+        const throwError = (err: ApiResponse) => {
+            throw err;
+        }
+
+        const results = await fetch(url.toString(), params)
+            .then((resp: Response) => {
+                checkResp(resp);
+                return resp.json();
+            })
+            .catch(throwError);
+
+        if (typeof results === 'undefined' || results.errors) {
+            if (typeof results === 'undefined') throw Error(`La API REST se encunetra fuera de servicio, puede comprobar su funcionamiento ingresando a ${this.api_url}`);
+            return null;
+        }
+
+        return results;
+    }
+
     async findAllByFilters(pagination?: IPaginationSetDto, filters?: IFilterSetDto[]) {
         // console.log("pagination",pagination,"filters",filters);
         let url = new URL(`${this.api_url}/${this.getResource()}`);

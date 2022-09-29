@@ -64,7 +64,8 @@ export default function PrivateCampus() {
     const [isWelcomePage, setIsWelcomePage] = useState(true);
     const currentUserType = React.useState(userTypes.map(
         (userType) => {
-            if (userType.id === loggedUser?.tipo_usuario && !!userType.description) return (userType.description);
+            if (userType.id === loggedUser?.es_admin && !!userType.description) return (userType.description)
+            else if (userType.id === loggedUser?.tipo_usuario && !!userType.description) return (userType.description);
             return ("")
         }
     ));
@@ -225,7 +226,9 @@ export default function PrivateCampus() {
                         </div>
 
                         <Typography variant="h6" noWrap component="div">
-                            {loggedUser?.nombre_completo} ({currentUserType})
+                            <>
+                                {loggedUser?.nombre_completo} ({currentUserType})
+                            </>
                         </Typography>
                         {loggedUser && (
                             <div>
@@ -301,32 +304,32 @@ export default function PrivateCampus() {
                     <Divider/>
                     <div onClick={handleDrawerOpenRight}>
                         {
-                            (loggedUser?.tipo_usuario === 3 || loggedUser?.tipo_usuario === 2 /*alumno*/) &&
+                            (loggedUser?.tipo_usuario === 3 /*alumno*/ || loggedUser?.tipo_usuario === 2 /*docente*/) &&
                             <List>
                                 {['En construcción']
                                     .map((text: string, index: number) => (
-                                    <ListItem
-                                        button
-                                        key={`${text}-${index}`}
-                                        // style={{
-                                        //     background: index ===
-                                        // parseInt(subMenuTabValue) ?
-                                        // colorCurrentButtonMenu : 'inherit',
-                                        // }}
-                                        onClick={() => handleClickMenu(index)}
-                                        disabled
-                                    >
-                                        {/*<ListItemIcon>
-                                         {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
-                                         </ListItemIcon>*/}
-                                        <ListItemText primary={text}/>
-                                    </ListItem>
-                                ))}
+                                        <ListItem
+                                            button
+                                            key={`${text}-${index}`}
+                                            // style={{
+                                            //     background: index ===
+                                            // parseInt(subMenuTabValue) ?
+                                            // colorCurrentButtonMenu : 'inherit',
+                                            // }}
+                                            // onClick={() => handleClickMenu(index)}
+                                            disabled
+                                        >
+                                            {/*<ListItemIcon>
+                                            {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
+                                            </ListItemIcon>*/}
+                                            <ListItemText primary={text}/>
+                                        </ListItem>
+                                    ))}
                             </List>
                         }
 
                         {
-                            (loggedUser?.tipo_usuario === 1 /* administrativo (administrativo) o docente */) &&
+                            (loggedUser?.es_admin === 1 /* administrativo (administrativo) o docente */) &&
                             <List>
                                 {[
                                     'GESTIÓN',

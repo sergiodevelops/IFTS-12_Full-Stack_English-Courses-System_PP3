@@ -26,7 +26,7 @@ export default function UserUpdateDeleteForm(props: { row: IUserCreateResDto }) 
     const title = "Modificar o eliminar";
     const row = props;
     const {
-        id,
+        IdUsuario,
         nombre_completo,
         username,
         password,
@@ -69,10 +69,10 @@ export default function UserUpdateDeleteForm(props: { row: IUserCreateResDto }) 
         };
 
         usuarioService
-            .replace(userToReplace, id)
+            .replace(userToReplace, IdUsuario)
             .then(createdUser => {
                 // console.log("createdUser en FE ", createdUser);
-                id === currentUser?.id && dispatch(userActions.setCurrentAuthenticatedUser(null));
+                IdUsuario === currentUser?.IdUsuario && dispatch(userActions.setCurrentAuthenticatedUser(null));
                 alert(`El usuario "${updateQueryUser.username}" se MODIFICÓ correctamente`);
                 dispatch(layoutActions.setOpenModal(false));
             })
@@ -89,10 +89,10 @@ export default function UserUpdateDeleteForm(props: { row: IUserCreateResDto }) 
 
     const handleClickDeleteRow = async () => {
         usuarioService
-            .delete(id)
+            .delete(IdUsuario)
             .then(createdUser => {
                 // console.log("createdUser en FE ", createdUser);
-                currentUser?.id === id && dispatch(userActions.setCurrentAuthenticatedUser(null));
+                currentUser?.IdUsuario === IdUsuario && dispatch(userActions.setCurrentAuthenticatedUser(null));
                 alert(`El usuario "${updateQueryUser.username}" se ELIMINÓ correctamente`);
                 dispatch(layoutActions.setOpenModal(false));
             })

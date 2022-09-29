@@ -1,21 +1,28 @@
-const Sequelize = require('sequelize');
-
-module.exports = function(sequelize, DataTypess) {
-  const DataTypes = require('sequelize');
-  const Usuario = sequelize.define('Usuario', {
+module.exports = function(sequelize, DataTypes) {
+  // const Sequelize = require('sequelize');
+  return sequelize.define('Usuario', {
     IdUsuario: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    contrasenia: {
-      type: DataTypes.STRING(100),
-      allowNull: true
+    username: {
+      type: DataTypes.CHAR(20),
+      allowNull: false,
+      comment: "Alias con el que ingresa al sistema",
+      unique: "username"
     },
-    fecha_creacion: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
+    password: {
+      type: DataTypes.STRING(35),
+      allowNull: false,
+      comment: "Clave necesaria para ingresar al sistema"
+    },
+    fecha_alta: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.literal('CURRENT_TIMESTAMP'),
+      comment: "Fecha en que se da el alta al usuario"
     },
     vencimiento: {
       type: DataTypes.DATEONLY,
@@ -36,10 +43,11 @@ module.exports = function(sequelize, DataTypess) {
         model: 'Persona',
         key: 'IdPersona'
       },
-      unique: "PersonaUsuario"
+      unique: "Usuario_ibfk_1"
     }
   }, {
     sequelize,
+    modelName: 'Usuario',
     tableName: 'Usuario',
     timestamps: false,
     indexes: [
@@ -52,6 +60,14 @@ module.exports = function(sequelize, DataTypess) {
         ]
       },
       {
+        name: "PersonaUsuario",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "IdPersona" },
+        ]
+      },
+      {
         name: "IdPersona",
         unique: true,
         using: "BTREE",
@@ -59,18 +75,14 @@ module.exports = function(sequelize, DataTypess) {
           { name: "IdPersona" },
         ]
       },
+      {
+        name: "username",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "username" },
+        ]
+      },
     ]
   });
-
-  // Usuario.associate = (models) => {
-  //   Usuario.belongsTo(models.Persona, {
-  //     foreignKey: {
-  //       name: 'IdUsuario',
-  //       allowNull: false
-  //     },
-  //     as: 'Persona'
-  //   });
-  // };
-
-  return Usuario;
 };

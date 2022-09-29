@@ -21,7 +21,7 @@
     "morgan": "^1.10.0",
     "mysql2": "^2.3.0",
     "sequelize": "^6.6.5",
-    "sequelize-auto": "^0.8.5",
+    "sequelize-auto": "^0.8.8",
     "typescript": "^4.6.3"
   },
   "scripts": {
