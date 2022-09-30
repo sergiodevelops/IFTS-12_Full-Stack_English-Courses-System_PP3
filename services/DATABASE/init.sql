@@ -162,14 +162,16 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Notas`
 CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Usuario`
 (
     `IdUsuario`      INT(10)      NOT NULL AUTO_INCREMENT,
-    `contrasenia`    VARCHAR(100) NULL,
-    `fecha_creacion` DATE         NULL,
+    `username`       CHAR(20)     NOT NULL,
+    `password`    VARCHAR(100)    NOT NULL,
+    `fecha_alta`     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `vencimiento`    DATE         NULL,
     `estado`         TINYINT(1)   NULL,
     `es_admin`       TINYINT(1)   NOT NULL,
     `IdPersona`      INT(10)      NOT NULL,
-    UNIQUE INDEX `IdPersona` (`IdPersona` ASC) VISIBLE,
     PRIMARY KEY (`IdUsuario`),
+    UNIQUE INDEX `IdPersona` (`IdPersona` ASC) VISIBLE,
+    UNIQUE INDEX `username` (`username` ASC) VISIBLE,
     CONSTRAINT `PersonaUsuario`
         FOREIGN KEY (`IdPersona`)
             REFERENCES `InstitutoIdiomas`.`Persona` (`IdPersona`)
