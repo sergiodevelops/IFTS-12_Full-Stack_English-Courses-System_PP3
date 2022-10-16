@@ -8,7 +8,9 @@ export default function CarouselInit() {
     const classes = useStyles();
 
     return (
-        <Carousel fade className={classes.root}>
+        <Carousel
+            onClick={()=> window.location.href = '/#inicio'}
+            fade className={classes.root}>
             <Carousel.Item about={carouselData.infoimagen1}>
                 <img
                     className={`${classes.imagen} d-block w-100 h-50`}

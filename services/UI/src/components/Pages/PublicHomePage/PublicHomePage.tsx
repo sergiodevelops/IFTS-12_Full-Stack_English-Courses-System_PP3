@@ -25,7 +25,7 @@ import {
 //!importar datos para  inicio:
 const { titulo, descripcion } = presInicio;
 
-export default function ButtonAppBar(): JSX.Element {
+export default function PublicHomePage(): JSX.Element {
     const homePageTabValueStore = useSelector(
         (state: RootState) => state.layoutReducers.homePageTabValueStore || '0',
     );
@@ -82,7 +82,7 @@ export default function ButtonAppBar(): JSX.Element {
     return (
         <Box className={`${classes.root} DangrekFont`} sx={{ flexGrow: 1 }}>
             {!sesionActiva && <PublicNavBar />}
-            <Box sx={{ width: '100%' }}>
+            <Box id={'inicio'} sx={{ width: '100%' }}>
                 <TabPanel value={Number(homeTabValue)} index={0}>
                     <Carousel />
                     {/* cards: */}
