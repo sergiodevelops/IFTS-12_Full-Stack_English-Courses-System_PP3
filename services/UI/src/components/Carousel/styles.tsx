@@ -14,6 +14,7 @@ export default makeStyles(() => ({
     },
     imagen:{
         minHeight: '100vh',
-        opacity: "0.3"
+        opacity: "0.3",
+        zIndex: -1,
     },
 }));
