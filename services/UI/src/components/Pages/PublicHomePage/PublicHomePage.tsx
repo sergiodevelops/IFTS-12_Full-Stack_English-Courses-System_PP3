@@ -14,12 +14,18 @@ import useStyles from './styles';
 import Building from '@components/Building/Building';
 import ContentInicio from '@src/components/ContentInicio/ContentInicio';
 import Carousel from '@src/components/Carousel/CarouselInit';
+import Nosotros from '@src/components/Nosotros/Nosotros';
 
 // !import datos:
-import { presInicio, cardsInfo } from '../../../assets/ContentData';
+import {
+    presInicio,
+    nosotrosInfo,
+} from '@constants/contentData';
+
+//!importar datos para  inicio:
 const { titulo, descripcion } = presInicio;
 
-export default function ButtonAppBar() {
+export default function PublicHomePage(): JSX.Element {
     const homePageTabValueStore = useSelector(
         (state: RootState) => state.layoutReducers.homePageTabValueStore || '0',
     );
@@ -76,7 +82,7 @@ export default function ButtonAppBar() {
     return (
         <Box className={`${classes.root} DangrekFont`} sx={{ flexGrow: 1 }}>
             {!sesionActiva && <PublicNavBar />}
-            <Box sx={{ width: '100%' }}>
+            <Box id={'inicio'} sx={{ width: '100%' }}>
                 <TabPanel value={Number(homeTabValue)} index={0}>
                     <Carousel />
                     {/* cards: */}
@@ -85,11 +91,7 @@ export default function ButtonAppBar() {
                         item
                         xs={12}
                     >
-                        <ContentInicio
-                            titulo={titulo}
-                            descripcion={descripcion}
-                            cardsInfo={cardsInfo}
-                        />
+                        <ContentInicio {...{titulo, descripcion}}/>
                     </Grid>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={1}>
@@ -98,14 +100,7 @@ export default function ButtonAppBar() {
                         item
                         xs={12}
                     >
-                        <Typography
-                            fontFamily={'DangrekFont'}
-                            align={'center'}
-                            variant={'h2'}
-                        >
-                            NOSOTROS
-                        </Typography>
-                        <Building />
+                        <Nosotros/>
                     </Grid>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={2}>
