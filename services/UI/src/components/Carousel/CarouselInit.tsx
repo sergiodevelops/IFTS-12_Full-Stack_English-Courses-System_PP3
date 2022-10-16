@@ -9,7 +9,7 @@ export default function CarouselInit() {
 
     return (
         <Carousel
-            onClick={()=> window.location.href = '/#inicio'}
+            onClick={()=> window.location.href = '/#'}
             fade className={classes.root}>
             <Carousel.Item about={carouselData.infoimagen1}>
                 <img
