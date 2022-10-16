@@ -2,13 +2,13 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import {cardsInfo} from "@constants/contentData";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -18,7 +18,14 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-export default function ContentInicio({ titulo, descripcion, cardsInfo }: any) {
+export type ContentInicioProps = {
+    titulo: string,
+    descripcion: string
+}
+
+export default function ContentInicio(props: ContentInicioProps) {
+    const {titulo, descripcion} = props;
+
     return (
         <Container maxWidth="xl">
             <br></br>

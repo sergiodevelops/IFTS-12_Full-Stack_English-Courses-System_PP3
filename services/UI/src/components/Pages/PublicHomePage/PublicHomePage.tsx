@@ -19,9 +19,8 @@ import Nosotros from '@src/components/Nosotros/Nosotros';
 // !import datos:
 import {
     presInicio,
-    cardsInfo,
     nosotrosInfo,
-} from '../../../assets/ContentData';
+} from '@constants/contentData';
 
 //!importar datos para  inicio:
 const { titulo, descripcion } = presInicio;
@@ -95,11 +94,7 @@ export default function ButtonAppBar(): JSX.Element {
                         item
                         xs={12}
                     >
-                        <ContentInicio
-                            titulo={titulo}
-                            descripcion={descripcion}
-                            cardsInfo={cardsInfo}
-                        />
+                        <ContentInicio {...{titulo, descripcion}}/>
                     </Grid>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={1}>
