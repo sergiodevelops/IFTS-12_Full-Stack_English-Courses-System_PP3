@@ -1,5 +1,7 @@
 # dependencies
 node_modules
+package-lock.json
+/pa
 /.vscode/
 yarn.lock
 /.pnp
