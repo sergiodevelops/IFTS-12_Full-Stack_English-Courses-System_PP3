@@ -19,13 +19,8 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-export type NosotrosProps = {
-    nosotros: string,
-    presentacion: string
-}
-
-export default function Nosotros(props: NosotrosProps) {
-    const { presentacion, nosotros } = props;
+export default function Nosotros() {
+    const { presentacion, nosotros } = nosotrosInfo;
 
     return (
         <Container maxWidth="xl">

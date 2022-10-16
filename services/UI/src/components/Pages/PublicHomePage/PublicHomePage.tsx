@@ -100,10 +100,7 @@ export default function ButtonAppBar(): JSX.Element {
                         item
                         xs={12}
                     >
-                        <Nosotros{...{
-                            presentacion,
-                            nosotros
-                        }}/>
+                        <Nosotros/>
                     </Grid>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={2}>
