@@ -1,0 +1,40 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@application/*": [
+				"src/application/*"
+			],
+			"@src/*": [
+				"src/*"
+			],
+			"@assets/*": [
+				"src/assets/*"
+			],
+			"@components/*": [
+				"src/components/*"
+			],
+			"@constants/*": [
+				"src/constants/*"
+			],
+			"@domain/*": [
+				"src/domain/*"
+			],
+			"@redux/*": [
+				"src/redux/*"
+			],
+			"@services/*": [
+				"src/services/*"
+			],
+			"@store/*": [
+				"src/store/*"
+			],
+			"@usecases/*": [
+				"src/usecases/*"
+			],
+			"@container-inversify": [
+				"src/inversify.config.ts"
+			],
+		}
+	}
+}

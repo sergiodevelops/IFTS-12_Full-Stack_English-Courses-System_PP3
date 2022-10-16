@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Dangrek', cursive;
+  src: local("Dangrek"),
+  url("./assets/fonts/Dangrek/Dangrek-Regular.ttf") format("truetype");
+  font-weight: bold;
+}
+
+.DangrekFont {
+  font-family: 'Dangrek', cursive;
+}
+
+body {
+  margin: 0;
+  /*font-family: -apple-system, BlinkMacSystemFont, 'Dangrek', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;*/
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

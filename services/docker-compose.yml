@@ -1,0 +1,100 @@
+version: '3.7'
+
+volumes:
+  volume_pp3:
+
+services:
+  # -------------------------------------------------------------
+  # DATABASE - MYSQL server engine
+  # -------------------------------------------------------------
+
+  mysql_service_main:
+    container_name: 'mysql_container_main'
+    image: 'mysql:latest'
+    command: '--init-file /docker-entrypoint-initdb.d/init.sql'
+    volumes:
+      - './DATABASE/init.sql:/docker-entrypoint-initdb.d/init.sql'
+      - 'volume_pp3:/var/lib/mysql'
+    hostname: 'localhost'
+    env_file:
+      - './.env'
+      - './DATABASE/.env'
+    ports:
+      - ${OS_DB_PORT}:${DOCKER_DB_PORT}
+    restart: 'always'
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # -------------------------------------------------------------
+  # ADMINER - database adminer
+  # -------------------------------------------------------------
+
+  adminer_service_main:
+    container_name: 'adminer_container_main'
+    depends_on:
+      mysql_service_main:
+        condition: service_healthy
+    image: 'adminer:latest'
+    hostname: 'localhost'
+    env_file:
+      - './.env'
+      - './DATABASE/.env'
+    ports:
+      - ${OS_ADMINER_PORT}:${DOCKER_ADMINER_PORT}
+    restart: 'unless-stopped'
+
+  # -------------------------------------------------------------
+  # API - EXPRESS JS
+  # -------------------------------------------------------------
+
+  api_service_main:
+    container_name: 'api_container_main'
+    depends_on:
+      mysql_service_main:
+        condition: service_healthy
+    image: 'node:14'
+    working_dir: '/var/www/html'
+    volumes:
+      - './API:/var/www/html'
+    command: 'bash -c "yarn config set network-timeout 600000 -g && yarn && yarn dev"'
+    dns:
+      - '8.8.8.8'
+      - '8.8.4.4'
+    hostname: 'localhost'
+    env_file:
+      - './.env'
+      - './API/.env'
+    ports:
+      - ${OS_API_PORT}:${DOCKER_API_PORT}
+    tty: true
+    restart: 'always'
+
+  # -------------------------------------------------------------
+  # UI - REACT JS
+  # -------------------------------------------------------------
+
+  ui_service_main:
+    container_name: 'ui_container_main'
+    depends_on:
+      - 'api_service_main'
+    image: 'node:14'
+    working_dir: '/var/www/html'
+    volumes:
+      - './UI:/var/www/html'
+    command: 'bash -c "yarn config set network-timeout 600000 -g && yarn && yarn dev"'
+    dns:
+      - '8.8.8.8'
+      - '8.8.4.4'
+    hostname: 'localhost'
+    env_file:
+      - './.env'
+      - './UI/.env'
+    ports:
+      - ${OS_UI_PORT}:${DOCKER_UI_PORT}
+    tty: true
+    stdin_open: true
+    restart: 'always'
+
+# -------------------------------------------------------------

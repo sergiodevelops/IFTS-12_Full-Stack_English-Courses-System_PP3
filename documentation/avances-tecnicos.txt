@@ -1,0 +1,234 @@
+nota sobre cada avance técnico del proyecto
+
+-------------
+al 22/04/2022
+--------------------------
+Nodejs y Mysql, Aplicación Completa (Login, Registro, CRUD, ES6+ y Más )
+https://www.youtube.com/watch?v=qJ5R9WTW0_E
+
+How to Create a Express/Node + React Project | Node Backend + React Frontend
+https://www.youtube.com/watch?v=w3vs4a03y3I
+
+MANEJA LOS ESTADOS DE LOS COMPONENTES CON FUNCTIONAL COMPONENTS en React
+https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-react-function-hooks-component
+
+COMANDOS PARA YML DE DOCKER-COMPOSE
+https://jsitech1.gitbooks.io/meet-docker/content/archivo_docker-compose_en_detalle.html
+
+TUTORIL node-js-express-y-mysql-con-sequelize
+https://tomasmalio.medium.com/node-js-express-y-mysql-con-sequelize-ec0a7c0ae292
+Sequelize --> es un ORM para Postgres, MySQL, MariaDB, SQLite y SQL Server.
+
+SEQUELIZE INIT
+https://ichi.pro/es/cree-su-primera-api-con-generador-rapido-sequelize-y-cli-52177759129979
+
+./node_modules/sequelize-auto/bin/sequelize-auto \
+-h <host> \
+-d <database> \
+-u <user> \
+-x [password] \
+-p [port]  \
+--dialect [dialect] \
+-c [/path/to/config] \
+-o [/path/to/models] \
+-t [tableName1] \
+-t [tableName2] \
+-t [tableName3]
+
+-------------
+al 24/08/2022
+--------------------------
+inicio del modulo front end con typescript y node js
+https://www.digitalocean.com/community/tutorials/setting-up-a-node-project-with-typescript-es
+yarn add typescript tslint express @types/express
+-------------
+al 31/08/2022
+--------------------------
+https://stackoverflow.com/questions/69027206/how-to-solve-integrity-check-failed-for-websocket-driver-error-when-installi
+error https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001383.tgz: Integrity check failed for "caniuse-lite" (computed integrity doesn't match our records, got "sha512-swMpEoTp5vDoGBZsYZX7L7nXHe6dsHxi9o6/LKf/f0LukVtnrxly5GVb/fWdCDTqi/yw6Km6tiJ0pmBacm0gbg== sha1-rs8xfM2UBpByWuOuTygpPF+4BQ4=")
+solución:
+yarn cache clean
+yarn install --update-checksums
+You could also try deleting the yarn.lock file altogether and re-run yarn install.
+problema "TS2307: Cannot find module '@usecases/applicant/create/IApplicantCreateResDto' or its corresponding type declarations."
+solución"Path Aliases o Alias de Ruta es una manera de renombrar una ruta para hacer más fácil su uso,"
+https://blog.nubecolectiva.com/como-usar-path-aliases-alias-de-ruta-con-typescript-en-node-js-13-7/
+
+npm tsc -v para ver la version de typescript instalada en el proyecto
+yarn global add --save typescript
+
+
+-------------
+al 04/09/2022
+--------------------------
+https://forum.huawei.com/enterprise/es/c%C3%B3mo-verificar-si-el-n%C3%BAmero-de-puerto-est%C3%A1-ocupado-linux/thread/499475-100253#:~:text=Ejecute%20el%20comando%20netstat%20%2Danp,8011%20para%20consultar%20el%20proceso.
+netstat -anp | grep 80
+ejemplo:
+tcp 0 0 192.168.8.249:40677 92.38.150.73:80 ESTABLISHED -
+unix  3      [ ]         STREAM     CONNECTED     9488075  1705338/java
+:::*4401/mysql_server
+ El proceso ID 1705338 es el del servicio java
+2. Ejecute el comando kill -9 4601 para detener el proceso.
+
+docker-compose up --remove-orphans
+
+WARNING: Image for service mysql_service was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
+
+ por el error de mysql
+mysql_container     | 2022-09-04T19:00:17.313393Z 0 [ERROR] [MY-000068] [Server] unknown option '--init-file /docker-entrypoint-initdb.d/init.sql'.
+mysql_container     | 2022-09-04T19:00:17.313477Z 0 [ERROR] [MY-010119] [Server] Aborting
+mysql_container     | 2022-09-04T19:00:18.992167Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.30)  MySQL Community Server - GPL.
+mysql_container exited with code 1
+solución
+Eliminamos el proceso que corre el contenedor creado.
+$ docker rm -f nombre-contenedor (si es que esta activo)
+para ver los activos
+$ docker ps
+Eliminamos todos los volúmenes ya que Docker crea volúmenes temporales sin pedirte permiso.
+$ docker volume prune <-- limpia todos los volumes
+$ docker container prune <-- limpia todos los contenedores
+persistir info con docker
+https://platzi.com/tutoriales/1432-docker/3268-como-crear-un-contenedor-con-docker-mysql-y-persistir-la-informacion/
+Error response from daemon: remove database_mysql_data: volume is in use
+docker-compose down --volumes
+
+si no se crea automatica la carpeta de volumen en ...DATABASE/carpeta_volumen se debe dar permisos para que docker pueda escribir alli con
+sudo chmod 777 -Rv ...DATABASE
+
+mysql_container1    | 2022-09-04T19:49:00.621467Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+
+Terminado el levantado de la base mysql 8
+con docker + adminer como administrador de la base
+[son dos servicios]
+
+download POSTMAN para testear la api-rest
+https://dl.pstmn.io/download/latest/linux64
+
+https://classic.yarnpkg.com/en/docs/cli/add
+
+Creating the first Model (and Migration)
+https://sequelize.org/docs/v6/other-topics/migrations/#creating-the-first-model-and-migration
+npx sequelize-cli \
+model:generate \
+--name User \
+--attributes \
+firstName:string,\
+lastName:string,\
+email:string
+
+./node_modules/sequelize-auto/bin/sequelize-auto \
+or
+npx sequelize-auto \
+-h "localhost" \
+-d "InstitutoIdiomas" \
+-u "root" \
+-x "root" \
+-p 3306  \
+--dialect "mysql" \
+-o "./src/models" \
+-t "Usuario" \
+-t "Alumno" \
+-t "Docente" \
+
+
+
+-l "esm" \
+
+si es en javascript hacer
+npx sequelize-auto \
+-h "localhost" \
+-d "InstitutoIdiomas" \
+-u "root" \
+-x "root" \
+-p 3306  \
+--dialect "mysql" \
+-o "./src/models" \
+-t "Curso"
+
+
+sobre el sistema de modulos (ficheros) funcionando en node js
+https://youtu.be/29iYdru2KUg
+https://www.typescriptlang.org/docs/handbook/esm-node.html
+
+-------------
+al 05/09/2022
+--------------------------
+Example `init-models.ts`:
+https://unpkg.com/browse/sequelize-auto@0.8.1/README.md
+
+-------------
+al 06/09/2022
+--------------------------
+error
+TypeError: require(...) is not a function
+solución ??
+https://bobbyhadz.com/blog/javascript-typeerror-require-is-not-a-function
+https://www.youtube.com/watch?v=VyEKwp6Q4fY
+https://github.com/willjw3/sequelize-typescript-tutorial
+
+index.ts example in models sequelize
+https://github.com/MichalZalecki/sequelize-with-typescript-example/blob/master/src/db/models/index.ts
+
+-------------
+al 08/09/2022
+--------------------------
+aun no solucionado este error
+https://stackoverflow.com/questions/72505297/typeerror-require-is-not-a-function-with-typescript
+
+https://stackoverflow.com/questions/46459778/cannot-read-property-use-env-variable-of-undefined
+https://shareablecode.com/snippets/solution-for-typeerror-require-is-not-a-function-while-using-sequelize-with-expr-vWFm-f34v
+
+-------------
+al 09/09/2022
+--------------------------
+https://sequelize.org/docs/v6/core-concepts/model-basics/
+
+-------------
+al 17/09/2022
+--------------------------
+https://es.stackoverflow.com/questions/13272/cu%C3%A1l-es-la-diferencia-entre-import-from-y-var-require#:~:text=La%20diferencia%20entre%20import%20y,en%20cualquier%20parte%20del%20c%C3%B3digo.
+https://github.com/KevinAlexanderSoto/APP_citas_gim/blob/main/db/usuario.js
+https://github.com/williampruden/sequelize-associations
+-------
+inner join de dos tablas con include en sequelize
+https://www.youtube.com/watch?v=hsfkkm3q8K4
+https://github.com/KevinAlexanderSoto/APP_citas_gim
+-------
+
+<Model1> =
+
+SELECT * <Model1> // registros a ser leidos inicialmente
+JOIN <Model2> // union de las dos tablas en una
+ON <Model1>.id = <Model2>.id // relación
+WHERE <Model1>.campo1 = '' //filtro
+monitorear por terminal contenedor corriendo
+https://diarioinforme.com/como-monitorear-los-registros-de-contenedores-de-docker/
+
+https://diarioinforme.com/como-monitorear-los-registros-de-contenedores-de-docker/
+
+https://stackoverflow.com/questions/63124161/attempted-import-error-switch-is-not-exported-from-react-router-dom
+
+-------------
+al 18/09/2022
+--------------------------
+https://stackoverflow.com/questions/63690695/react-redirect-is-not-exported-from-react-router-dom
+
+-------------
+al 20/09/2022
+--------------------------
+https://blog.greenroots.info/3-quick-ways-to-add-fonts-to-your-react-app
+
+-------------
+al 01/10/22
+--------------------------
+https://appletenhtml.blogspot.com/2020/10/solucion-al-error-collation-desconocida.html
+https://www.freakyjolly.com/resolved-when-i-faced-1273-unknown-collation-utf8mb4_0900_ai_ci-error/#.X5wu14hKiUk
+
+-------------
+al x/10/22
+--------------------------
+
+
+-------------
+al x/10/22
+--------------------------

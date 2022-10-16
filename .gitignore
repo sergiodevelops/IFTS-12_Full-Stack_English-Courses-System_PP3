@@ -1,0 +1,32 @@
+# dependencies
+node_modules
+package-lock.json
+/pa
+/.vscode/
+yarn.lock
+/.pnp
+.pnp.js
+.idea/*
+*/.idea
+*.iml
+.yarn
+/yarn.lock
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+*/*.env
+*/*.iml
+*.env
+
+*.bkp
+
+# npm && yarn
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+

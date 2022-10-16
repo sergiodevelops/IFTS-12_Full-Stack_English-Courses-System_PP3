@@ -1,0 +1,21 @@
+version: '3.2'
+
+services:
+  # API service BACKend --> puerto 4005(pc):4005(docker)
+  api_express:
+    container_name: 'api_express'
+    image: 'node:14'
+    volumes:
+      - '.:/var/www/html'
+    working_dir: '/var/www/html/'
+    dns:
+      - '8.8.8.8'
+      - '8.8.4.4'
+    ports:
+      - '4005:4005'
+    hostname: 'api_express'
+    env_file:
+      - './.env'
+    tty: true
+    command: 'bash -c "yarn && yarn dev"'
+  #    restart: 'always'

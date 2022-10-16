@@ -1,0 +1,90 @@
+{
+    "name": "ui_InstitutoIdiomas",
+    "type": "module",
+    "version": "0.1.0",
+    "proxy": "http://localhost:4005",
+    "private": true,
+    "dependencies": {
+        "@emotion/react": "^11.4.1",
+        "@emotion/styled": "^11.3.0",
+        "@material-ui/core": "^4.12.3",
+        "@material-ui/lab": "^4.0.0-alpha.60",
+        "@material-ui/styles": "^4.11.4",
+        "@mui/icons-material": "^5.0.1",
+        "@mui/lab": "^5.0.0-alpha.48",
+        "@mui/material": "^5.0.1",
+        "@mui/utils": "^5.0.1",
+        "@testing-library/jest-dom": "^5.11.4",
+        "@testing-library/react": "^11.1.0",
+        "@testing-library/user-event": "^12.1.10",
+        "@types/material-ui": "^0.21.12",
+        "@types/module-alias": "^2.0.1",
+        "@types/react-dom": "^17.0.10",
+        "@types/react-router-dom": "^5.3.3",
+        "@types/react-swipeable-views": "^0.13.1",
+        "@types/redux": "^3.6.0",
+        "@types/webfontloader": "^1.6.33",
+        "bootstrap": "^5.2.1",
+        "inversify": "^6.0.1",
+        "module-alias": "^2.2.2",
+        "moment": "^2.29.1",
+        "mysql": "^2.18.1",
+        "path": "^0.12.7",
+        "react": "^17.0.2",
+        "react-bootstrap": "^2.5.0",
+        "react-dom": "^17.0.2",
+        "react-hook-form": "^7.12.2",
+        "react-redux": "^7.2.5",
+        "react-resize-detector": "^6.7.6",
+        "react-router-dom": "^6.4.0",
+        "react-scripts": "4.0.3",
+        "react-swipeable-views": "^0.14.0",
+        "redux": "^4.1.2",
+        "redux-devtools-extension": "^2.13.9",
+        "redux-logger": "^3.0.6",
+        "typescript": "^4.4.4",
+        "web-vitals": "^1.0.1",
+        "webfontloader": "^1.6.28"
+    },
+    "scripts": {
+        "start": "react-app-rewired start",
+        "dev": "react-app-rewired start",
+        "build": "react-app-rewired build",
+        "test": "react-app-rewired test",
+        "eject": "react-app-rewired eject",
+        "docker:build": "docker build . -t sergioarieljuarez/rrhh-react",
+        "docker:run": "docker run -p 8080:80 sergioarieljuarez/rrhh-client --name rrhh-react",
+        "docker:stop": "docker rm -f rrhh-react"
+    },
+    "repository": "https://github.com/sergioarieljuarez/rrhh-express-react",
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "customize-cra": "^1.0.0",
+        "react-app-rewired": "^2.1.8"
+    },
+    "_moduleAliases": {
+        "@entrypoint": "src/entrypoint",
+        "@web": "src/entrypoint/presenters/web",
+        "@components": "src/entrypoint/presenters/web/components",
+        "@constants": "src/entrypoint/presenters/web/constants",
+        "@redux": "src/entrypoint/presenters/web/redux",
+        "@store": "src/entrypoint/presenters/web/store"
+    }
+}
