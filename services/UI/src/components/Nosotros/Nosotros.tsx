@@ -9,7 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-/* import { nosotrosInfo } from '@src/assets/ContentData'; */
+import {nosotrosInfo} from "@constants/contentData";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -19,11 +19,14 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-export default function Nosotros({
-    nosotros,
-    presentacion,
-    nosotrosInfo,
-}: any) {
+export type NosotrosProps = {
+    nosotros: string,
+    presentacion: string
+}
+
+export default function Nosotros(props: NosotrosProps) {
+    const { presentacion, nosotros } = props;
+
     return (
         <Container maxWidth="xl">
             <br></br>

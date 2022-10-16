@@ -25,9 +25,6 @@ import {
 //!importar datos para  inicio:
 const { titulo, descripcion } = presInicio;
 
-//!importar datos para  nosotros:
-const { presentacion, nosotros } = nosotrosInfo;
-
 export default function ButtonAppBar(): JSX.Element {
     const homePageTabValueStore = useSelector(
         (state: RootState) => state.layoutReducers.homePageTabValueStore || '0',
@@ -103,13 +100,10 @@ export default function ButtonAppBar(): JSX.Element {
                         item
                         xs={12}
                     >
-                        <Nosotros
-                            nosotrosInfo={nosotrosInfo}
-                            presentacion={presentacion}
-                            nosotros={nosotros}
-                        />
-
-                        {/*  <Building /> */}
+                        <Nosotros{...{
+                            presentacion,
+                            nosotros
+                        }}/>
                     </Grid>
                 </TabPanel>
                 <TabPanel value={Number(homeTabValue)} index={2}>
