@@ -17,12 +17,12 @@ CREATE SCHEMA IF NOT EXISTS `InstitutoIdiomas`;
 -- ----------------------------------------------------------------------------
 -- Table InstitutoIdiomas.Nivel_Idioma
 -- ----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Nivel_Idioma`
-(
-    `Cod_Nivel` INT(10)     NOT NULL AUTO_INCREMENT,
-    `nivel`     VARCHAR(30) NULL,
-    PRIMARY KEY (`Cod_Nivel`)
-);
+# CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Nivel_Idioma`
+# (
+#     `Cod_Nivel` INT(10)     NOT NULL AUTO_INCREMENT,
+#     `nivel`     VARCHAR(30) NULL,
+#     PRIMARY KEY (`Cod_Nivel`)
+# );
 
 -- ----------------------------------------------------------------------------
 -- Table InstitutoIdiomas.Telefonos
@@ -203,11 +203,6 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Curso`
         FOREIGN KEY (`CodIdioma`)
             REFERENCES `InstitutoIdiomas`.`Idioma` (`CodIdioma`)
             ON DELETE RESTRICT
-            ON UPDATE RESTRICT,
-    CONSTRAINT `Nivel_IdiomaCurso`
-        FOREIGN KEY (`CodNivel`)
-            REFERENCES `InstitutoIdiomas`.`Nivel_Idioma` (`Cod_Nivel`)
-            ON DELETE RESTRICT
             ON UPDATE RESTRICT
 );
 
@@ -370,5 +365,34 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Empleado`
             ON UPDATE RESTRICT
 );
 
+-- ----------------------------------------------------------------------------
+-- Table InstitutoIdiomas.usuarios
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`usuarios` (
+                            `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del usuario',
+                            `tipo_usuario` tinyint NOT NULL COMMENT 'Si el usuario es un postulante =1 , o es un solicitante = 2 , o es Administrativo = 3',
+                            `nombre_completo` varchar(50) NOT NULL COMMENT 'Nombres y apellidos del usuario',
+                            `username` char(20) NOT NULL COMMENT 'Alias con el que ingresa al sistema',
+                            `password` varchar(35) NOT NULL COMMENT 'Clave necesaria para ingresar al sistema',
+                            `fecha_alta` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha en que se da el alta al usuario',
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `username` (`username`)
+);
 
+# ----------------------------------------------------
+#  INSERTS
+# ----------------------------------------------------
+INSERT INTO `InstitutoIdiomas`.`Aula` (`CodAula`, `capacidad`) VALUES
+                                                (1,	30),
+                                                (2,	20),
+                                                (3,	20),
+                                                (4,	30)
+ON DUPLICATE KEY UPDATE `CodAula` = VALUES(`CodAula`), `capacidad` = VALUES(`capacidad`);
+
+# ----------------------------------------------------
+INSERT INTO `InstitutoIdiomas`.`Idioma` (`CodIdioma`, `idioma`) VALUES
+    (1,	'INGLES')
+ON DUPLICATE KEY UPDATE `CodIdioma` = VALUES(`CodIdioma`), `idioma` = VALUES(`idioma`);
+
+# ----------------------------------------------------
 SET FOREIGN_KEY_CHECKS = 1;
