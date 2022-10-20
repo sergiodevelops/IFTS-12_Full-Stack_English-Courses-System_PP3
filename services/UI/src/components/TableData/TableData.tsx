@@ -342,7 +342,7 @@ export default function TableData() {
                     < JobAdUpdateDeleteForm
                         row={clickedRow as INewCreateResDto}/>}
 
-                { // si es consulta de JobAds Info by Filters
+                { // si es consulta de CourseUpdateDelete Info by Filters
                     currentQueryCase === queriesEnum.coursesPostsList
                     &&
                     < CourseUpdateDeleteForm
