@@ -1,13 +1,12 @@
-module.exports = function(sequelize, DataTypess) {
-  const DataTypes = require('sequelize');
-  const Curso = sequelize.define('Curso', {
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('Curso', {
     CodCurso: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    comision: { //NOMBRE DEL CURSO
+    comision: {
       type: DataTypes.STRING(10),
       allowNull: true
     },
@@ -20,6 +19,7 @@ module.exports = function(sequelize, DataTypess) {
       }
     },
     CodIdioma: {
+      defaultValue: 1,
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
@@ -37,11 +37,7 @@ module.exports = function(sequelize, DataTypess) {
     },
     CodNivel: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'Nivel_Idioma',
-        key: 'Cod_Nivel'
-      }
+      allowNull: true
     }
   }, {
     sequelize,
@@ -77,16 +73,6 @@ module.exports = function(sequelize, DataTypess) {
           { name: "CodIdioma" },
         ]
       },
-
-      // {
-      //   name: "Nivel_IdiomaCurso",
-      //   using: "BTREE",
-      //   fields: [
-      //     { name: "CodNivel" },
-      //   ]
-      // },
     ]
   });
-
-  return Curso;
 };

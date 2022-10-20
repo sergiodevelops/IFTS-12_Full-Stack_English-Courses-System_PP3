@@ -40,6 +40,8 @@ import JobAdUpdateDeleteForm
     from "@components/Forms/JobAdForms/JobAdUpdateDeleteForm/JobAdUpdateDeleteForm";
 import moment from "moment";
 import ICourseCreateResDto from "@usecases/course/create/ICourseCreateResDto";
+import CourseUpdateDeleteForm
+    from "@components/Forms/CourseForms/CourseUpdateDeleteForm/CourseUpdateDeleteForm";
 
 
 
@@ -75,6 +77,8 @@ export default function TableData() {
     const [clickedRow, setClickedRow] = useState<(IUserLoginResDto
         |
         IApplicantCreateResDto
+        |
+        ICourseCreateResDto
         |
         INewCreateResDto)>();
     const [queryInProgress, setQueryInProgress] = useState<boolean>(false);
@@ -337,6 +341,12 @@ export default function TableData() {
                     &&
                     < JobAdUpdateDeleteForm
                         row={clickedRow as INewCreateResDto}/>}
+
+                { // si es consulta de JobAds Info by Filters
+                    currentQueryCase === queriesEnum.coursesPostsList
+                    &&
+                    < CourseUpdateDeleteForm
+                        row={clickedRow as ICourseCreateResDto}/>}
             </>
         )
     }

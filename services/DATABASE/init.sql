@@ -379,6 +379,17 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`usuarios` (
                             UNIQUE KEY `username` (`username`)
 );
 
+-- ----------------------------------------------------------------------------
+-- Table InstitutoIdiomas.Anuncio
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Anuncio` (
+                           `id` int unsigned NOT NULL AUTO_INCREMENT,
+                           `titulo` varchar(50) NOT NULL COMMENT 'Descripción resumida del puesto a cubrir',
+                           `descripcion` varchar(300) NOT NULL COMMENT 'Breve descripción de las tareas a complir',
+                           `fecha_alta` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha en que se da el alta al anuncio',
+                           PRIMARY KEY (`id`)
+);
+
 # ----------------------------------------------------
 #  INSERTS
 # ----------------------------------------------------

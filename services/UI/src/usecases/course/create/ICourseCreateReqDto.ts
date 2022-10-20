@@ -3,4 +3,5 @@ export default interface ICourseCreateReqDto {
     CodAula: number;
     CodDocente: number;
     CodNivel: number;
+    CodCurso?: number;
 }

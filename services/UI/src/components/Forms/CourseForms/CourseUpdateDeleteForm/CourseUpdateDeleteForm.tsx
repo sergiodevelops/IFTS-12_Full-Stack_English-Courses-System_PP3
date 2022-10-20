@@ -89,6 +89,7 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
             CodAula,
             CodDocente,
             CodNivel,
+            CodCurso,
         });
     }, [row])
 
@@ -98,6 +99,7 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
             <Grid>
                 <Grid item xs={12}>
                     <h3 className={classes.titulo}>{title}</h3>
+                    <h4 className={classes.titulo}>{`Curso ${updateQueryCourse?.CodCurso} ${updateQueryCourse?.comision}`}</h4>
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container spacing={2}>
