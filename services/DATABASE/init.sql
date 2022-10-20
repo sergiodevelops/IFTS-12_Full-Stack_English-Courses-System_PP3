@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Curso`
     `CodCurso`   INT(10)     NOT NULL AUTO_INCREMENT,
     `comision`   VARCHAR(10) NULL,
     `CodAula`    INT(10)     NULL,
-    `CodIdioma`  INT(10)     NULL,
+    `CodIdioma`  INT(10)     NOT NULL DEFAULT 1,
     `CodDocente` INT(10)     NULL,
     `CodNivel`   INT(10)     NULL,
     PRIMARY KEY (`CodCurso`),
