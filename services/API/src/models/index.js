@@ -6,6 +6,7 @@ const UsuarioModel = require("./Usuario");
 const PersonaModel = require("./Persona");
 const AnuncioModel = require("./Anuncio");
 const CursoModel = require("./Curso");
+const AulaModel = require("./Aula");
 
 let db = {};
 db.Sequelize = Sequelize;
@@ -23,6 +24,7 @@ db.Usuario = UsuarioModel(sequelize, Sequelize);
 db.Persona = PersonaModel(sequelize, Sequelize);
 db.Anuncio = AnuncioModel(sequelize, Sequelize);
 db.Curso = CursoModel(sequelize, Sequelize);
+db.Aula = AulaModel(sequelize, Sequelize);
 
 db.Persona.hasOne(db.Usuario, {foreignKey: 'IdPersona'})
 db.Usuario.belongsTo(db.Persona, {foreignKey: 'IdPersona'})

@@ -1,20 +1,15 @@
 var DataTypes = require("sequelize").DataTypes;
-var _Curso = require("./Curso");
+var _Aula = require("./Aula");
+var _Idioma = require("./Idioma");
 
 function initModels(sequelize) {
-  var Curso = _Curso(sequelize, DataTypes);
+  var Aula = _Aula(sequelize, DataTypes);
+  var Idioma = _Idioma(sequelize, DataTypes);
 
-  Curso.belongsTo(Aula, { as: "CodAula_Aula", foreignKey: "CodAula"});
-  Aula.hasMany(Curso, { as: "Cursos", foreignKey: "CodAula"});
-  Curso.belongsTo(Docente, { as: "CodDocente_Docente", foreignKey: "CodDocente"});
-  Docente.hasMany(Curso, { as: "Cursos", foreignKey: "CodDocente"});
-  Curso.belongsTo(Idioma, { as: "CodIdioma_Idioma", foreignKey: "CodIdioma"});
-  Idioma.hasMany(Curso, { as: "Cursos", foreignKey: "CodIdioma"});
-  Curso.belongsTo(Nivel_Idioma, { as: "CodNivel_Nivel_Idioma", foreignKey: "CodNivel"});
-  Nivel_Idioma.hasMany(Curso, { as: "Cursos", foreignKey: "CodNivel"});
 
   return {
-    Curso,
+    Aula,
+    Idioma,
   };
 }
 module.exports = initModels;
