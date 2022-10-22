@@ -16,8 +16,8 @@
 */*.env
 */*.iml
 *.env
-
 *.bkp
+.vscode
 
 # npm && yarn
 npm-debug.log*

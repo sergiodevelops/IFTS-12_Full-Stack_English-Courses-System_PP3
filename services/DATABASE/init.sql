@@ -162,7 +162,8 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Notas`
 CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Usuario`
 (
     `IdUsuario`      INT(10)      NOT NULL AUTO_INCREMENT,
-    `contrasenia`    VARCHAR(100) NULL,
+
+    `password`    VARCHAR(100) NULL,
     `fecha_creacion` DATE         NULL,
     `vencimiento`    DATE         NULL,
     `estado`         TINYINT(1)   NULL,
@@ -372,3 +373,21 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Empleado`
 
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- ----------------------------------------------------------------------------
+-- MySQL Workbench Migration
+-- App: Grafana
+-- Created: 2022/09/30
+-- ----------------------------------------------------------------------------
+
+-- SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------------------------------------------------------
+-- Schema Grafana
+-- ----------------------------------------------------------------------------
+-- DROP SCHEMA IF EXISTS `grafana`;
+-- CREATE SCHEMA IF NOT EXISTS `grafana`;
+
+
+-- SET FOREIGN_KEY_CHECKS = 1;
