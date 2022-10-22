@@ -26,7 +26,6 @@ db.Anuncio = AnuncioModel(sequelize, Sequelize);
 db.Curso = CursoModel(sequelize, Sequelize);
 db.Aula = AulaModel(sequelize, Sequelize);
 
-db.Persona.hasOne(db.Usuario, {foreignKey: 'IdPersona'})
-db.Usuario.belongsTo(db.Persona, {foreignKey: 'IdPersona'})
+require("./relations")(sequelize.models);
 
 module.exports = db;

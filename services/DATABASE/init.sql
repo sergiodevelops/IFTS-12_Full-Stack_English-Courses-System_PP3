@@ -17,12 +17,12 @@ CREATE SCHEMA IF NOT EXISTS `InstitutoIdiomas`;
 -- ----------------------------------------------------------------------------
 -- Table InstitutoIdiomas.Nivel_Idioma
 -- ----------------------------------------------------------------------------
-# CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Nivel_Idioma`
-# (
-#     `Cod_Nivel` INT(10)     NOT NULL AUTO_INCREMENT,
-#     `nivel`     VARCHAR(30) NULL,
-#     PRIMARY KEY (`Cod_Nivel`)
-# );
+-- CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Nivel_Idioma`
+-- (
+--     `Cod_Nivel` INT(10)     NOT NULL AUTO_INCREMENT,
+--     `nivel`     VARCHAR(30) NULL,
+--     PRIMARY KEY (`Cod_Nivel`)
+-- );
 
 -- ----------------------------------------------------------------------------
 -- Table InstitutoIdiomas.Telefonos
@@ -194,9 +194,14 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Curso`
             REFERENCES `InstitutoIdiomas`.`Aula` (`CodAula`)
             ON DELETE RESTRICT
             ON UPDATE RESTRICT,
+    -- CONSTRAINT `DocenteCurso`
+    --     FOREIGN KEY (`CodDocente`)
+    --         REFERENCES `InstitutoIdiomas`.`Docente` (`CodDocente`)
+    --         ON DELETE RESTRICT
+    --         ON UPDATE RESTRICT,
     CONSTRAINT `DocenteCurso`
         FOREIGN KEY (`CodDocente`)
-            REFERENCES `InstitutoIdiomas`.`Docente` (`CodDocente`)
+            REFERENCES `InstitutoIdiomas`.`usuarios` (`id`)
             ON DELETE RESTRICT
             ON UPDATE RESTRICT,
     CONSTRAINT `IdiomaCurso`
