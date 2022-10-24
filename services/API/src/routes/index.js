@@ -3,7 +3,7 @@ const usersRoutes = require('./usuarios');
 const userRoutes = require('./Usuario');
 const newsRoutes = require('./Anuncio');
 const courseRoutes = require('./Curso');
-const classroomsRoutes = require('./Aula');
+const classroomRoutes = require('./Aula');
 
 module.exports = (app) => {
     apiRoutes(app);
@@ -11,5 +11,5 @@ module.exports = (app) => {
     userRoutes(app);
     newsRoutes(app);
     courseRoutes(app);
-    classroomsRoutes(app);
+    classroomRoutes(app);
 };

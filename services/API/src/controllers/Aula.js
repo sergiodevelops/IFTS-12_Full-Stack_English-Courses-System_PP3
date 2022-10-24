@@ -13,6 +13,7 @@ const getPagingData = (data, page, limit) => {
     return {totalItems, classrooms, totalPages, currentPage};
 };
 
+/*
 // ALTA (crea nuevo curso)
 exports.create = (req, res) => {
     if (!req.body.CodNivel) {
@@ -99,6 +100,7 @@ exports.delete = (req, res) => {
             });
         });
 };
+*/
 
 // CONSULTA (obtiene los CURSOS segun filtros)
 exports.findAllByFilters = (req, res) => {

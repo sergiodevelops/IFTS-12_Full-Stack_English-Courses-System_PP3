@@ -12,10 +12,18 @@ import ICourseCreateResDto
 import ICourseCreateReqDto
     from "@usecases/course/create/ICourseCreateReqDto";
 import CursoService from "@services/CursoService";
+import AulaService from "@services/AulaService";
 import FormControl from "@material-ui/core/FormControl";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import userTypes from "@constants/userTypes";
 // import { IsNumber, IsString, IsOptional, ValidateNested, IsNotEmpty, ArrayNotEmpty } from "class-validator";
+import IPaginationSetDto
+    from "@usecases/pagination/set/IPaginationSetDto";
+import IFilterSetDto from "@usecases/filter/add/IFilterSetDto";
+import IClassroomFindResDto
+    from "@usecases/classroom/find/IClassroomFindResDto";
+import IClassroomCreateResDto
+    from "@usecases/classroom/create/IClassroomCreateResDto";
 
 export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto }) {
 
@@ -96,6 +104,48 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
         });
     }, [row])
 
+    const [rows, setRows] = useState<(IClassroomCreateResDto)[]>([]);
+    const [totalPages, setTotalPages] = useState<number>(0);
+    const [totalItems, setTotalItems] = useState<number>(0);
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const [queryInProgress, setQueryInProgress] = useState<boolean>(false);
+    const getAulasByFilters = (
+        pagination?: IPaginationSetDto,
+        filters?: IFilterSetDto[],
+    ) => {
+        const aulaService = new AulaService();
+        setQueryInProgress(true);
+
+        aulaService
+            .findAllByFilters(pagination, filters)
+            .then((response: IClassroomFindResDto) => {
+                // console.log("response", response);
+                const {
+                    classrooms,
+                    totalPages,
+                    totalItems
+                } = response;
+                setRows(classrooms as IClassroomCreateResDto[]);
+                setTotalPages(totalPages);
+                setTotalItems(totalItems);
+                setCurrentPage(currentPage);
+                setQueryInProgress(false);
+            })
+            .catch((err: any) => {
+                // err.then((err: any) => {
+                console.error("ERROR en FE", err.message);
+                // });
+                setQueryInProgress(false);
+            });
+    }
+
+    useEffect(() => {
+        // console.log("currentQueryCase",currentQueryCase)
+        let newPagination;
+        let newFilters;
+        newPagination = {size: 1, page: currentPage};
+        getAulasByFilters(newPagination, newFilters);
+    }, [currentPage/*, currentQueryCase, modalStateStore*/]);
 
     return (
         <Container className={classes.container} maxWidth="xs">
@@ -111,11 +161,11 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
                             disableClearable
                             className={`CodAula`}
                             disabled={!updateQueryCourse}
-                            options={userTypes || []}
-                            getOptionLabel={(option) => option.description || ""}
+                            options={rows || []} 
+                            getOptionLabel={(option) => `${option.CodAula} - ${option.capacidad}`|| ""}
                             onChange={(e: React.ChangeEvent<{}>, selectedOption) => setUpdateQueryCourse({
                                 ...updateQueryCourse,
-                                CodAula: selectedOption?.id || 0,
+                                CodAula: selectedOption?.CodAula || 0,
                             })}
                             style={{width: 300}}
                             renderInput={(params) =>
@@ -123,13 +173,13 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
                                     {...params}
                                     error={!updateQueryCourse?.CodAula}
                                     style={{background: updateQueryCourse.CodAula !== CodAula ? '#e8ffe9' : 'inherit'}}
-                                    label="Seleccionar una opción"
+                                    label="Seleccionar Aula"
                                     variant="outlined"
                                 />}
                         />
                     </FormControl>
                 </Grid>
-          <Grid item xs={12}>
+                <Grid item xs={12}>
                     <FormControl variant="outlined"
                                  className={classes.formControl}>
                         <Autocomplete

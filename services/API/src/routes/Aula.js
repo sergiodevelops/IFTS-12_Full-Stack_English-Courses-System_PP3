@@ -7,5 +7,5 @@ module.exports = (app) => {
     // router.put("/", AulaController.replace);
     // router.delete("/", AulaController.delete);
 
-    app.use('/api/classrooms', router);
+    app.use('/api/classroom', router);
 };
