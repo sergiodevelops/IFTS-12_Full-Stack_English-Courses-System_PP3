@@ -225,7 +225,9 @@ export default function PrivateCampus() {
                         </div>
 
                         <Typography variant="h6" noWrap component="div">
-                            {loggedUser?.nombre_completo} ({currentUserType})
+                            <>
+                                {loggedUser?.nombre_completo} ({currentUserType})
+                            </>
                         </Typography>
                         {loggedUser && (
                             <div>
