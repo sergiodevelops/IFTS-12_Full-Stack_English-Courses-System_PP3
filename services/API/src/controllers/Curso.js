@@ -1,4 +1,5 @@
 const CursoModel = require('../models').Curso;
+const {Aula, usuarios, Idioma} = require('../models');
 
 const getPagination = (size, page) => {
     const limit = size ? +size : 10;
@@ -108,7 +109,27 @@ exports.findAllByFilters = (req, res) => {
     const {limit, offset} = getPagination(size, page);
 
     CursoModel
-        .findAndCountAll({where: condition, limit, offset})
+        .findAndCountAll({
+            where: condition, 
+            include: [{
+                model: Aula,
+            }, {
+                model: usuarios,
+                as: 'Docente',
+                attributes: ['nombre_completo']
+            }, {
+                model: Idioma,
+                attributes: ['nombre']
+            }],
+            attributes: {
+                exclude: [
+                    'CodAula',
+                    'CodDocente',
+                    'CodIdioma'
+                ]
+            },
+            raw: true,
+            limit, offset})
         .then(data => {
             const response = getPagingData(data, page, limit);
             res.send(response);

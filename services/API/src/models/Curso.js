@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     CodDocente: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
       references: {
         model: 'usuarios',

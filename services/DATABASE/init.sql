@@ -186,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Curso`
     `comision`   VARCHAR(10) NULL,
     `CodAula`    INT(10)     NULL,
     `CodIdioma`  INT(10)     NOT NULL DEFAULT 1,
-    `CodDocente` INT(10)     NULL,
+    `CodDocente` INT(10)     UNSIGNER NULL,
     `CodNivel`   INT(10)     NULL,
     PRIMARY KEY (`CodCurso`),
     CONSTRAINT `AulaCurso`
@@ -343,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Alumno`
 CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Idioma`
 (
     `CodIdioma` INT(10)     NOT NULL AUTO_INCREMENT,
-    `idioma`    VARCHAR(50) NULL,
+    `nombre`    VARCHAR(50) NULL,
     PRIMARY KEY (`CodIdioma`),
     INDEX `idioma` (`idioma` ASC) VISIBLE
 );

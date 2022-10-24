@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    idioma: {
+    nombre: {
       type: DataTypes.STRING(50),
       allowNull: true
     }
@@ -24,10 +24,10 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "idioma",
+        name: "nombre",
         using: "BTREE",
         fields: [
-          { name: "idioma" },
+          { name: "nombre" },
         ]
       },
     ]
