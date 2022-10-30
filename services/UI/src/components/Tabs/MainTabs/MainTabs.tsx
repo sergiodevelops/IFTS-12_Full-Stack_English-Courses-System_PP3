@@ -15,7 +15,7 @@ import Grid from "@material-ui/core/Grid";
 import UserAddForm from "@components/Forms/UserForms/UserAddForm/UserAddForm";
 import SwipeableViews from "react-swipeable-views";
 import {ClassNameMap} from "@material-ui/styles";
-import JobAdAddForm from '@components/Forms/JobAdForms/JobAdAddForm/JobAdAddForm';
+import NewAddForm from '@components/Forms/NewForms/NewAddForm/NewAddForm';
 import ApplicantAddForm
     from "@components/Forms/ApplicantForms/ApplicantAddForm/ApplicantAddForm";
 import CourseAddForm
@@ -127,7 +127,7 @@ export default function MainTabs(props: { isWelcomePage: boolean }) {
                                                     {!!content.title &&
                                                     <MainTitle classes={classes}
                                                                content={content}/>}
-                                                    <JobAdAddForm title={""}/>
+                                                    <NewAddForm title={""}/>
                                                 </div>}
 
                                                 {content.moduleName === 'ApplicantAddForm' &&

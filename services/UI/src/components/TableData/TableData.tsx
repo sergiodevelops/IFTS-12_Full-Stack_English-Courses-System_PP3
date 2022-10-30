@@ -36,8 +36,8 @@ import UserUpdateDeleteForm
 import {queriesEnum} from "@constants/queriesEnum";
 import IUserCreateResDto
     from "@usecases/user/create/IUserCreateResDto";
-import JobAdUpdateDeleteForm
-    from "@components/Forms/JobAdForms/JobAdUpdateDeleteForm/JobAdUpdateDeleteForm";
+import NewUpdateDeleteForm
+    from "@components/Forms/NewForms/NewUpdateDeleteForm/NewUpdateDeleteForm";
 import moment from "moment";
 import ICourseCreateResDto from "@usecases/course/create/ICourseCreateResDto";
 import CourseUpdateDeleteForm
@@ -66,7 +66,7 @@ export default function TableData() {
         |
         INewCreateResDto)[]>([]);
 
-    const paginationDefault = {size: 1, page: 0};
+    const paginationDefault = {size: 10, page: 0};
     const [pagination, setPagination] = useState<IPaginationSetDto>(paginationDefault);
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [arrowPage, setArrowPage] = useState<number>(0);
@@ -272,7 +272,7 @@ export default function TableData() {
                 case (queriesEnum.applicantUsersList):
                     console.log("currentQueryCase",currentQueryCase)
                     setBackColor('#ffb8b8');
-                    newPagination = {size: 1, page: currentPage};
+                    newPagination = {size: 10, page: currentPage};
                     newFilters = [{key: 'tipo_usuario', value: '3'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
@@ -281,7 +281,7 @@ export default function TableData() {
                 case (queriesEnum.clientUsersList):
                     console.log("currentQueryCase",currentQueryCase)
                     setBackColor('#d2e3fd');
-                    newPagination = {size: 1, page: currentPage};
+                    newPagination = {size: 10, page: currentPage};
                     newFilters = [{key: 'tipo_usuario', value: '2'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
@@ -290,7 +290,7 @@ export default function TableData() {
                 case (queriesEnum.administrativoUsersList):
                     console.log("currentQueryCase",currentQueryCase)
                     setBackColor('#ffd5b5');
-                    newPagination = {size: 1, page: currentPage};
+                    newPagination = {size: 10, page: currentPage};
                     newFilters = [{key: 'tipo_usuario', value: '1'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
@@ -299,16 +299,16 @@ export default function TableData() {
                 case (queriesEnum.newsPostsList):
                     // CONSULTA segun TAB VALUE (Anuncios)
                     setBackColor('#fdffb5');
-                    newPagination = {size: 1, page: currentPage};
+                    newPagination = {size: 10, page: currentPage};
                     // newFilters = [{key: 'tipo_usuario', value: '1'}];
                     getAnunciosByFilters(newPagination, newFilters); //JobAds
                     break;
 
-                // GESTION (consulta, modificación, baja)(novedades-news)
+                // GESTION (consulta, modificación, baja)(cursos)
                 case (queriesEnum.coursesPostsList):
-                    // CONSULTA segun TAB VALUE (Anuncios)
+                    // CONSULTA segun TAB VALUE (cursos)
                     setBackColor('#fdffb5');
-                    newPagination = {size: 1, page: currentPage};
+                    newPagination = {size: 10, page: currentPage};
                     // newFilters = [{key: 'tipo_usuario', value: '1'}];
                     getCursosByFilters(newPagination, newFilters); //JobAds
                     break;
@@ -333,20 +333,19 @@ export default function TableData() {
                     currentQueryCase === queriesEnum.administrativoUsersList
                 )
                 &&
-                < UserUpdateDeleteForm row={clickedRow as IUserCreateResDto}/>}
+                <UserUpdateDeleteForm row={clickedRow as IUserCreateResDto}/>}
 
 
                 { // si es consulta de JobAds Info by Filters
                     currentQueryCase === queriesEnum.newsPostsList
                     &&
-                    < JobAdUpdateDeleteForm
+                    <NewUpdateDeleteForm
                         row={clickedRow as INewCreateResDto}/>}
 
                 { // si es consulta de CourseUpdateDelete Info by Filters
                     currentQueryCase === queriesEnum.coursesPostsList
                     &&
-                    < CourseUpdateDeleteForm
-                        row={clickedRow as ICourseCreateResDto}/>}
+                    <CourseUpdateDeleteForm row={clickedRow as ICourseCreateResDto}/>}
             </>
         )
     }

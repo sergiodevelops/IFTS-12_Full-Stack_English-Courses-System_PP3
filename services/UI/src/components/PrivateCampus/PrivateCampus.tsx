@@ -332,7 +332,7 @@ export default function PrivateCampus() {
                             <List>
                                 {[
                                     'GESTIÓN',
-                                    'ALTAS',
+                                    'REGISTRACIÓN',
                                 ].map((text: string, index: number) => (
                                     <ListItem
                                         button

@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect, useState, Fragment} from 'react';
+import {useDispatch} from "react-redux";
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Container from "@material-ui/core/Container";
+import CursoService from "@services/CursoService";
+import AulaService from "@services/AulaService";
 import UsuarioService from "@services/UsuarioService";
 import useStyles from "./styles";
 import layoutActions from "@redux/actions/layoutActions";
@@ -11,13 +13,9 @@ import ICourseCreateResDto
     from "@usecases/course/create/ICourseCreateResDto";
 import ICourseCreateReqDto
     from "@usecases/course/create/ICourseCreateReqDto";
-import CursoService from "@services/CursoService";
-import AulaService from "@services/AulaService";
 import FormControl from "@material-ui/core/FormControl";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from '@mui/material/CircularProgress';
-import userTypes from "@constants/userTypes";
-// import { IsNumber, IsString, IsOptional, ValidateNested, IsNotEmpty, ArrayNotEmpty } from "class-validator";
 import IPaginationSetDto
     from "@usecases/pagination/set/IPaginationSetDto";
 import IFilterSetDto from "@usecases/filter/add/IFilterSetDto";
@@ -25,6 +23,9 @@ import IClassroomFindResDto
     from "@usecases/classroom/find/IClassroomFindResDto";
 import IClassroomCreateResDto
     from "@usecases/classroom/create/IClassroomCreateResDto";
+import IUserCreateResDto from "@usecases/user/create/IUserCreateResDto";
+import IUserFindResDto from "@usecases/user/find/IUserFindResDto";
+import userTypes from "@constants/userTypes";
 
 export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto }) {
 
@@ -37,63 +38,36 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
         CodDocente,
         CodNivel
     } = props.row as ICourseCreateResDto;
-
     const cursoService = new CursoService();
-
     const dispatch = useDispatch();
-    // const coursesListStore = useSelector((state) => state?.courseReducers.coursesList);
     const classes = useStyles();
     const emptyCourseModify: ICourseCreateReqDto = {
         comision: "",
         CodAula: 0,
         CodDocente: 0,
         CodNivel: 0,
-    }
+    };
 
     const [updateQueryCourse, setUpdateQueryCourse] = useState<ICourseCreateReqDto>(emptyCourseModify);
-
     const [updateButtonDisable, setUpdateButtonDisable] = useState(false);
 
-    const handleClickReplaceRow = async () => {
-        const courseToReplace: ICourseCreateReqDto = {
-            comision: updateQueryCourse?.comision, // mapeo para la base, envia un number
-            CodAula: !!updateQueryCourse?.CodAula ? updateQueryCourse?.CodAula :  CodAula,
-            CodDocente: !!updateQueryCourse?.CodDocente ? updateQueryCourse?.CodDocente :  CodDocente,
-            CodNivel: updateQueryCourse?.CodNivel,
-        };
+    const [aulas, setAulas] = useState<(IClassroomCreateResDto)[]>([]);
+    const [aula, setAula] = useState<IClassroomCreateResDto | undefined>(undefined);
+    const [docentes, setDocentes] = useState<(IUserCreateResDto)[]>([]);
+    const [docente, setDocente] = useState<IUserCreateResDto | undefined>(undefined);
+    // const aula: IClassroomCreateResDto = aulas.; //CodAula
+    // const docente: IUserCreateResDto = row; //CodDocente
 
-        cursoService
-            .replace(courseToReplace, CodCurso)
-            .then(createdCourse => {
-                alert(`La información del curso "${updateQueryCourse.CodAula}" se MODIFICÓ correctamente`);
-                dispatch(layoutActions.setOpenModal(false));
-            })
-            .catch(err => {
-                err.then((err: Error) => {
-                        console.error("ERROR en FE", err.message);
-                        alert(`${err.message}`);
-                        dispatch(layoutActions.setOpenModal(false));
-                    }
-                )
-            });
-    };
+    const [queryInProgress, setQueryInProgress] = useState<boolean>(false);
+    const [queryDocenteInProgress, setQueryDocenteInProgress] = useState<boolean>(false);
 
-    const handleClickDeleteRow = async () => {
-        cursoService
-            .delete(CodCurso)
-            .then(createdCourse => {
-                alert(`La información del curso "${updateQueryCourse.CodAula}" se ELIMINÓ correctamente`);
-                dispatch(layoutActions.setOpenModal(false));
-            })
-            .catch(err => {
-                err.then((err: Error) => {
-                        console.error("ERROR en FE", err.message);
-                        alert(`${err.message}`);
-                        dispatch(layoutActions.setOpenModal(false));
-                    }
-                )
-            });
-    };
+
+    useEffect(() => {
+        const newPagination = {size: 10, page: 0};
+        getAulas(newPagination);
+        getDocentesByFilters(newPagination);
+
+    }, []);
 
     useEffect(() => {
         setUpdateQueryCourse({
@@ -105,93 +79,101 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
         });
     }, [row])
 
-    const [aulas, setAulas] = useState<(IClassroomCreateResDto)[]>([]);
-    const [aulaOptions, setAulaOptions] = useState<(IClassroomCreateResDto)[]>([]);
-    const [totalPages, setTotalPages] = useState<number>(0);
-    const [totalItems, setTotalItems] = useState<number>(0);
-    const [currentPage, setCurrentPage] = useState<number>(0);
-    const [selectedPage, setSelectedPage] = useState<number>(0);
-    const [queryInProgress, setQueryInProgress] = useState<boolean>(false);
-    const getAulasByFilters = (
-        pagination?: IPaginationSetDto,
+
+    const handleClickReplaceRow = async () => {
+        const courseToReplace: ICourseCreateReqDto = {
+            comision: updateQueryCourse?.comision, // mapeo para la base, envia un number
+            CodAula: !!updateQueryCourse?.CodAula ? updateQueryCourse?.CodAula :  CodAula,
+            CodDocente: !!updateQueryCourse?.CodDocente ? updateQueryCourse?.CodDocente :  CodDocente,
+            CodNivel: updateQueryCourse?.CodNivel,
+        };
+
+        cursoService
+            .replace(courseToReplace, CodCurso)
+            .then(() => {
+                alert(`La información del curso "${updateQueryCourse.CodAula}" se MODIFICÓ correctamente`);
+                dispatch(layoutActions.setOpenModal(false));
+            })
+            .catch(err => {
+                err.then((err: Error) => {
+                        console.error("ERROR en FE", err.message);
+                        alert(`${err.message}`);
+                        dispatch(layoutActions.setOpenModal(false));
+                    }
+                )
+            });
+    }
+
+    const handleClickDeleteRow = async () => {
+        cursoService
+            .delete(CodCurso)
+            .then(() => {
+                alert(`La información del curso "${updateQueryCourse.CodAula}" se ELIMINÓ correctamente`);
+                dispatch(layoutActions.setOpenModal(false));
+            })
+            .catch(err => {
+                err.then((err: Error) => {
+                        console.error("ERROR en FE", err.message);
+                        alert(`${err.message}`);
+                        dispatch(layoutActions.setOpenModal(false));
+                    }
+                )
+            });
+    }
+
+    const getAulas = async(
+        pagination: IPaginationSetDto,
         filters?: IFilterSetDto[],
     ) => {
         const aulaService = new AulaService();
         setQueryInProgress(true);
 
-        aulaService
-            .findAllByFilters(pagination, filters)
-            .then((response: IClassroomFindResDto) => {
-                // console.log("response", response);
-                const {
-                    classrooms,
-                    totalPages,
-                    totalItems
-                } = response;
-                setAulas(classrooms as IClassroomCreateResDto[]);
-                setTotalPages(totalPages);
-                setTotalItems(totalItems);
-                setCurrentPage(currentPage);
-                setQueryInProgress(false);
-            })
-            .catch((err: any) => {
-                // err.then((err: any) => {
-                console.error("ERROR en FE", err.message);
-                // });
-                setQueryInProgress(false);
-            });
+        let response: IClassroomFindResDto ;
+        response = await aulaService.findAllByFilters(pagination, filters);
+        if(!response) throw Error("No llego info en primer lista");
+
+        let aulas = response.classrooms;
+        const {totalPages, currentPage} = response;
+        if(totalPages > 1){
+            for(let i = currentPage; i < totalPages - 1; i++){
+                pagination = {...pagination, page: i + 1};
+                response = await aulaService.findAllByFilters(pagination, filters);
+                if(!response) throw Error("No llego info en el for");
+                aulas = [...aulas, ...response.classrooms];
+            }
+        }
+        setAulas(aulas);
+        setQueryInProgress(false);
     }
 
-    // useEffect(() => {
-    //     let newPagination;
-    //     let newFilters;
-    //     newPagination = {size: 1, page: currentPage};
-    //     getAulasByFilters(newPagination, newFilters);
-    // }, [currentPage/*, currentQueryCase, modalStateStore*/]);
 
+    const getDocentesByFilters = async(
+        pagination: IPaginationSetDto,
+    ) => {
+        setQueryDocenteInProgress(true);
 
-    const [open, setOpen] = useState(false);
-    const [activeCombo, setActiveCombo] = useState<string>();
-    const loading = open && aulaOptions.length === 0;  // AGREGAR DOCENTE!!! if open && (aulas=0 OR docentes=0)
+        const userService = new UsuarioService();
 
-    React.useEffect(() => {
-        let active = true;
-        let hasMore = true;
-        let newOptions: IClassroomCreateResDto[] = [];
+        let response: IUserFindResDto ;
+        const docentesFilter = [{key: 'tipo_usuario', value: '2'}];
 
-        if (!loading) {
-            return undefined;
-        }
+        response = await userService.findAllByFilters(pagination, docentesFilter);
+        if(!response) throw Error("No llego info en primer lista");
 
-        (async () => {
-            let newPagination = {size: 2, page: selectedPage};
-            let newFilters;
-            
-            if (activeCombo === 'combo-aula') {
-                console.log("Carga Combo-Aula");
-                getAulasByFilters(newPagination, newFilters);
+        let docentes = response.users;
+        const {totalPages, currentPage} = response;
+        if(totalPages > 1){
+            for(let i = currentPage; i < totalPages - 1; i++){
+                pagination = {...pagination, page: i + 1};
+                response = await userService.findAllByFilters(pagination, docentesFilter);
+                if(!response) throw Error("No llego info en el for");
+                docentes = [...docentes, ...response.users];
             }
-
-            // await sleep(1e3); // For demo purposes.
-
-            if (active) {
-                newOptions = [...aulas];
-                setAulaOptions(newOptions);
-            }
-        })();
-
-        return () => {
-            active = false;
-            // setSelectedPage(0);
-        };
-    }, [loading]);
-
-    React.useEffect(() => {
-        if (!open) {
-            setAulaOptions([]);
-            setActiveCombo(undefined);
         }
-    }, [open]);
+        setDocentes(docentes);
+        setQueryDocenteInProgress(false);
+    }
+
 
     return (
         <Container className={classes.container} maxWidth="xs">
@@ -201,22 +183,14 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
                     <h4 className={classes.titulo}>{`Curso ${updateQueryCourse?.CodCurso} ${updateQueryCourse?.comision}`}</h4>
                 </Grid>
                 <Grid item xs={12}>
-                    <FormControl variant="outlined"
-                                 className={classes.formControl}>
+                    <FormControl variant="outlined" className={classes.formControl}>
                         <Autocomplete
                             disableClearable
                             className={`CodAula`}
                             disabled={!updateQueryCourse}
-                            open={open}
-                            onOpen={() => {
-                                setActiveCombo("combo-aula");
-                                setOpen(true);
-                            }}
-                            onClose={() => {
-                                setOpen(false);
-                            }}
-                            options={aulaOptions || []} 
-                            getOptionLabel={(option) => `${option.CodAula} - ${option.capacidad}`|| ""}
+                            options={aulas || []}
+                            getOptionLabel={(option) => `Aula: ${option.CodAula} | Capacidad: ${option.capacidad}`|| ""}
+                            defaultValue={aula ? aula : aulas[0]}
                             onChange={(e: React.ChangeEvent<{}>, selectedOption) => setUpdateQueryCourse({
                                 ...updateQueryCourse,
                                 CodAula: selectedOption?.CodAula || 0,
@@ -232,12 +206,15 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
                                     InputProps={{
                                         ...params.InputProps,
                                         endAdornment: (
-                                          <React.Fragment>
-                                            {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                            {params.InputProps.endAdornment}
-                                          </React.Fragment>
+                                            <Fragment>
+                                                {queryInProgress ?
+                                                    <CircularProgress
+                                                        color="inherit"
+                                                        size={20}/> : null}
+                                                {params.InputProps.endAdornment}
+                                            </Fragment>
                                         ),
-                                      }}
+                                    }}
                                 />}
                         />
                     </FormControl>
@@ -249,8 +226,8 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
                             disableClearable
                             className={`docente`}
                             disabled={!updateQueryCourse}
-                            options={userTypes || []}
-                            getOptionLabel={(option) => option.description || ""}
+                            options={docentes || []}
+                            getOptionLabel={(option) => option.nombre_completo || ""}
                             onChange={(e: React.ChangeEvent<{}>, selectedOption) => setUpdateQueryCourse({
                                 ...updateQueryCourse,
                                 CodDocente: selectedOption?.id || 0,
@@ -263,6 +240,18 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
                                     style={{background: updateQueryCourse.CodDocente !== CodDocente ? '#e8ffe9' : 'inherit'}}
                                     label="Seleccionar Docente"
                                     variant="outlined"
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        endAdornment: (
+                                            <Fragment>
+                                                {queryDocenteInProgress ?
+                                                    <CircularProgress
+                                                        color="inherit"
+                                                        size={20}/> : null}
+                                                {params.InputProps.endAdornment}
+                                            </Fragment>
+                                        ),
+                                    }}
                                 />}
                         />
                     </FormControl>
