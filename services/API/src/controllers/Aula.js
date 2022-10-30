@@ -59,7 +59,7 @@ exports.replace = (req, res) => {
             req.body,
             {where: {CodAula: id}})
         .then(num => {
-            if (num == 1) {
+            if (num == 1 || num == 0) {
                 res.send({
                     message: "Course was updated successfully."
                 });

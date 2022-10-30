@@ -8,6 +8,7 @@ const AnuncioModel = require("./Anuncio");
 const CursoModel = require("./Curso");
 const AulaModel = require("./Aula");
 const IdiomaModel = require("./Idioma");
+const MatriculaModel = require("./Matricula");
 
 let db = {};
 db.Sequelize = Sequelize;
@@ -27,6 +28,7 @@ db.Anuncio = AnuncioModel(sequelize, Sequelize);
 db.Curso = CursoModel(sequelize, Sequelize);
 db.Aula = AulaModel(sequelize, Sequelize);
 db.Idioma = IdiomaModel(sequelize, Sequelize);
+db.Matricula = MatriculaModel(sequelize, Sequelize);
 
 require("./relations")(sequelize.models);
 

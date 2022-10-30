@@ -1,5 +1,5 @@
-const CursoModel = require('../models').Curso;
-const {Aula, usuarios, Idioma} = require('../models');
+const MatriculaModel = require('../models').Matricula;
+const {Curso, usuarios } = require('../models');
 
 const getPagination = (size, page) => {
     const limit = size ? +size : 10;
@@ -8,124 +8,118 @@ const getPagination = (size, page) => {
 };
 
 const getPagingData = (data, page, limit) => {
-    const {count: totalItems, rows: courses} = data;
+    const {count: totalItems, rows: matriculas} = data;
     const currentPage = page ? +page : 0;
     const totalPages = Math.ceil(totalItems / limit);
-    return {totalItems, courses, totalPages, currentPage};
+    return {totalItems, matriculas, totalPages, currentPage};
 };
 
-// ALTA (crea nuevo curso)
+// ALTA (crea nuevo Matricula)
 exports.create = (req, res) => {
-    if (!req.body.CodNivel) {
+    if (!req.body.CodCurso) {
         res.status(400).send({
-            message: "Debe enviar un 'CodNivel' para crear el Curso!"
+            message: "Debe enviar un 'CodCurso' para crear el Matricula!"
         });
         return;
     }
-    if (!req.body.comision) {
+    if (!req.body.Legajo) {
         res.status(400).send({
-            message: "Debe enviar un 'comision' para crear el Curso!"
+            message: "Debe enviar un 'Legajo' para crear el Matricula!"
         });
         return;
     }
 
-    // Create a Curso
-    const newCourse = {
-        CodNivel: req.body.CodNivel,
-        comision: req.body.comision
+    // Create a Matricula
+    const newMatricula = {
+        CodCurso: req.body.CodCurso,
+        Legajo: req.body.Legajo
     };
 
-    // Save Curso in the database if "CodCurso" not exist
-    CursoModel
-        .create(newCourse)
+    // Save Matricula in the database if "CodMatricula" not exist
+    MatriculaModel
+        .create(newMatricula)
         .then(data => {
             res.status(201).send(data);
         })
         .catch(err => {
             res.status(409).send({
-                name: "Duplicate Course Entry",
+                name: "Duplicate Matricula Entry",
                 message: `${err}`
-                // message: `El CodCurso "${req.body.CodNivel}" ya existe, intente con uno diferente.`
             });
         });
 };
 
-// MODIFICACIÓN DE CURSO TOTAL (actualización)
+// MODIFICACIÓN DE Matricula TOTAL (actualización)
 exports.replace = (req, res) => {
     const {id} = req.query;
 
-    CursoModel
+    MatriculaModel
         .update(
             req.body,
-            {where: {CodCurso: id}})
+            {where: {IdMatricula: id}})
         .then(num => {
             if (num == 1 || num == 0) {
                 res.send({
-                    message: "Course was updated successfully."
+                    message: "Matricula was updated successfully."
                 });
             } else {
                 res.send({
-                    message: `Cannot update Tutorial with id=${id}. Maybe Course was not found or req.body is empty!`
+                    message: `Cannot update Tutorial with id=${id}. Maybe Matricula was not found or req.body is empty!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error updating Course with id=" + id
+                message: "Error updating Matricula with id=" + id + err
             });
         });
 };
 
-// BAJA (elimina el CURSO)
+// BAJA (elimina el Matricula)
 exports.delete = (req, res) => {
     const {id} = req.query;
 
-    CursoModel.destroy({
-        where: {CodCurso: id}
+    MatriculaModel.destroy({
+        where: {IdMatricula: id}
     })
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "Course was deleted successfully!" + id
+                    message: "Matricula was deleted successfully!" + id
                 });
             } else {
                 res.send({
-                    message: `Cannot delete Course with id=${id}. Maybe Course was not found!`
+                    message: `Cannot delete Matricula with id=${id}. Maybe Matricula was not found!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete Course with id=" + id
+                message: "Could not delete Matricula with id=" + id
             });
         });
 };
 
-// CONSULTA (obtiene los CURSOS segun filtros)
+// CONSULTA (obtiene los MatriculaS segun filtros)
 exports.findAllByFilters = (req, res) => {
-    let {size, page, CodCurso} = req.query;
-    const userTypeIsValid = (CodCurso > 0 && CodCurso < 4);
-    const condition = CodCurso ? {CodCurso: userTypeIsValid ? CodCurso : null} : null;
+    let {size, page, CodMatricula} = req.query;
+    const userTypeIsValid = (CodMatricula > 0 && CodMatricula < 4);
+    const condition = CodMatricula ? {CodMatricula: userTypeIsValid ? CodMatricula : null} : null;
     const {limit, offset} = getPagination(size, page);
 
-    CursoModel
+    MatriculaModel
         .findAndCountAll({
             where: condition, 
             include: [{
-                model: Aula,
+                model: Curso,
             }, {
                 model: usuarios,
-                as: 'Docente',
+                as: 'Alumno',
                 attributes: ['nombre_completo']
-            }, {
-                model: Idioma,
-                attributes: ['nombre']
             }],
             attributes: {
                 exclude: [
-                    'CodAula',
-                    'CodDocente',
-                    'CodIdioma'
+                    'CodCurso',
                 ]
             },
             raw: true,
@@ -137,7 +131,7 @@ exports.findAllByFilters = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving courses."
+                    err.message || "Some error occurred while retrieving matriculas."
             });
         });
 };

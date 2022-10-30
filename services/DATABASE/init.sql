@@ -186,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Curso`
     `comision`   VARCHAR(10) NULL,
     `CodAula`    INT(10)     NULL,
     `CodIdioma`  INT(10)     NOT NULL DEFAULT 1,
-    `CodDocente` INT(10)     UNSIGNER NULL,
+    `CodDocente` INT(10)     UNSIGNED NULL,
     `CodNivel`   INT(10)     NULL,
     PRIMARY KEY (`CodCurso`),
     CONSTRAINT `AulaCurso`
@@ -291,11 +291,11 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Matricula`
     `fecha`       DATE        NULL,
     `estado`      VARCHAR(20) NULL,
     `CodCurso`    INT(10)     NULL,
-    `Legajo`      INT(10)     NULL,
+    `Legajo`      INT(10) UNSIGNED     NULL,
     PRIMARY KEY (`IdMatricula`),
     CONSTRAINT `AlumnoMatricula`
         FOREIGN KEY (`Legajo`)
-            REFERENCES `InstitutoIdiomas`.`Alumno` (`Legajo`)
+            REFERENCES `InstitutoIdiomas`.`usuarios` (`id`)
             ON DELETE RESTRICT
             ON UPDATE RESTRICT,
     CONSTRAINT `CursoMatricula`
@@ -374,7 +374,7 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Empleado`
 -- Table InstitutoIdiomas.usuarios
 -- ----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`usuarios` (
-                            `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del usuario',
+                            `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del usuario',
                             `tipo_usuario` tinyint NOT NULL COMMENT 'Si el usuario es un postulante =1 , o es un solicitante = 2 , o es Administrativo = 3',
                             `nombre_completo` varchar(50) NOT NULL COMMENT 'Nombres y apellidos del usuario',
                             `username` char(20) NOT NULL COMMENT 'Alias con el que ingresa al sistema',
@@ -388,7 +388,7 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`usuarios` (
 -- Table InstitutoIdiomas.Anuncio
 -- ----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Anuncio` (
-                           `id` int unsigned NOT NULL AUTO_INCREMENT,
+                           `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
                            `titulo` varchar(50) NOT NULL COMMENT 'Descripción resumida del puesto a cubrir',
                            `descripcion` varchar(300) NOT NULL COMMENT 'Breve descripción de las tareas a complir',
                            `fecha_alta` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha en que se da el alta al anuncio',
