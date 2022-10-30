@@ -5,7 +5,7 @@ import { PublicNavBar } from '@components/Pages/PublicHomePage/PublicNavBar/Publ
 import Typography from '@mui/material/Typography';
 import Login from '@components/Pages/Login/Login';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { RootState } from '@redux/reducers/allReducers';
 import NewsPosts from '@components/Pages/NewsPosts/NewsPosts';
 import { Grid } from '@mui/material';
@@ -21,11 +21,14 @@ import {
     presInicio,
     nosotrosInfo,
 } from '@constants/contentData';
+import layoutActions from "@redux/actions/layoutActions";
 
 //!importar datos para  inicio:
 const { titulo, descripcion } = presInicio;
 
-export default function PublicHomePage(): JSX.Element {
+export default function PublicHomePage(props: {isAdmin?: boolean}): JSX.Element {
+    const dispatch = useDispatch();
+
     const homePageTabValueStore = useSelector(
         (state: RootState) => state.layoutReducers.homePageTabValueStore || '0',
     );
@@ -68,6 +71,11 @@ export default function PublicHomePage(): JSX.Element {
     }
 
     useEffect(() => {
+        if (props.isAdmin)
+            dispatch(layoutActions.setHomeTabValue(4));
+    }, [props.isAdmin]);
+
+    useEffect(() => {
         setSesionActiva(userIsLoggedIn);
     }, [userIsLoggedIn]);
 
@@ -83,6 +91,7 @@ export default function PublicHomePage(): JSX.Element {
         <Box className={`${classes.root} DangrekFont`} sx={{ flexGrow: 1 }}>
             {!sesionActiva && <PublicNavBar />}
             <Box id={'inicio'} sx={{ width: '100%' }}>
+                {/* inicio */}
                 <TabPanel value={Number(homeTabValue)} index={0}>
                     <Carousel />
                     {/* cards: */}
@@ -94,6 +103,7 @@ export default function PublicHomePage(): JSX.Element {
                         <ContentInicio {...{titulo, descripcion}}/>
                     </Grid>
                 </TabPanel>
+                {/* nosotros */}
                 <TabPanel value={Number(homeTabValue)} index={1}>
                     <Grid
                         className={`${classes.nosotros} ${classes.content}`}
@@ -103,21 +113,18 @@ export default function PublicHomePage(): JSX.Element {
                         <Nosotros/>
                     </Grid>
                 </TabPanel>
+                {/* novedades */}
                 <TabPanel value={Number(homeTabValue)} index={2}>
                     <NewsPosts {...{ tab: homePageTabValueStore === 2 }} />
                 </TabPanel>
+                {/* contacto */}
                 <TabPanel value={Number(homeTabValue)} index={3}>
                     <Grid item xs={12}>
-                        <Typography
-                            fontFamily={'DangrekFont'}
-                            align={'center'}
-                            variant={'h2'}
-                        >
-                            CONTACTO
-                        </Typography>
+                        <h1 className={classes.contactTitle}>{"Contacto"}</h1>
                         <Building />
                     </Grid>
                 </TabPanel>
+                {/* login sección oculta */}
                 <TabPanel value={Number(homeTabValue)} index={4}>
                     {!sesionActiva ? <Login /> : <PrivateCampus />}
                 </TabPanel>

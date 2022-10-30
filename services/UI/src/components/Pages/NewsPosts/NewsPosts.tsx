@@ -7,6 +7,7 @@ import INewCreateResDto from "@usecases/jobad/create/INewCreateResDto";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
 import useStyles from "./styles";
+import {Item} from "@components/Nosotros/Nosotros";
 
 export default function NewsPosts(props: {tab: boolean}) {
     const classes = useStyles();
@@ -33,11 +34,9 @@ export default function NewsPosts(props: {tab: boolean}) {
         props.tab && getNewsByFilters();
     }, [props.tab])
 
-    return <Grid container justifyItems={"center"}>
+    return <Grid container display={"flex"} justifyContent={"center"} justifyItems={"center"}>
+            <h1 className={classes.newsTitle}>{"Novedades y más"}</h1>
             <Grid item xs={12} >
-                <Typography className={`${classes.uppercase}`} fontFamily={"DangrekFont"} align={"center"} variant={"h2"}>
-                    Novedades y más
-                </Typography>
                 {!newsPosts.length  &&
                     <Typography
                         className={`${classes.msgQueryResults}`}

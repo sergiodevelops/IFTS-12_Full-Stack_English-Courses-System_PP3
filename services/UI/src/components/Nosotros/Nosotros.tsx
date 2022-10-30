@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import {nosotrosInfo} from "@constants/contentData";
 
-const Item = styled(Paper)(({ theme }) => ({
+export const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
     padding: theme.spacing(1),
