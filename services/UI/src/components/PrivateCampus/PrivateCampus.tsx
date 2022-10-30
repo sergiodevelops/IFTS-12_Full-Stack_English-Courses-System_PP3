@@ -158,6 +158,7 @@ export default function PrivateCampus() {
     };
     const handleLogOut = () => {
         handleClose();
+        window.location.href = "/";
         dispatch(userActions.setCurrentAuthenticatedUser(null));
         dispatch(layoutActions.setHomeTabValue(0));
     };
