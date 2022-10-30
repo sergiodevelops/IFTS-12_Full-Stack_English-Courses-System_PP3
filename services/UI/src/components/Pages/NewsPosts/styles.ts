@@ -1,9 +1,12 @@
 import {makeStyles} from '@material-ui/core/styles';
 
 export default makeStyles(theme => ({
-    uppercase: {
-        textTransform: "uppercase",
-   },
+    newsTitle: {
+        ...theme.typography.h4,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
     container: {
         margin: theme.spacing(1),
         backgroundColor: "#4a3bb60f",

@@ -7,11 +7,13 @@ import {
     Routes,
     Route,
     BrowserRouter,
+    Link,
 } from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@redux/reducers/allReducers";
 import {Navigate} from 'react-router-dom';
 import PrivateCampus from "@components/PrivateCampus/PrivateCampus";
+import layoutActions from "@redux/actions/layoutActions";
 
 function App() {
     // usuario esta logueado o no?
@@ -37,6 +39,7 @@ function App() {
             <Routes>
                 <Route path={"/*"} element={<Navigate replace to={"/"}/>}/>
                 <Route path={"/"} element={<PublicHomePage/>}/>
+                <Route path={"/login"} element={<PublicHomePage isAdmin={true}/>}/>
             </Routes>
         </BrowserRouter>
     )
