@@ -15,6 +15,7 @@ import CursoService from "@services/CursoService";
 import AulaService from "@services/AulaService";
 import FormControl from "@material-ui/core/FormControl";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import CircularProgress from '@mui/material/CircularProgress';
 import userTypes from "@constants/userTypes";
 // import { IsNumber, IsString, IsOptional, ValidateNested, IsNotEmpty, ArrayNotEmpty } from "class-validator";
 import IPaginationSetDto
@@ -104,10 +105,12 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
         });
     }, [row])
 
-    const [rows, setRows] = useState<(IClassroomCreateResDto)[]>([]);
+    const [aulas, setAulas] = useState<(IClassroomCreateResDto)[]>([]);
+    const [aulaOptions, setAulaOptions] = useState<(IClassroomCreateResDto)[]>([]);
     const [totalPages, setTotalPages] = useState<number>(0);
     const [totalItems, setTotalItems] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState<number>(0);
+    const [selectedPage, setSelectedPage] = useState<number>(0);
     const [queryInProgress, setQueryInProgress] = useState<boolean>(false);
     const getAulasByFilters = (
         pagination?: IPaginationSetDto,
@@ -125,7 +128,7 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
                     totalPages,
                     totalItems
                 } = response;
-                setRows(classrooms as IClassroomCreateResDto[]);
+                setAulas(classrooms as IClassroomCreateResDto[]);
                 setTotalPages(totalPages);
                 setTotalItems(totalItems);
                 setCurrentPage(currentPage);
@@ -139,13 +142,56 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
             });
     }
 
-    useEffect(() => {
-        // console.log("currentQueryCase",currentQueryCase)
-        let newPagination;
-        let newFilters;
-        newPagination = {size: 1, page: currentPage};
-        getAulasByFilters(newPagination, newFilters);
-    }, [currentPage/*, currentQueryCase, modalStateStore*/]);
+    // useEffect(() => {
+    //     let newPagination;
+    //     let newFilters;
+    //     newPagination = {size: 1, page: currentPage};
+    //     getAulasByFilters(newPagination, newFilters);
+    // }, [currentPage/*, currentQueryCase, modalStateStore*/]);
+
+
+    const [open, setOpen] = useState(false);
+    const [activeCombo, setActiveCombo] = useState<string>();
+    const loading = open && aulaOptions.length === 0;  // AGREGAR DOCENTE!!! if open && (aulas=0 OR docentes=0)
+
+    React.useEffect(() => {
+        let active = true;
+        let hasMore = true;
+        let newOptions: IClassroomCreateResDto[] = [];
+
+        if (!loading) {
+            return undefined;
+        }
+
+        (async () => {
+            let newPagination = {size: 2, page: selectedPage};
+            let newFilters;
+            
+            if (activeCombo === 'combo-aula') {
+                console.log("Carga Combo-Aula");
+                getAulasByFilters(newPagination, newFilters);
+            }
+
+            // await sleep(1e3); // For demo purposes.
+
+            if (active) {
+                newOptions = [...aulas];
+                setAulaOptions(newOptions);
+            }
+        })();
+
+        return () => {
+            active = false;
+            // setSelectedPage(0);
+        };
+    }, [loading]);
+
+    React.useEffect(() => {
+        if (!open) {
+            setAulaOptions([]);
+            setActiveCombo(undefined);
+        }
+    }, [open]);
 
     return (
         <Container className={classes.container} maxWidth="xs">
@@ -161,7 +207,15 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
                             disableClearable
                             className={`CodAula`}
                             disabled={!updateQueryCourse}
-                            options={rows || []} 
+                            open={open}
+                            onOpen={() => {
+                                setActiveCombo("combo-aula");
+                                setOpen(true);
+                            }}
+                            onClose={() => {
+                                setOpen(false);
+                            }}
+                            options={aulaOptions || []} 
                             getOptionLabel={(option) => `${option.CodAula} - ${option.capacidad}`|| ""}
                             onChange={(e: React.ChangeEvent<{}>, selectedOption) => setUpdateQueryCourse({
                                 ...updateQueryCourse,
@@ -175,6 +229,15 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
                                     style={{background: updateQueryCourse.CodAula !== CodAula ? '#e8ffe9' : 'inherit'}}
                                     label="Seleccionar Aula"
                                     variant="outlined"
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        endAdornment: (
+                                          <React.Fragment>
+                                            {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                            {params.InputProps.endAdornment}
+                                          </React.Fragment>
+                                        ),
+                                      }}
                                 />}
                         />
                     </FormControl>
@@ -198,7 +261,7 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
                                     {...params}
                                     error={!updateQueryCourse?.CodDocente}
                                     style={{background: updateQueryCourse.CodDocente !== CodDocente ? '#e8ffe9' : 'inherit'}}
-                                    label="Seleccionar una opción"
+                                    label="Seleccionar Docente"
                                     variant="outlined"
                                 />}
                         />
