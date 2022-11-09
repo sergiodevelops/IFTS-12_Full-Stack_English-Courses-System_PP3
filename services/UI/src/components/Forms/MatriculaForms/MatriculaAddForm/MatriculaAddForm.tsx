@@ -6,21 +6,23 @@ import Container from "@material-ui/core/Container";
 import useStyles from "./styles";
 import Typography from "@mui/material/Typography";
 import IMatriculaCreateReqDto from "@usecases/matricula/create/IMatriculaCreateReqDto";
-import CursoService from "@services/CursoService";
 import FormControl from "@material-ui/core/FormControl";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import IPaginationSetDto from "@usecases/pagination/set/IPaginationSetDto";
-import UsuarioService from "@services/UsuarioService";
 import IUserFindResDto from "@usecases/user/find/IUserFindResDto";
 import IUserCreateResDto from "@usecases/user/create/IUserCreateResDto";
 import ICoursesFindResDto from "@usecases/course/find/ICoursesFindResDto";
 import ICourseCreateResDto from "@usecases/course/create/ICourseCreateResDto";
 import IFilterSetDto from "@usecases/filter/add/IFilterSetDto";
-import AulaService from "@services/AulaService";
+import UsuarioService from "@services/UsuarioService";
+import MatriculaService from "@services/MatriculaService";
+import CursoService from "@services/CursoService";
+import IMatriculaCreateResDto
+    from "@usecases/matricula/create/IMatriculaCreateResDto";
 
 export default function MatriculaAddForm(props: { title: string }) {
-    const matriculaAddService = new CursoService();
+    const matriculaAddService = new MatriculaService();
 
     const buttonRef = useRef<HTMLButtonElement>(null);
     const classes = useStyles();
@@ -31,11 +33,9 @@ export default function MatriculaAddForm(props: { title: string }) {
     const [newMatricula, setNewMatricula] = useState<IMatriculaCreateReqDto>(emptyMatricula);
 
     const [cursos, setCursos] = useState<(ICourseCreateResDto)[]>([]);
-    const [curso, setCurso] = useState<ICourseCreateResDto | undefined>(undefined);
 
     const [alumnos, setAlumnos] = useState<(IUserCreateResDto)[]>([]);
-    const [alumno, setAlumno] = useState<IUserCreateResDto | undefined>(undefined);
-    
+
     const [queryCursoInProgress, setQueryCursoInProgress] = useState<boolean>(false);
     const [queryDocenteInProgress, setQueryDocenteInProgress] = useState<boolean>(false);
 
@@ -78,8 +78,8 @@ export default function MatriculaAddForm(props: { title: string }) {
 
         matriculaAddService
             .create(newMatriculaPost as IMatriculaCreateReqDto)
-            .then(createdMatricula => {
-                alert(`El curso para "${createdMatricula.CodNivel}" se persistió correctamente`);
+            .then((createdMatricula: IMatriculaCreateResDto) => {
+                alert(`Se matriculó el alumno "${createdMatricula["Alumno.nombre_completo"]}" al curso "${createdMatricula["Curso.CodCurso"]}-${createdMatricula["Curso.comision"]}"`);
                 cleanInputValues();
             })
             .catch(err => {
@@ -95,7 +95,7 @@ export default function MatriculaAddForm(props: { title: string }) {
         pagination: IPaginationSetDto,
         filters?: IFilterSetDto[],
     ) => {
-        const cursoService = new AulaService();
+        const cursoService = new CursoService();
         setQueryCursoInProgress(true);
 
         let response: ICoursesFindResDto ;
@@ -124,7 +124,7 @@ export default function MatriculaAddForm(props: { title: string }) {
         const userService = new UsuarioService();
 
         let response: IUserFindResDto ;
-        const alumnosFilter = [{key: 'tipo_usuario', value: '2'}];
+        const alumnosFilter = [{key: 'tipo_usuario', value: '3'}];
 
         response = await userService.findAllByFilters(pagination, alumnosFilter);
         if(!response) throw Error("No llego info en primer lista");
@@ -206,7 +206,6 @@ export default function MatriculaAddForm(props: { title: string }) {
                                     className={`alumno`}
                                     options={alumnos || []}
                                     getOptionLabel={(option) => option.nombre_completo || ""}
-                                    defaultValue={alumno ? alumno : alumnos[0]}
                                     onChange={(e: React.ChangeEvent<{}>, selectedOption) => setNewMatricula({
                                         ...newMatricula,
                                         Legajo: selectedOption?.id || 0,
