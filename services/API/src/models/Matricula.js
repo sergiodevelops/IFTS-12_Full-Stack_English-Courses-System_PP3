@@ -9,11 +9,13 @@ module.exports = function(sequelize, DataTypes) {
     },
     fecha: {
       type: DataTypes.DATEONLY,
-      allowNull: true
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.fn('curdate')
     },
     estado: {
-      type: DataTypes.STRING(20),
-      allowNull: true
+      type: DataTypes.STRING(30),
+      allowNull: true,
+      defaultValue: "activo"
     },
     CodCurso: {
       type: DataTypes.INTEGER,

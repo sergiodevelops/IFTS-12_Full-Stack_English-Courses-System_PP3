@@ -288,8 +288,8 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Aula`
 CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Matricula`
 (
     `IdMatricula` INT(10)     NOT NULL AUTO_INCREMENT,
-    `fecha`       DATE        NULL,
-    `estado`      VARCHAR(20) NULL,
+    `fecha`       date        DEFAULT (CURRENT_DATE),
+    `estado`      varchar(30) default 'activo',
     `CodCurso`    INT(10)     NULL,
     `Legajo`      INT(10) UNSIGNED     NULL,
     PRIMARY KEY (`IdMatricula`),
