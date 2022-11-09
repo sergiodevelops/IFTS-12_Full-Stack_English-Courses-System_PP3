@@ -345,7 +345,7 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Idioma`
     `CodIdioma` INT(10)     NOT NULL AUTO_INCREMENT,
     `nombre`    VARCHAR(50) NULL,
     PRIMARY KEY (`CodIdioma`),
-    INDEX `idioma` (`idioma` ASC) VISIBLE
+    INDEX `idioma` (`nombre` ASC) VISIBLE
 );
 
 -- ----------------------------------------------------------------------------
@@ -406,9 +406,9 @@ INSERT INTO `InstitutoIdiomas`.`Aula` (`CodAula`, `capacidad`) VALUES
 ON DUPLICATE KEY UPDATE `CodAula` = VALUES(`CodAula`), `capacidad` = VALUES(`capacidad`);
 
 # ----------------------------------------------------
-INSERT INTO `InstitutoIdiomas`.`Idioma` (`CodIdioma`, `idioma`) VALUES
+INSERT INTO `InstitutoIdiomas`.`Idioma` (`CodIdioma`, `nombre`) VALUES
     (1,	'INGLES')
-ON DUPLICATE KEY UPDATE `CodIdioma` = VALUES(`CodIdioma`), `idioma` = VALUES(`idioma`);
+ON DUPLICATE KEY UPDATE `CodIdioma` = VALUES(`CodIdioma`), `nombre` = VALUES(`nombre`);
 
 # ----------------------------------------------------
 SET FOREIGN_KEY_CHECKS = 1;

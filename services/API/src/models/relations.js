@@ -19,6 +19,6 @@ module.exports = function(models) {
     // matricula
     models.usuarios.hasMany(models.Matricula, {foreignKey: "Legajo"})
     models.Matricula.belongsTo(models.usuarios, {as: "Alumno", foreignKey: "Legajo", scope: { tipo_usuario: 3 }});
-    models.Matricula.hasMany(models.Curso, {foreignKey: "CodCurso"})
+    models.Matricula.hasOne(models.Curso, {foreignKey: "CodCurso"})
     models.Curso.belongsTo(models.Matricula, {foreignKey: "CodCurso"});
   };

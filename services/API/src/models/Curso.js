@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('Curso', {
     CodCurso: {
@@ -19,9 +20,9 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     CodIdioma: {
-      defaultValue: 1,
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: 1,
       references: {
         model: 'Idioma',
         key: 'CodIdioma'

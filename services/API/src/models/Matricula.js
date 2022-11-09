@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('Matricula', {
     IdMatricula: {
@@ -12,8 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     estado: {
       type: DataTypes.STRING(20),
-      allowNull: true,
-      defaultValue: "ACTIVO"
+      allowNull: true
     },
     CodCurso: {
       type: DataTypes.INTEGER,
