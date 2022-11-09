@@ -16,11 +16,11 @@ import UserAddForm from "@components/Forms/UserForms/UserAddForm/UserAddForm";
 import SwipeableViews from "react-swipeable-views";
 import {ClassNameMap} from "@material-ui/styles";
 import NewAddForm from '@components/Forms/NewForms/NewAddForm/NewAddForm';
-import ApplicantAddForm
-    from "@components/Forms/ApplicantForms/ApplicantAddForm/ApplicantAddForm";
 import CourseAddForm
     from "@components/Forms/CourseForms/CourseAddForm/CourseAddForm";
 import NewsPosts from "@components/Pages/NewsPosts/NewsPosts";
+import MatriculaAddForm
+    from "@components/Forms/MatriculaForms/MatriculaAddForm/MatriculaAddForm";
 
 function MainTitle(props: { classes: ClassNameMap<"objetivo" | "singlePageContentList" | "vision" | "parrafo" | "welcomeTitle" | "root" | "nosotros" | "spaTitle" | "mision" | "backImage">, content: ISinglePageContentDto }) {
     return <Typography variant={"h4"}
@@ -130,20 +130,20 @@ export default function MainTabs(props: { isWelcomePage: boolean }) {
                                                     <NewAddForm title={""}/>
                                                 </div>}
 
-                                                {content.moduleName === 'ApplicantAddForm' &&
-                                                <div>
-                                                    {!!content.title &&
-                                                    <MainTitle classes={classes}
-                                                               content={content}/>}
-                                                    <ApplicantAddForm title={""}/>
-                                                </div>}
-
                                                 {content.moduleName === 'CourseAddForm' &&
                                                 <div>
                                                     {!!content.title &&
                                                     <MainTitle classes={classes}
                                                                content={content}/>}
                                                     <CourseAddForm title={""}/>
+                                                </div>}
+
+                                                {content.moduleName === 'MatriculaAddForm' &&
+                                                <div>
+                                                    {!!content.title &&
+                                                    <MainTitle classes={classes}
+                                                               content={content}/>}
+                                                    <MatriculaAddForm title={""}/>
                                                 </div>}
 
                                                 {content.moduleName === 'Mision' &&

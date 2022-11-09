@@ -82,6 +82,7 @@ export default function SubMenuTabs() {
                                 'Usuarios',
                                 'Anuncios',
                                 'Cursos',
+                                'Matrículas',
                             ].map((text: string, index: number) => (
                                 <ListItem
                                     button

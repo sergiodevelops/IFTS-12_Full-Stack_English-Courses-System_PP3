@@ -42,6 +42,11 @@ export const singlePageContentList = [
         body: "",
         moduleName: "CourseAddForm",
     },
+    {
+        title: "Alta de Matrículas",
+        body: "",
+        moduleName: "MatriculaAddForm",
+    },
 
     /*{
         title: "Misión",
