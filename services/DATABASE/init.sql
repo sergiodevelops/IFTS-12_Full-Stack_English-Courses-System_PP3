@@ -189,6 +189,7 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Curso`
     `CodDocente` INT(10)     UNSIGNED NULL,
     `CodNivel`   INT(10)     NULL,
     PRIMARY KEY (`CodCurso`),
+    UNIQUE KEY `Nivel_comision` (`CodNivel`,`comision`),
     CONSTRAINT `AulaCurso`
         FOREIGN KEY (`CodAula`)
             REFERENCES `InstitutoIdiomas`.`Aula` (`CodAula`)
@@ -289,10 +290,11 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Matricula`
 (
     `IdMatricula` INT(10)     NOT NULL AUTO_INCREMENT,
     `fecha`       date        DEFAULT (CURRENT_DATE),
-    `estado`      varchar(30) default 'activo',
+    `estado`      varchar(30) DEFAULT 'ACTIVO',
     `CodCurso`    INT(10)     NULL,
     `Legajo`      INT(10) UNSIGNED     NULL,
     PRIMARY KEY (`IdMatricula`),
+    UNIQUE KEY `Curso_Legajo` (`CodCurso`,`Legajo`),
     CONSTRAINT `AlumnoMatricula`
         FOREIGN KEY (`Legajo`)
             REFERENCES `InstitutoIdiomas`.`usuarios` (`id`)

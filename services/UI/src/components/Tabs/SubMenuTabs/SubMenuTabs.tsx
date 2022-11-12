@@ -38,6 +38,15 @@ export default function SubMenuTabs() {
     };
     const colorCurrentButtonMenu = '#d6001c';
 
+    const gestionOptions = [
+        'Alumnos',
+        'Docentes',
+        'Administrativos',
+        'Anuncios',
+        'Cursos',
+        'Matrículas',
+    ];
+
     return (
         <Box
             sx={{
@@ -46,20 +55,14 @@ export default function SubMenuTabs() {
             }}
         >
             <TabContext value={subMenuTab}>
-                {/*SubMenues de CONSULTAS [0 a 3]*/}
+                {/*SubMenues de CONSULTAS [0 a 6]*/}
                 <SwipeableViews index={parseInt(subMenuTab)} className={classes.subMenuItems}>
 
-                    {/*SubMenues de GESTIÓN (edición y borrado) [0 a 5]*/}
+                    {/*SubMenues de GESTIÓN (edición y borrado) [0 a 6]*/}
                     <TabPanel tabIndex={parseInt(subMenuTab)} value="0">
                         <Typography align={"center"}>GESTIÓN</Typography>
                         <List>
-                            {[
-                                'Alumnos',
-                                'Docentes',
-                                'Administrativos',
-                                'Anuncios',
-                                'Cursos',
-                            ].map((text, index) => (
+                            {gestionOptions.map((text: string, index: number) => (
                                 <ListItem
                                     button
                                     key={`${text}-${index}`}
@@ -74,7 +77,7 @@ export default function SubMenuTabs() {
                         </List>
                     </TabPanel>
 
-                    {/*SubMenues de ALTAS [6 a 8]*/}
+                    {/*SubMenues de REGISTRACION [7 a 10]*/}
                     <TabPanel tabIndex={parseInt(subMenuTab)} value="1">
                         <Typography align={"center"}>ALTAS</Typography>
                         <List>
@@ -88,10 +91,10 @@ export default function SubMenuTabs() {
                                     button
                                     key={`${text}-${index}`}
                                     style={{
-                                        background: mainTabValue && index+5 === parseInt(mainTabValue) ?
+                                        background: mainTabValue && index + gestionOptions.length === parseInt(mainTabValue) ?
                                             colorCurrentButtonMenu : 'inherit',
                                     }}
-                                    onClick={() => handleClickMenu(index+5)}
+                                    onClick={() => handleClickMenu(index + gestionOptions.length)}
                                 >
                                     <ListItemText primary={text}/>
                                 </ListItem>
@@ -99,28 +102,28 @@ export default function SubMenuTabs() {
                         </List>
                     </TabPanel>
 
-                    {/*SubMenues de ABM [9 a 12]*/}
+                    {/*SubMenues de REGISTRACION [7 a 10]*/}
                     <TabPanel tabIndex={parseInt(subMenuTab)} value="2">
-                        <Typography align={"center"}>GESTIÓN</Typography>
-                        <List>
-                            {[
-                                'MISIÓN',
-                                'VISIÓN',
-                                'OBJETIVO',
-                                'NOSOTROS',
-                            ].map((text: string, index: number) => (
-                                <ListItem
-                                    button
-                                    key={`${text}-${index}`}
-                                    style={{
-                                        background: mainTabValue &&  index+9 === parseInt(mainTabValue) ? colorCurrentButtonMenu : 'inherit',
-                                    }}
-                                    onClick={() => handleClickMenu(index+9)}
-                                >
-                                    <ListItemText primary={text}/>
-                                </ListItem>
-                            ))}
-                        </List>
+                        {/*<Typography align={"center"}>GESTIÓN</Typography>
+                         <List>
+                         {[
+                         'MISIÓN',
+                         'VISIÓN',
+                         'OBJETIVO',
+                         'NOSOTROS',
+                         ].map((text: string, index: number) => (
+                         <ListItem
+                         button
+                         key={`${text}-${index}`}
+                         style={{
+                         background: mainTabValue &&  index+9 === parseInt(mainTabValue) ? colorCurrentButtonMenu : 'inherit',
+                         }}
+                         onClick={() => handleClickMenu(index+9)}
+                         >
+                         <ListItemText primary={text}/>
+                         </ListItem>
+                         ))}
+                         </List>*/}
                     </TabPanel>
 
                 </SwipeableViews>

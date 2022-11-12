@@ -44,7 +44,7 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(409).send({
                 name: "Duplicate Matricula Entry",
-                message: `${err}`
+                message: "Este alumno ya se encuentra matrículado al curso"
             });
         });
 };

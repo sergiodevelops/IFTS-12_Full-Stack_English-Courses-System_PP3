@@ -1,5 +1,5 @@
 export const singlePageContentList = [
-    // 0 a 5
+    // 0 a 6
     {
         title: "Gestión de Alumnos",
         body: "",
@@ -25,8 +25,13 @@ export const singlePageContentList = [
         body: "",
         moduleName: "TableData",
     },
+    {
+        title: "Gestión de Matrículas",
+        body: "",
+        moduleName: "TableData",
+    },
 
-    // 6 a 8
+    // 7 a 10
     {
         title: "Alta de Usuarios",
         body: "",

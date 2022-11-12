@@ -58,6 +58,8 @@ export default function MatriculaAddForm(props: { title: string }) {
     }, [buttonRef]);
 
     const cleanInputValues = () => {
+        setCursos([]);
+        setAlumnos([]);
         setNewMatricula(emptyMatricula);
     }
 
@@ -79,7 +81,8 @@ export default function MatriculaAddForm(props: { title: string }) {
         matriculaAddService
             .create(newMatriculaPost as IMatriculaCreateReqDto)
             .then((createdMatricula: IMatriculaCreateResDto) => {
-                alert(`Se matriculó el alumno "${createdMatricula["Alumno.nombre_completo"]}" al curso "${createdMatricula["Curso.CodCurso"]}-${createdMatricula["Curso.comision"]}"`);
+                console.log("createdMatricula", createdMatricula)
+                alert(`Se matriculó exitosamente al alumno"`);
                 cleanInputValues();
             })
             .catch(err => {
@@ -167,7 +170,7 @@ export default function MatriculaAddForm(props: { title: string }) {
                                 <Autocomplete
                                     disableClearable
                                     className={`CodCurso`}
-                                    options={cursos || []}
+                                    options={cursos}
                                     getOptionLabel={(option) => `Curso: ${option.CodCurso} | Comisión: ${option.comision}`|| ""}
                                     onChange={(e: React.ChangeEvent<{}>, selectedOption) => setNewMatricula({
                                         ...newMatricula,
@@ -178,7 +181,7 @@ export default function MatriculaAddForm(props: { title: string }) {
                                         <TextField
                                             {...params}
                                             error={!newMatricula?.CodCurso}
-                                            label="Seleccionar Aula"
+                                            label="Seleccionar Curso"
                                             variant="outlined"
                                             InputProps={{
                                                 ...params.InputProps,
@@ -206,7 +209,8 @@ export default function MatriculaAddForm(props: { title: string }) {
                                     className={`alumno`}
                                     options={alumnos || []}
                                     getOptionLabel={(option) => option.nombre_completo || ""}
-                                    onChange={(e: React.ChangeEvent<{}>, selectedOption) => setNewMatricula({
+                                    onChange={(e: React.ChangeEvent<{}>, selectedOption) =>
+                                        setNewMatricula({
                                         ...newMatricula,
                                         Legajo: selectedOption?.id || 0,
                                     })}
@@ -215,7 +219,7 @@ export default function MatriculaAddForm(props: { title: string }) {
                                         <TextField
                                             {...params}
                                             error={!newMatricula?.Legajo}
-                                            label="Seleccionar Docente"
+                                            label="Seleccionar Alumno"
                                             variant="outlined"
                                             InputProps={{
                                                 ...params.InputProps,

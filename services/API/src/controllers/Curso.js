@@ -44,8 +44,7 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(409).send({
                 name: "Duplicate Course Entry",
-                message: `${err}`
-                // message: `El CodCurso "${req.body.CodNivel}" ya existe, intente con uno diferente.`
+                message: `El Curso "${req.body.CodNivel}-${req.body.comision}" ya existe, intente con uno diferente.`
             });
         });
 };

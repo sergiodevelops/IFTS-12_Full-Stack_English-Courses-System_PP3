@@ -9,10 +9,7 @@ import AulaService from "@services/AulaService";
 import UsuarioService from "@services/UsuarioService";
 import useStyles from "./styles";
 import layoutActions from "@redux/actions/layoutActions";
-import ICourseCreateResDto
-    from "@usecases/course/create/ICourseCreateResDto";
-import ICourseCreateReqDto
-    from "@usecases/course/create/ICourseCreateReqDto";
+import IMatriculaCreateReqDto from "@usecases/matricula/create/IMatriculaCreateReqDto";
 import FormControl from "@material-ui/core/FormControl";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -26,29 +23,22 @@ import IClassroomCreateResDto
 import IUserCreateResDto from "@usecases/user/create/IUserCreateResDto";
 import IUserFindResDto from "@usecases/user/find/IUserFindResDto";
 import userTypes from "@constants/userTypes";
+import IMatriculaCreateResDto from "@usecases/matricula/create/IMatriculaCreateResDto";
+import MatriculaService from "@services/MatriculaService";
+import matriculaStates from "@constants/matriculaStates";
 
-export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto }) {
-
+export default function MatriculaUpdateDeleteForm(props: { row: any }) {
+    const {IdMatricula} = props.row;
     const title = "Modificar o eliminar";
     const row = props;
-    const {
-        CodCurso,
-        comision,
-        CodAula,
-        CodDocente,
-        CodNivel
-    } = props.row as ICourseCreateResDto;
-    const cursoService = new CursoService();
+    const matriculaService = new MatriculaService();
     const dispatch = useDispatch();
     const classes = useStyles();
-    const emptyCourseModify: ICourseCreateReqDto = {
-        comision: "",
-        CodAula: 0,
-        CodDocente: 0,
-        CodNivel: 0,
+    const emptyMatriculaModify: any = {
+        estado: "",
     };
 
-    const [updateQueryCourse, setUpdateQueryCourse] = useState<ICourseCreateReqDto>(emptyCourseModify);
+    const [updateQueryMatricula, setUpdateQueryMatricula] = useState<any>(emptyMatriculaModify);
     const [updateButtonDisable, setUpdateButtonDisable] = useState(false);
 
     const [aulas, setAulas] = useState<(IClassroomCreateResDto)[]>([]);
@@ -60,6 +50,13 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
 
     const [queryInProgress, setQueryInProgress] = useState<boolean>(false);
     const [queryDocenteInProgress, setQueryDocenteInProgress] = useState<boolean>(false);
+    const matriculaState = React.useState(matriculaStates.map(
+        (matriculaState: string) => {
+            if (matriculaState.toLowerCase() === props.row.estado.toLowerCase())
+                return (matriculaState);
+            return "";
+        }
+    ));
 
 
     useEffect(() => {
@@ -70,28 +67,29 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
     }, []);
 
     useEffect(() => {
-        setUpdateQueryCourse({
-            comision,
-            CodAula,
-            CodDocente,
-            CodNivel,
-            CodCurso,
+        setUpdateQueryMatricula({
+            IdMatricula: props.row.IdMatricula,
+            fecha: props.row.fecha,
+            estado: props.row.estado,
+            CodCurso: props.row.CodCurso,
+            Legajo: props.row.Legajo,
         });
     }, [row])
 
 
     const handleClickReplaceRow = async () => {
-        const courseToReplace: ICourseCreateReqDto = {
-            comision: updateQueryCourse?.comision, // mapeo para la base, envia un number
-            CodAula: !!updateQueryCourse?.CodAula ? updateQueryCourse?.CodAula :  CodAula,
-            CodDocente: !!updateQueryCourse?.CodDocente ? updateQueryCourse?.CodDocente :  CodDocente,
-            CodNivel: updateQueryCourse?.CodNivel,
+        const matriculaToReplace: any = {
+            IdMatricula: props.row.IdMatricula,
+            fecha: props.row.fecha,
+            estado: updateQueryMatricula?.estado || props.row.estado,
+            CodCurso: props.row.CodCurso,
+            Legajo: props.row.Legajo,
         };
 
-        cursoService
-            .replace(courseToReplace, CodCurso)
+        matriculaService
+            .replace(matriculaToReplace, IdMatricula)
             .then(() => {
-                alert(`La información del curso "${updateQueryCourse.CodAula}" se MODIFICÓ correctamente`);
+                alert(`La información del curso "${updateQueryMatricula.CodAula}" se MODIFICÓ correctamente`);
                 dispatch(layoutActions.setOpenModal(false));
             })
             .catch(err => {
@@ -104,22 +102,6 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
             });
     }
 
-    const handleClickDeleteRow = async () => {
-        cursoService
-            .delete(CodCurso)
-            .then(() => {
-                alert(`La información del curso "${updateQueryCourse.CodAula}" se ELIMINÓ correctamente`);
-                dispatch(layoutActions.setOpenModal(false));
-            })
-            .catch(err => {
-                err.then((err: Error) => {
-                        console.error("ERROR en FE", err.message);
-                        alert(`${err.message}`);
-                        dispatch(layoutActions.setOpenModal(false));
-                    }
-                )
-            });
-    }
 
     const getAulas = async(
         pagination: IPaginationSetDto,
@@ -180,27 +162,27 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
             <Grid>
                 <Grid item xs={12}>
                     <h3 className={classes.titulo}>{title}</h3>
-                    <h4 className={classes.titulo}>{`Curso ${updateQueryCourse?.CodCurso} ${updateQueryCourse?.comision}`}</h4>
+                    <h4 className={classes.titulo}>{`Curso ${updateQueryMatricula?.CodCurso} ${updateQueryMatricula?.comision}`}</h4>
                 </Grid>
                 <Grid item xs={12}>
                     <FormControl variant="outlined" className={classes.formControl}>
                         <Autocomplete
                             disableClearable
-                            className={`CodAula`}
-                            disabled={!updateQueryCourse}
-                            options={aulas || []}
-                            getOptionLabel={(option) => `Aula: ${option.CodAula} | Capacidad: ${option.capacidad}`|| ""}
-                            defaultValue={aula ? aula : aulas[0]}
-                            onChange={(e: React.ChangeEvent<{}>, selectedOption) => setUpdateQueryCourse({
-                                ...updateQueryCourse,
-                                CodAula: selectedOption?.CodAula || 0,
+                            className={`matriculaState`}
+                            disabled={!updateQueryMatricula}
+                            options={matriculaStates || []}
+                            getOptionLabel={(option) => `Estado: ${option}`|| ""}
+                            value={updateQueryMatricula.estado}
+                            onChange={(e: React.ChangeEvent<{}>, selectedOption) => setUpdateQueryMatricula({
+                                ...updateQueryMatricula,
+                                estado: selectedOption || 0,
                             })}
                             style={{width: 300}}
                             renderInput={(params) =>
                                 <TextField
                                     {...params}
-                                    error={!updateQueryCourse?.CodAula}
-                                    style={{background: updateQueryCourse.CodAula !== CodAula ? '#e8ffe9' : 'inherit'}}
+                                    error={!updateQueryMatricula?.CodAula}
+                                    style={{background: updateQueryMatricula.IdMatricula !== IdMatricula ? '#e8ffe9' : 'inherit'}}
                                     label="Seleccionar Aula"
                                     variant="outlined"
                                     InputProps={{
@@ -208,43 +190,6 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
                                         endAdornment: (
                                             <Fragment>
                                                 {queryInProgress ?
-                                                    <CircularProgress
-                                                        color="inherit"
-                                                        size={20}/> : null}
-                                                {params.InputProps.endAdornment}
-                                            </Fragment>
-                                        ),
-                                    }}
-                                />}
-                        />
-                    </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                    <FormControl variant="outlined"
-                                 className={classes.formControl}>
-                        <Autocomplete
-                            disableClearable
-                            className={`docente`}
-                            disabled={!updateQueryCourse}
-                            options={docentes || []}
-                            getOptionLabel={(option) => option.nombre_completo || ""}
-                            onChange={(e: React.ChangeEvent<{}>, selectedOption) => setUpdateQueryCourse({
-                                ...updateQueryCourse,
-                                CodDocente: selectedOption?.id || 0,
-                            })}
-                            style={{width: 300}}
-                            renderInput={(params) =>
-                                <TextField
-                                    {...params}
-                                    error={!updateQueryCourse?.CodDocente}
-                                    style={{background: updateQueryCourse.CodDocente !== CodDocente ? '#e8ffe9' : 'inherit'}}
-                                    label="Seleccionar Docente"
-                                    variant="outlined"
-                                    InputProps={{
-                                        ...params.InputProps,
-                                        endAdornment: (
-                                            <Fragment>
-                                                {queryDocenteInProgress ?
                                                     <CircularProgress
                                                         color="inherit"
                                                         size={20}/> : null}
@@ -266,15 +211,6 @@ export default function CourseUpdateDeleteForm(props: { row: ICourseCreateResDto
                             disabled={updateButtonDisable}
                         >
                             modificar
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            color={"secondary"}
-                            fullWidth type="submit" variant="contained"
-                            onClick={handleClickDeleteRow}
-                        >
-                            eliminar
                         </Button>
                     </Grid>
                 </Grid>
