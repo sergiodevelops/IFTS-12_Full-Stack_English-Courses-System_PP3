@@ -21,16 +21,21 @@ import CursoService from "@services/CursoService";
 import IMatriculaCreateResDto
     from "@usecases/matricula/create/IMatriculaCreateResDto";
 
+type IMatriculaResDto = {
+    curso: ICourseCreateResDto | undefined,
+    alumno: IUserCreateResDto | undefined,
+}
+
 export default function MatriculaAddForm(props: { title: string }) {
     const matriculaAddService = new MatriculaService();
 
     const buttonRef = useRef<HTMLButtonElement>(null);
     const classes = useStyles();
-    const emptyMatricula: IMatriculaCreateReqDto = {
-        CodCurso: 0,
-        Legajo: 0,
+    const emptyMatricula: IMatriculaResDto = {
+        curso: undefined,
+        alumno: undefined,
     };
-    const [newMatricula, setNewMatricula] = useState<IMatriculaCreateReqDto>(emptyMatricula);
+    const [newMatricula, setNewMatricula] = useState<IMatriculaResDto>(emptyMatricula);
 
     const [cursos, setCursos] = useState<(ICourseCreateResDto)[]>([]);
 
@@ -58,24 +63,22 @@ export default function MatriculaAddForm(props: { title: string }) {
     }, [buttonRef]);
 
     const cleanInputValues = () => {
-        setCursos([]);
-        setAlumnos([]);
         setNewMatricula(emptyMatricula);
     }
 
     const saveMatricula = async () => {
         let message;
         if (
-            !newMatricula.CodCurso ||
-            !newMatricula.Legajo
+            !newMatricula.curso?.CodCurso ||
+            !newMatricula.alumno?.id
         ) {
             message = "Por favor complete los campos requeridos";
             alert(message);
             return;
         }
         const newMatriculaPost: IMatriculaCreateReqDto = {
-            CodCurso: newMatricula.CodCurso,
-            Legajo: newMatricula.Legajo,
+            CodCurso: newMatricula.curso?.CodCurso,
+            Legajo: newMatricula.alumno?.id,
         };
 
         matriculaAddService
@@ -168,19 +171,25 @@ export default function MatriculaAddForm(props: { title: string }) {
                         <Grid item xs={12}>
                             <FormControl variant="outlined" className={classes.formControl}>
                                 <Autocomplete
+                                    key={`curso`}
+                                    className={`curso`}
                                     disableClearable
-                                    className={`CodCurso`}
-                                    options={cursos}
-                                    getOptionLabel={(option) => `Curso: ${option.CodCurso} | Comisión: ${option.comision}`|| ""}
-                                    onChange={(e: React.ChangeEvent<{}>, selectedOption) => setNewMatricula({
+                                    value={newMatricula.curso as ICourseCreateResDto || ""}
+                                    options={cursos || []}
+                                    getOptionLabel={(option) =>
+                                        option.CodCurso && option.comision &&
+                                        `Curso: ${option.CodCurso} | Comisión: ${option.comision}` || ""
+                                    }
+                                    onChange={(e: React.ChangeEvent<{}>, selectedOption) =>
+                                        setNewMatricula({
                                         ...newMatricula,
-                                        CodCurso: selectedOption?.CodCurso || 0,
+                                        curso: selectedOption,
                                     })}
                                     style={{width: 300}}
                                     renderInput={(params) =>
                                         <TextField
                                             {...params}
-                                            error={!newMatricula?.CodCurso}
+                                            error={!newMatricula?.curso?.CodCurso}
                                             label="Seleccionar Curso"
                                             variant="outlined"
                                             InputProps={{
@@ -205,20 +214,22 @@ export default function MatriculaAddForm(props: { title: string }) {
                             <FormControl variant="outlined"
                                          className={classes.formControl}>
                                 <Autocomplete
-                                    disableClearable
+                                    key={`alumno`}
                                     className={`alumno`}
+                                    disableClearable
+                                    value={newMatricula.alumno as IUserCreateResDto || ""}
                                     options={alumnos || []}
                                     getOptionLabel={(option) => option.nombre_completo || ""}
                                     onChange={(e: React.ChangeEvent<{}>, selectedOption) =>
                                         setNewMatricula({
                                         ...newMatricula,
-                                        Legajo: selectedOption?.id || 0,
+                                        alumno: selectedOption,
                                     })}
                                     style={{width: 300}}
                                     renderInput={(params) =>
                                         <TextField
                                             {...params}
-                                            error={!newMatricula?.Legajo}
+                                            error={!newMatricula?.alumno?.id}
                                             label="Seleccionar Alumno"
                                             variant="outlined"
                                             InputProps={{
@@ -248,8 +259,8 @@ export default function MatriculaAddForm(props: { title: string }) {
                             color={"primary"}
                             fullWidth type="submit" variant="contained"
                             disabled={
-                                !newMatricula.CodCurso ||
-                                !newMatricula.Legajo
+                                !newMatricula.curso?.CodCurso ||
+                                !newMatricula.alumno?.id
                             }
                             onClick={saveMatricula}
                         >
