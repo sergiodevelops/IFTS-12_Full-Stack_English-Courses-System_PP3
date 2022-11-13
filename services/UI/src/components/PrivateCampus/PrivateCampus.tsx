@@ -287,7 +287,6 @@ export default function PrivateCampus() {
                         '& .MuiDrawer-paper': {
                             color: "white",
                             backgroundColor: "#3f51b5",
-                            // width: drawerWidth, //culo
                             boxSizing: 'border-box',
                         },
                     }}
