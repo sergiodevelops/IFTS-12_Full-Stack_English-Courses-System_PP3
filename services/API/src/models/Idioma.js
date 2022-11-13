@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('Idioma', {
     CodIdioma: {
@@ -24,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "nombre",
+        name: "idioma",
         using: "BTREE",
         fields: [
           { name: "nombre" },

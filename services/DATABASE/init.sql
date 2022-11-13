@@ -186,9 +186,10 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Curso`
     `comision`   VARCHAR(10) NULL,
     `CodAula`    INT(10)     NULL,
     `CodIdioma`  INT(10)     NOT NULL DEFAULT 1,
-    `CodDocente` INT(10)     UNSIGNER NULL,
+    `CodDocente` INT(10)     UNSIGNED NULL,
     `CodNivel`   INT(10)     NULL,
     PRIMARY KEY (`CodCurso`),
+    UNIQUE KEY `Nivel_comision` (`CodNivel`,`comision`),
     CONSTRAINT `AulaCurso`
         FOREIGN KEY (`CodAula`)
             REFERENCES `InstitutoIdiomas`.`Aula` (`CodAula`)
@@ -288,14 +289,15 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Aula`
 CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Matricula`
 (
     `IdMatricula` INT(10)     NOT NULL AUTO_INCREMENT,
-    `fecha`       DATE        NULL,
-    `estado`      VARCHAR(20) NULL,
+    `fecha`       date        DEFAULT (CURRENT_DATE),
+    `estado`      varchar(30) DEFAULT 'ACTIVO',
     `CodCurso`    INT(10)     NULL,
-    `Legajo`      INT(10)     NULL,
+    `Legajo`      INT(10) UNSIGNED     NULL,
     PRIMARY KEY (`IdMatricula`),
+    UNIQUE KEY `Curso_Legajo` (`CodCurso`,`Legajo`),
     CONSTRAINT `AlumnoMatricula`
         FOREIGN KEY (`Legajo`)
-            REFERENCES `InstitutoIdiomas`.`Alumno` (`Legajo`)
+            REFERENCES `InstitutoIdiomas`.`usuarios` (`id`)
             ON DELETE RESTRICT
             ON UPDATE RESTRICT,
     CONSTRAINT `CursoMatricula`
@@ -345,7 +347,7 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Idioma`
     `CodIdioma` INT(10)     NOT NULL AUTO_INCREMENT,
     `nombre`    VARCHAR(50) NULL,
     PRIMARY KEY (`CodIdioma`),
-    INDEX `idioma` (`idioma` ASC) VISIBLE
+    INDEX `idioma` (`nombre` ASC) VISIBLE
 );
 
 -- ----------------------------------------------------------------------------
@@ -374,7 +376,7 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Empleado`
 -- Table InstitutoIdiomas.usuarios
 -- ----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`usuarios` (
-                            `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del usuario',
+                            `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del usuario',
                             `tipo_usuario` tinyint NOT NULL COMMENT 'Si el usuario es un postulante =1 , o es un solicitante = 2 , o es Administrativo = 3',
                             `nombre_completo` varchar(50) NOT NULL COMMENT 'Nombres y apellidos del usuario',
                             `username` char(20) NOT NULL COMMENT 'Alias con el que ingresa al sistema',
@@ -388,7 +390,7 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`usuarios` (
 -- Table InstitutoIdiomas.Anuncio
 -- ----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Anuncio` (
-                           `id` int unsigned NOT NULL AUTO_INCREMENT,
+                           `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
                            `titulo` varchar(50) NOT NULL COMMENT 'Descripción resumida del puesto a cubrir',
                            `descripcion` varchar(300) NOT NULL COMMENT 'Breve descripción de las tareas a complir',
                            `fecha_alta` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha en que se da el alta al anuncio',
@@ -406,9 +408,9 @@ INSERT INTO `InstitutoIdiomas`.`Aula` (`CodAula`, `capacidad`) VALUES
 ON DUPLICATE KEY UPDATE `CodAula` = VALUES(`CodAula`), `capacidad` = VALUES(`capacidad`);
 
 # ----------------------------------------------------
-INSERT INTO `InstitutoIdiomas`.`Idioma` (`CodIdioma`, `idioma`) VALUES
+INSERT INTO `InstitutoIdiomas`.`Idioma` (`CodIdioma`, `nombre`) VALUES
     (1,	'INGLES')
-ON DUPLICATE KEY UPDATE `CodIdioma` = VALUES(`CodIdioma`), `idioma` = VALUES(`idioma`);
+ON DUPLICATE KEY UPDATE `CodIdioma` = VALUES(`CodIdioma`), `nombre` = VALUES(`nombre`);
 
 # ----------------------------------------------------
 SET FOREIGN_KEY_CHECKS = 1;
