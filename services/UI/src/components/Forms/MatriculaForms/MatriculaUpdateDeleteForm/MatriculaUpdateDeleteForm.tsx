@@ -89,7 +89,7 @@ export default function MatriculaUpdateDeleteForm(props: { row: any }) {
         matriculaService
             .replace(matriculaToReplace, IdMatricula)
             .then(() => {
-                alert(`La información del curso "${updateQueryMatricula.CodAula}" se MODIFICÓ correctamente`);
+                alert(`La matricula se actualizó exitosamente`);
                 dispatch(layoutActions.setOpenModal(false));
             })
             .catch(err => {
@@ -173,7 +173,8 @@ export default function MatriculaUpdateDeleteForm(props: { row: any }) {
                             options={matriculaStates || []}
                             getOptionLabel={(option) => `Estado: ${option}`|| ""}
                             value={updateQueryMatricula.estado}
-                            onChange={(e: React.ChangeEvent<{}>, selectedOption) => setUpdateQueryMatricula({
+                            onChange={(e: React.ChangeEvent<{}>, selectedOption) =>
+                                setUpdateQueryMatricula({
                                 ...updateQueryMatricula,
                                 estado: selectedOption || 0,
                             })}
