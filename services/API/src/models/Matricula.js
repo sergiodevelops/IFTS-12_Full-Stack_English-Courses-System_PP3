@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
     estado: {
       type: DataTypes.STRING(30),
       allowNull: true,
-      defaultValue: "activo"
+      defaultValue: "ACTIVO"
     },
     CodCurso: {
       type: DataTypes.INTEGER,

@@ -33,8 +33,8 @@ app.use(logger('dev'));
 DB
     .sequelize
     // .query('SET FOREIGN_KEY_CHECKS=0', {raw: true}) //MODO desarrollo
-    .sync({force: false}) //MODO produccion
     // .sync({force: true}); //MODO desarrollo
+    .sync({force: false}) //MODO produccion
     .catch((error) => {
         console.log('el error es:', error)
     });

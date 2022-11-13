@@ -1,4 +1,4 @@
-module.exports = function(models) {
+module.exports = function (models) {
     // setup relations
 
     // models.Usuario.belongsTo(models.Persona, { /*as: "IdPersona_Persona",*/ foreignKey: "IdPersona"});
@@ -9,16 +9,54 @@ module.exports = function(models) {
     // models.Persona.hasOne(models.Docente, { /*as: "Docente",*/ foreignKey: "IdPersona"});
 
     // curso
-    models.usuarios.hasMany(models.Curso, {foreignKey: "CodDocente"});
-    models.Curso.belongsTo(models.usuarios, {as: "Docente", foreignKey: "CodDocente", scope: { tipo_usuario: 2 }});
-    models.Aula.hasMany(models.Curso, {foreignKey: "CodAula"})
-    models.Curso.belongsTo(models.Aula, {foreignKey: "CodAula"});
-    models.Idioma.hasMany(models.Curso, {foreignKey: "CodIdioma"})
-    models.Curso.belongsTo(models.Idioma, {foreignKey: "CodIdioma"});
+    models.usuarios.hasMany(
+        models.Curso, {
+            foreignKey: "CodDocente"
+        });
+    models.Curso.belongsTo(
+        models.usuarios, {
+            as: "Docente",
+            foreignKey: "CodDocente",
+            scope: {
+                tipo_usuario: 2
+            }
+        });
+    models.Aula.hasMany(
+        models.Curso, {
+            foreignKey: "CodAula"
+        });
+    models.Curso.belongsTo(
+        models.Aula, {
+            foreignKey: "CodAula"
+        });
+    models.Idioma.hasMany(
+        models.Curso, {
+            foreignKey: "CodIdioma"
+        });
+    models.Curso.belongsTo(
+        models.Idioma, {
+            foreignKey: "CodIdioma"
+        });
 
     // matricula
-    models.usuarios.hasMany(models.Matricula, {foreignKey: "Legajo"})
-    models.Matricula.belongsTo(models.usuarios, {as: "Alumno", foreignKey: "Legajo", scope: { tipo_usuario: 3 }});
-    models.Matricula.hasOne(models.Curso, {foreignKey: "CodCurso"})
-    models.Curso.belongsTo(models.Matricula, {foreignKey: "CodCurso"});
-  };
+    models.usuarios.hasMany(
+        models.Matricula, {
+            foreignKey: "Legajo",
+        });
+    models.Matricula.belongsTo(
+        models.usuarios, {
+            as: "Alumno",
+            foreignKey: "Legajo",
+            scope: {
+                tipo_usuario: 3,
+            }
+        });
+    models.Curso.hasMany(
+        models.Matricula, {
+            foreignKey: "CodCurso",
+        });
+    models.Matricula.belongsTo(
+        models.Curso, {
+            foreignKey: "CodCurso",
+        });
+};
