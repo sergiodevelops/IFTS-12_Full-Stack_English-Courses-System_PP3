@@ -1,5 +1,5 @@
 import INewsCreateResDto
-    from "@usecases/jobad/create/INewCreateResDto";
+    from "@usecases/new/create/INewCreateResDto";
 
 export default interface INewsFindResDto {
     totalItems: number; // size (items per page)

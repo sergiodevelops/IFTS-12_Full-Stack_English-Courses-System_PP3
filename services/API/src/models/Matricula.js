@@ -1,48 +1,41 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Curso', {
-    CodCurso: {
+  return sequelize.define('Matricula', {
+    IdMatricula: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    comision: {
-      type: DataTypes.STRING(10),
-      allowNull: true
+    fecha: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.fn('curdate')
     },
-    CodAula: {
+    estado: {
+      type: DataTypes.STRING(30),
+      allowNull: true,
+      defaultValue: "ACTIVO"
+    },
+    CodCurso: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'Aula',
-        key: 'CodAula'
+        model: 'Curso',
+        key: 'CodCurso'
       }
     },
-    CodIdioma: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 1,
-      references: {
-        model: 'Idioma',
-        key: 'CodIdioma'
-      }
-    },
-    CodDocente: {
+    Legajo: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
       references: {
         model: 'usuarios',
         key: 'id'
       }
-    },
-    CodNivel: {
-      type: DataTypes.INTEGER,
-      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'Curso',
+    tableName: 'Matricula',
     timestamps: false,
     indexes: [
       {
@@ -50,28 +43,21 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
+          { name: "IdMatricula" },
+        ]
+      },
+      {
+        name: "AlumnoMatricula",
+        using: "BTREE",
+        fields: [
+          { name: "Legajo" },
+        ]
+      },
+      {
+        name: "CursoMatricula",
+        using: "BTREE",
+        fields: [
           { name: "CodCurso" },
-        ]
-      },
-      {
-        name: "AulaCurso",
-        using: "BTREE",
-        fields: [
-          { name: "CodAula" },
-        ]
-      },
-      {
-        name: "DocenteCurso",
-        using: "BTREE",
-        fields: [
-          { name: "CodDocente" },
-        ]
-      },
-      {
-        name: "IdiomaCurso",
-        using: "BTREE",
-        fields: [
-          { name: "CodIdioma" },
         ]
       },
     ]

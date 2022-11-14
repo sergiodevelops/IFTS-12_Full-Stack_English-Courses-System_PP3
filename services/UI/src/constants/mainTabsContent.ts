@@ -1,5 +1,5 @@
 export const singlePageContentList = [
-    // 0 a 3
+    // 0 a 6
     {
         title: "Gestión de Alumnos",
         body: "",
@@ -20,8 +20,18 @@ export const singlePageContentList = [
         body: "",
         moduleName: "NewsPosts",
     },
+    {
+        title: "Gestión de Cursos",
+        body: "",
+        moduleName: "TableData",
+    },
+    {
+        title: "Gestión de Matrículas",
+        body: "",
+        moduleName: "TableData",
+    },
 
-    // 4 a 5
+    // 7 a 10
     {
         title: "Alta de Usuarios",
         body: "",
@@ -31,6 +41,16 @@ export const singlePageContentList = [
         title: "Alta de Anuncios",
         body: "",
         moduleName: "JobAdAddForm",
+    },
+    {
+        title: "Alta de Cursos",
+        body: "",
+        moduleName: "CourseAddForm",
+    },
+    {
+        title: "Alta de Matrículas",
+        body: "",
+        moduleName: "MatriculaAddForm",
     },
 
     /*{

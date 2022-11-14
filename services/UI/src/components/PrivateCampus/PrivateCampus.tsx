@@ -226,7 +226,9 @@ export default function PrivateCampus() {
                         </div>
 
                         <Typography variant="h6" noWrap component="div">
-                            {loggedUser?.nombre_completo} ({currentUserType})
+                            <>
+                                {loggedUser?.nombre_completo} ({currentUserType})
+                            </>
                         </Typography>
                         {loggedUser && (
                             <div>
@@ -285,7 +287,6 @@ export default function PrivateCampus() {
                         '& .MuiDrawer-paper': {
                             color: "white",
                             backgroundColor: "#3f51b5",
-                            width: drawerWidth,
                             boxSizing: 'border-box',
                         },
                     }}
@@ -331,7 +332,7 @@ export default function PrivateCampus() {
                             <List>
                                 {[
                                     'GESTIÓN',
-                                    'ALTAS',
+                                    'REGISTRACIÓN',
                                 ].map((text: string, index: number) => (
                                     <ListItem
                                         button
@@ -349,6 +350,22 @@ export default function PrivateCampus() {
                                         <ListItemText primary={text}/>
                                     </ListItem>
                                 ))}
+
+                                <ListItem
+                                    button
+                                    key={`grafana`}
+                                    /*style={{
+                                        background: index === parseInt(subMenuTabValue) ?
+                                            colorCurrentButtonMenu :
+                                            "inherit",
+                                    }}*/
+                                    onClick={() => window.open("http://grafana-pp3.herokuapp.com/")}
+                                >
+                                    {/*<ListItemIcon>
+                                     {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
+                                     </ListItemIcon>*/}
+                                    <ListItemText primary={`REPORTES`}/>
+                                </ListItem>
                             </List>
                         }
                     </div>
