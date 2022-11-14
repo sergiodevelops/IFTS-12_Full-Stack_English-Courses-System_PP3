@@ -7,12 +7,12 @@ import Container from "@material-ui/core/Container";
 import useStyles from "./styles";
 import layoutActions from "@redux/actions/layoutActions";
 import INewCreateResDto
-    from "@usecases/jobad/create/INewCreateResDto";
+    from "@usecases/new/create/INewCreateResDto";
 import AnuncioService from "@services/AnuncioService";
 import INewsCreateReqDto
-    from "@usecases/jobad/create/INewsCreateReqDto";
+    from "@usecases/new/create/INewsCreateReqDto";
 
-export default function JobAdUpdateDeleteForm(props: { row: INewCreateResDto }) {
+export default function NewUpdateDeleteForm(props: { row: INewCreateResDto }) {
     const title = "Modificar o eliminar";
     const row = props;
     const {

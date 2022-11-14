@@ -75,7 +75,7 @@ exports.replace = (req, res) => {
             req.body,
             {where: {id: id}})
         .then(num => {
-            if (num == 1) {
+            if (num == 1 || num == 0) {
                 res.send({
                     message: "User was updated successfully."
                 });
@@ -205,7 +205,7 @@ exports.update = (req, res) => {
     Usuario
         .update(req.body, {where: {id: id}})
         .then(data => {
-            if (data == 1) {
+            if (num == 1 || num == 0) {
                 res.send({
                     message: "User was updated successfully."
                 });
