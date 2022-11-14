@@ -1,26 +1,35 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(() => ({
-    root:{},
+    root:{
+        padding: "1.2rem"
+    },
     queryTable:{
         textAlign: 'center',
     },
-    tableHeaderRow:{
+    headerTableRow:{
+        background: '#dee6ff',
+
         fontSize: "14px",
         fontWeight: 'bold',
     },
-    tableBodyRow:{
+    valuesTableRow:{
         minHeight: '6%',
         cursor:'pointer',
         '&:hover':{
             outline: '-webkit-focus-ring-color auto 1px',
-            background: '#eef1ffc4',
+            background: 'rgba(188,255,233,0.39)',
         },
     },
-    tableBodyCell:{
+    tableCell:{
         display:'flex',
         justifyContent:'center',
-        alignItems:'center',
+        alignItems:'start',
+        wordBreak: "break-word",
+        borderWidth: "1px",
+        borderStyle: "solid",
+        padding: "5px",
+        borderColor: "#a8b1ff",
     },
     arrowChangeQueryPage:{
         display: 'flex',

@@ -5,16 +5,13 @@ import IUserLoginReqDto
 import IPaginationSetDto
     from "@usecases/pagination/set/IPaginationSetDto";
 import IFilterSetDto from "@usecases/filter/add/IFilterSetDto";
-import IUserUpdateReqDto
-    from "@usecases/user/update/IUserUpdateReqDto";
-import IUserDeleteReqDto
-    from "@usecases/user/delete/IUserDeleteReqDto";
-import IApplicantCreateResDto
-    from "@usecases/applicant/create/IApplicantCreateResDto";
 import IApplicantCreateReqDto
     from "@usecases/applicant/create/IApplicantCreateReqDto";
 import INewsCreateReqDto
-    from "@usecases/jobad/create/INewsCreateReqDto";
+    from "@usecases/new/create/INewsCreateReqDto";
+import ICourseCreateReqDto from "@usecases/course/create/ICourseCreateReqDto";
+import IMatriculaCreateReqDto
+    from "@usecases/matricula/create/IMatriculaCreateReqDto";
 
 type ApiResponse = {
     name: string;
@@ -46,7 +43,12 @@ export default class BaseService {
         return this.headers;
     }
 
-    async create(baseModel: IUserCreateReqDto | IApplicantCreateReqDto | INewsCreateReqDto) {
+    async create(baseModel: IUserCreateReqDto
+        | IApplicantCreateReqDto
+        | INewsCreateReqDto
+        | ICourseCreateReqDto
+        | IMatriculaCreateReqDto
+    ) {
         const url = `${this.api_url}/${this.getResource()}/create`;
 
         const params = {
@@ -151,7 +153,11 @@ export default class BaseService {
     }
 
     async replace(
-        baseModel:  IUserCreateReqDto | IApplicantCreateReqDto | INewsCreateReqDto,
+        baseModel:  IUserCreateReqDto
+            | IApplicantCreateReqDto
+            | INewsCreateReqDto
+            | ICourseCreateReqDto
+            | IMatriculaCreateReqDto,
         userId: number) {
         let url = new URL(`${this.api_url}/${this.getResource()}`);
         url.searchParams.append('id', userId.toString());

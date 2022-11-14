@@ -1,5 +1,4 @@
-const CursoModel = require('../models').Curso;
-const {Aula, usuarios, Idioma} = require('../models');
+const IdiomaModel = require('../models').Idioma;
 
 const getPagination = (size, page) => {
     const limit = size ? +size : 10;
@@ -18,25 +17,25 @@ const getPagingData = (data, page, limit) => {
 exports.create = (req, res) => {
     if (!req.body.CodNivel) {
         res.status(400).send({
-            message: "Debe enviar un 'CodNivel' para crear el Curso!"
+            message: "Debe enviar un 'CodNivel' para crear el Idioma!"
         });
         return;
     }
     if (!req.body.comision) {
         res.status(400).send({
-            message: "Debe enviar un 'comision' para crear el Curso!"
+            message: "Debe enviar un 'comision' para crear el Idioma!"
         });
         return;
     }
 
-    // Create a Curso
+    // Create a Idioma
     const newCourse = {
         CodNivel: req.body.CodNivel,
         comision: req.body.comision
     };
 
-    // Save Curso in the database if "CodCurso" not exist
-    CursoModel
+    // Save Idioma in the database if "CodIdioma" not exist
+    IdiomaModel
         .create(newCourse)
         .then(data => {
             res.status(201).send(data);
@@ -44,7 +43,8 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(409).send({
                 name: "Duplicate Course Entry",
-                message: `El Curso "${req.body.CodNivel}-${req.body.comision}" ya existe, intente con uno diferente.`
+                message: `${err}`
+                // message: `El CodIdioma "${req.body.CodNivel}" ya existe, intente con uno diferente.`
             });
         });
 };
@@ -53,10 +53,10 @@ exports.create = (req, res) => {
 exports.replace = (req, res) => {
     const {id} = req.query;
 
-    CursoModel
+    IdiomaModel
         .update(
             req.body,
-            {where: {CodCurso: id}})
+            {where: {CodIdioma: id}})
         .then(num => {
             if (num == 1 || num == 0) {
                 res.send({
@@ -79,8 +79,8 @@ exports.replace = (req, res) => {
 exports.delete = (req, res) => {
     const {id} = req.query;
 
-    CursoModel.destroy({
-        where: {CodCurso: id}
+    IdiomaModel.destroy({
+        where: {CodIdioma: id}
     })
         .then(num => {
             if (num == 1) {
@@ -102,33 +102,13 @@ exports.delete = (req, res) => {
 
 // CONSULTA (obtiene los CURSOS segun filtros)
 exports.findAllByFilters = (req, res) => {
-    let {size, page, CodCurso} = req.query;
-    const userTypeIsValid = (CodCurso > 0 && CodCurso < 4);
-    const condition = CodCurso ? {CodCurso: userTypeIsValid ? CodCurso : null} : null;
+    let {size, page, CodIdioma} = req.query;
+    const userTypeIsValid = (CodIdioma > 0 && CodIdioma < 4);
+    const condition = CodIdioma ? {CodIdioma: userTypeIsValid ? CodIdioma : null} : null;
     const {limit, offset} = getPagination(size, page);
 
-    CursoModel
-        .findAndCountAll({
-            where: condition, 
-            include: [{
-                model: Aula,
-            }, {
-                model: usuarios,
-                as: 'Docente',
-                attributes: ['nombre_completo']
-            }, {
-                model: Idioma,
-                attributes: ['nombre']
-            }],
-            attributes: {
-                exclude: [
-                    'CodAula',
-                    'CodDocente',
-                    'CodIdioma'
-                ]
-            },
-            raw: true,
-            limit, offset})
+    IdiomaModel
+        .findAndCountAll({where: condition, limit, offset})
         .then(data => {
             const response = getPagingData(data, page, limit);
             res.send(response);
