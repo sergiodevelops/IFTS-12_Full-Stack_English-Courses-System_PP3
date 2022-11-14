@@ -7,6 +7,8 @@ const PersonaModel = require("./Persona");
 const AnuncioModel = require("./Anuncio");
 const CursoModel = require("./Curso");
 const AulaModel = require("./Aula");
+const IdiomaModel = require("./Idioma");
+const MatriculaModel = require("./Matricula");
 
 let db = {};
 db.Sequelize = Sequelize;
@@ -25,8 +27,9 @@ db.Persona = PersonaModel(sequelize, Sequelize);
 db.Anuncio = AnuncioModel(sequelize, Sequelize);
 db.Curso = CursoModel(sequelize, Sequelize);
 db.Aula = AulaModel(sequelize, Sequelize);
+db.Idioma = IdiomaModel(sequelize, Sequelize);
+db.Matricula = MatriculaModel(sequelize, Sequelize);
 
-db.Persona.hasOne(db.Usuario, {foreignKey: 'IdPersona'})
-db.Usuario.belongsTo(db.Persona, {foreignKey: 'IdPersona'})
+require("./relations")(sequelize.models);
 
 module.exports = db;

@@ -13,6 +13,7 @@ const getPagingData = (data, page, limit) => {
     return {totalItems, classrooms, totalPages, currentPage};
 };
 
+/*
 // ALTA (crea nuevo curso)
 exports.create = (req, res) => {
     if (!req.body.CodNivel) {
@@ -58,7 +59,7 @@ exports.replace = (req, res) => {
             req.body,
             {where: {CodAula: id}})
         .then(num => {
-            if (num == 1) {
+            if (num == 1 || num == 0) {
                 res.send({
                     message: "Course was updated successfully."
                 });
@@ -99,6 +100,7 @@ exports.delete = (req, res) => {
             });
         });
 };
+*/
 
 // CONSULTA (obtiene los CURSOS segun filtros)
 exports.findAllByFilters = (req, res) => {

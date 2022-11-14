@@ -12,7 +12,7 @@ import AnuncioService from "@services/AnuncioService";
 import INewsCreateReqDto
     from "@usecases/new/create/INewsCreateReqDto";
 
-export default function JobAdUpdateDeleteForm(props: { row: INewCreateResDto }) {
+export default function NewUpdateDeleteForm(props: { row: INewCreateResDto }) {
     const title = "Modificar o eliminar";
     const row = props;
     const {

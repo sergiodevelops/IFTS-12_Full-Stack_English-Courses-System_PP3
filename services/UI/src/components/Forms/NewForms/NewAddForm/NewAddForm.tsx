@@ -9,7 +9,7 @@ import INewsCreateReqDto
     from "@usecases/new/create/INewsCreateReqDto";
 import AnuncioService from "@services/AnuncioService";
 
-export default function ApplicantAddForm(props: { title: string }) {
+export default function NewAddForm(props: { title: string }) {
     const jobAdService = new AnuncioService();
 
     const buttonRef = useRef<HTMLButtonElement>(null);

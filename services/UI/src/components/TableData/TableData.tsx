@@ -21,6 +21,7 @@ import Spinner from "@components/ModalSpinner/Spinner/Spinner";
 import AlumnoService from "@services/AlumnoService";
 import AnuncioService from "@services/AnuncioService";
 import CursoService from "@services/CursoService";
+import MatriculaService from "@services/MatriculaService";
 import IApplicantFindResDto
     from "@usecases/applicant/find/IApplicantFindResDto";
 import INewsFindResDto
@@ -36,12 +37,18 @@ import UserUpdateDeleteForm
 import {queriesEnum} from "@constants/queriesEnum";
 import IUserCreateResDto
     from "@usecases/user/create/IUserCreateResDto";
-import JobAdUpdateDeleteForm
-    from "@components/Forms/JobAdForms/JobAdUpdateDeleteForm/JobAdUpdateDeleteForm";
+import NewUpdateDeleteForm
+    from "@components/Forms/NewForms/NewUpdateDeleteForm/NewUpdateDeleteForm";
 import moment from "moment";
 import ICourseCreateResDto from "@usecases/course/create/ICourseCreateResDto";
 import CourseUpdateDeleteForm
     from "@components/Forms/CourseForms/CourseUpdateDeleteForm/CourseUpdateDeleteForm";
+import IMatriculaFindResDto
+    from "@usecases/matricula/find/IMatriculaFindResDto";
+import IMatriculaCreateResDto
+    from "@usecases/matricula/create/IMatriculaCreateResDto";
+import MatriculaUpdateDeleteForm
+    from "@components/Forms/MatriculaForms/MatriculaUpdateDeleteForm/MatriculaUpdateDeleteForm";
 
 
 
@@ -58,15 +65,19 @@ export default function TableData() {
 
     const currentMainTabHeight = useSelector((state: RootState) => state.layoutReducers);
     const [minHeightTable, setMinHeightTable] = useState<number>(600);
-    const [rows, setRows] = useState<(IUserCreateResDto
+    const [rows, setRows] = useState<(
+        IUserCreateResDto
         |
         IApplicantCreateResDto
         |
         ICourseCreateResDto
         |
-        INewCreateResDto)[]>([]);
+        INewCreateResDto
+        |
+        IMatriculaCreateResDto
+        )[]>([]);
 
-    const paginationDefault = {size: 1, page: 0};
+    const paginationDefault = {size: 10, page: 0};
     const [pagination, setPagination] = useState<IPaginationSetDto>(paginationDefault);
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [arrowPage, setArrowPage] = useState<number>(0);
@@ -209,6 +220,38 @@ export default function TableData() {
             });
     }
 
+    const getMatriculas = (
+        pagination?: IPaginationSetDto,
+        filters?: IFilterSetDto[],
+    ) => {
+        const matriculaService = new MatriculaService();
+        setQueryInProgress(true);
+
+        matriculaService
+            .findAllByFilters(pagination, filters)
+            .then((response: IMatriculaFindResDto) => {
+                // console.log("response", response);
+                const {
+                    matriculas,
+                    totalPages,
+                    totalItems
+                } = response;
+                // if (!!news.length) {
+                    setRows(matriculas as IMatriculaCreateResDto[]);
+                    setTotalPages(totalPages);
+                    setTotalItems(totalItems);
+                    setCurrentPage(currentPage);
+                // }
+                setQueryInProgress(false);
+            })
+            .catch((err: any) => {
+                // err.then((err: any) => {
+                console.error("ERROR en FE", err.message);
+                // });
+                setQueryInProgress(false);
+            });
+    }
+
     const handleTableBodyRowClick = (row: any) => {
         setClickedRow(row);
         // setCurrentForm(<UserUpdateDeleteForm row={clickedRow}/>);
@@ -272,7 +315,7 @@ export default function TableData() {
                 case (queriesEnum.applicantUsersList):
                     console.log("currentQueryCase",currentQueryCase)
                     setBackColor('#ffb8b8');
-                    newPagination = {size: 1, page: currentPage};
+                    newPagination = {size: 10, page: currentPage};
                     newFilters = [{key: 'tipo_usuario', value: '3'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
@@ -281,7 +324,7 @@ export default function TableData() {
                 case (queriesEnum.clientUsersList):
                     console.log("currentQueryCase",currentQueryCase)
                     setBackColor('#d2e3fd');
-                    newPagination = {size: 1, page: currentPage};
+                    newPagination = {size: 10, page: currentPage};
                     newFilters = [{key: 'tipo_usuario', value: '2'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
@@ -290,27 +333,36 @@ export default function TableData() {
                 case (queriesEnum.administrativoUsersList):
                     console.log("currentQueryCase",currentQueryCase)
                     setBackColor('#ffd5b5');
-                    newPagination = {size: 1, page: currentPage};
+                    newPagination = {size: 10, page: currentPage};
                     newFilters = [{key: 'tipo_usuario', value: '1'}];
                     getUsersByFilters(newPagination, newFilters);
                     break;
 
                 // GESTION (consulta, modificación, baja)(novedades-news)
                 case (queriesEnum.newsPostsList):
-                    // CONSULTA segun TAB VALUE (Anuncios)
+                    // CONSULTA segun TAB VALUE (novedades-news)
                     setBackColor('#fdffb5');
-                    newPagination = {size: 1, page: currentPage};
+                    newPagination = {size: 10, page: currentPage};
                     // newFilters = [{key: 'tipo_usuario', value: '1'}];
-                    getAnunciosByFilters(newPagination, newFilters); //JobAds
+                    getAnunciosByFilters(newPagination, newFilters); //novedades-news
                     break;
 
-                // GESTION (consulta, modificación, baja)(novedades-news)
-                case (queriesEnum.coursesPostsList):
-                    // CONSULTA segun TAB VALUE (Anuncios)
+                // GESTION (consulta, modificación, baja)(cursos)
+                case (queriesEnum.coursesList):
+                    // CONSULTA segun TAB VALUE (cursos)
                     setBackColor('#fdffb5');
-                    newPagination = {size: 1, page: currentPage};
+                    newPagination = {size: 10, page: currentPage};
                     // newFilters = [{key: 'tipo_usuario', value: '1'}];
-                    getCursosByFilters(newPagination, newFilters); //JobAds
+                    getCursosByFilters(newPagination, newFilters); //cursos
+                    break;
+
+                // GESTION (consulta, modificación, baja)(matriculas)
+                case (queriesEnum.matriculasList):
+                    // CONSULTA segun TAB VALUE (cursos)
+                    setBackColor('#fdffb5');
+                    newPagination = {size: 10, page: currentPage};
+                    // newFilters = [{key: 'tipo_usuario', value: '1'}];
+                    getMatriculas(newPagination, newFilters); //matriculas
                     break;
 
                 default:
@@ -333,20 +385,24 @@ export default function TableData() {
                     currentQueryCase === queriesEnum.administrativoUsersList
                 )
                 &&
-                < UserUpdateDeleteForm row={clickedRow as IUserCreateResDto}/>}
+                <UserUpdateDeleteForm row={clickedRow as IUserCreateResDto}/>}
 
 
                 { // si es consulta de JobAds Info by Filters
                     currentQueryCase === queriesEnum.newsPostsList
                     &&
-                    < JobAdUpdateDeleteForm
+                    <NewUpdateDeleteForm
                         row={clickedRow as INewCreateResDto}/>}
 
                 { // si es consulta de CourseUpdateDelete Info by Filters
-                    currentQueryCase === queriesEnum.coursesPostsList
+                    currentQueryCase === queriesEnum.coursesList
                     &&
-                    < CourseUpdateDeleteForm
-                        row={clickedRow as ICourseCreateResDto}/>}
+                    <CourseUpdateDeleteForm row={clickedRow as ICourseCreateResDto}/>}
+
+                { // si es consulta de MatriculaUpdateDelete Info
+                    currentQueryCase === queriesEnum.matriculasList
+                    &&
+                    <MatriculaUpdateDeleteForm row={clickedRow as any}/>}
             </>
         )
     }
@@ -359,6 +415,7 @@ export default function TableData() {
                     container
                     className={`${classes.root}`}
                 >
+                    {/*ARROW LEFT PAGINATION*/}
                     <Grid
                         item xs={1}
                         className={`${classes.arrowChangeQueryPage}`}
@@ -386,8 +443,8 @@ export default function TableData() {
                         <Grid
                             key={`tableHeaderRow`}
                             container
-                            className={classes.tableHeaderRow}
-                            style={{width: '100%', background: backColor}}
+                            className={classes.headerTableRow}
+                            // style={{width: '100%', background: backColor}}
                         >
                             {
                                 Object
@@ -399,7 +456,7 @@ export default function TableData() {
                                             style={{
                                                 width: `${100 / Object.keys(rows[0]).length}%`,
                                             }}
-                                            className={'tableHeadCell'}
+                                            className={`${classes.tableCell}`}
                                         >{cell.toUpperCase()}</Grid>)
                             }
                         </Grid>
@@ -408,7 +465,7 @@ export default function TableData() {
                                 .map((row: any, index: number) => {
                                     return (
                                         <Grid
-                                            className={classes.tableBodyRow}
+                                            className={classes.valuesTableRow}
                                             key={`tableBodyRow-${index}`}
                                             onClick={() => {
                                                 handleTableBodyRowClick(row)
@@ -425,7 +482,7 @@ export default function TableData() {
                                                     index: number,
                                                 ) =>
                                                     <Grid
-                                                        className={classes.tableBodyCell}
+                                                        className={classes.tableCell}
                                                         key={`tableBodyCell-${index}`}
                                                         style={{width: `${100 / Object.keys(row).length}%`}}
                                                         item

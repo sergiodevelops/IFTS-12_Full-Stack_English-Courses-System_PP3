@@ -16,29 +16,28 @@ app.use(logger('dev'));
 //MODO desarrollo
 //----------------------
 
-DB
+/*DB
     .sequelize
     .query('SET FOREIGN_KEY_CHECKS=0', {raw: true})
     .then(()=> {
         DB
             .sequelize
             .sync({force: true});
-    });
+    });*/
 
 
 //------------------------------------------
 // MODO produccion
 //----------------------
 
-// DB
-//     .sequelize
-//     .sync() //MODO produccion
-//     .then(() => { //modo dev
-//         console.log("Drop and re-sync db.");
-//     })
-//     .catch((error) => {
-//         console.log('el error es:', error)
-//     });
+DB
+    .sequelize
+    // .query('SET FOREIGN_KEY_CHECKS=0', {raw: true}) //MODO desarrollo
+    // .sync({force: true}); //MODO desarrollo
+    .sync({force: false}) //MODO produccion
+    .catch((error) => {
+        console.log('el error es:', error)
+    });
 
 //------------------------------------------
 
