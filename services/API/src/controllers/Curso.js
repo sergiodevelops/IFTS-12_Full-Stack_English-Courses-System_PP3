@@ -1,4 +1,5 @@
 const CursoModel = require('../models').Curso;
+const {Aula, usuarios, Idioma} = require('../models');
 
 const getPagination = (size, page) => {
     const limit = size ? +size : 10;
@@ -30,10 +31,8 @@ exports.create = (req, res) => {
 
     // Create a Curso
     const newCourse = {
-        // CodCurso: req.body.CodCurso,
-        comision: req.body.comision,
-        // CodDocente: req.body.CodDocente,
-        CodNivel: req.body.CodNivel
+        CodNivel: req.body.CodNivel,
+        comision: req.body.comision
     };
 
     // Save Curso in the database if "CodCurso" not exist
@@ -45,8 +44,7 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(409).send({
                 name: "Duplicate Course Entry",
-                message: `${err}`
-                // message: `El CodCurso "${req.body.CodNivel}" ya existe, intente con uno diferente.`
+                message: `El Curso "${req.body.CodNivel}-${req.body.comision}" ya existe, intente con uno diferente.`
             });
         });
 };
@@ -58,9 +56,9 @@ exports.replace = (req, res) => {
     CursoModel
         .update(
             req.body,
-            {where: {id: id}})
+            {where: {CodCurso: id}})
         .then(num => {
-            if (num == 1) {
+            if (num == 1 || num == 0) {
                 res.send({
                     message: "Course was updated successfully."
                 });
@@ -82,7 +80,7 @@ exports.delete = (req, res) => {
     const {id} = req.query;
 
     CursoModel.destroy({
-        where: {id: id}
+        where: {CodCurso: id}
     })
         .then(num => {
             if (num == 1) {
@@ -110,7 +108,27 @@ exports.findAllByFilters = (req, res) => {
     const {limit, offset} = getPagination(size, page);
 
     CursoModel
-        .findAndCountAll({where: condition, limit, offset})
+        .findAndCountAll({
+            where: condition, 
+            include: [{
+                model: Aula,
+            }, {
+                model: usuarios,
+                as: 'Docente',
+                attributes: ['nombre_completo']
+            }, {
+                model: Idioma,
+                attributes: ['nombre']
+            }],
+            attributes: {
+                exclude: [
+                    'CodAula',
+                    'CodDocente',
+                    'CodIdioma'
+                ]
+            },
+            raw: true,
+            limit, offset})
         .then(data => {
             const response = getPagingData(data, page, limit);
             res.send(response);

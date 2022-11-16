@@ -3,4 +3,6 @@ export enum queriesEnum {
     'clientUsersList',
     'administrativoUsersList',
     'newsPostsList',
+    'coursesList',
+    'matriculasList',
 }

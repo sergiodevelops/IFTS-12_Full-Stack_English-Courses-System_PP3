@@ -1,4 +1,3 @@
-const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypess) {
   const DataTypes = require('sequelize');
   const Persona = sequelize.define('Persona', {
