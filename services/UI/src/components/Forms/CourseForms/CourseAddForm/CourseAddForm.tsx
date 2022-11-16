@@ -3,20 +3,24 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Container from "@material-ui/core/Container";
-import Typography from "@mui/material/Typography";
-import IApplicantCreateReqDto from "@usecases/applicant/create/IApplicantCreateReqDto";
-import AlumnoService from "@services/AlumnoService";
 import useStyles from "./styles";
+import Typography from "@mui/material/Typography";
+import ICourseCreateReqDto
+    from "@usecases/course/create/ICourseCreateReqDto";
+import CursoService from "@services/CursoService";
 
 export default function CourseAddForm(props: { title: string }) {
-    const alumnoService = new AlumnoService();
+    const courseAddService = new CursoService();
 
     const buttonRef = useRef<HTMLButtonElement>(null);
     const classes = useStyles();
-    const emptyApplicant: IApplicantCreateReqDto = {
-        apellido: "", dni: 0, email: "", nombres: "", tel: ""
+    const emptyApplicant: ICourseCreateReqDto = {
+        comision: "",
+        CodAula: 0,
+        CodDocente: 0,
+        CodNivel: 0,
     };
-    const [newApplicant, setNewApplicant] = useState<IApplicantCreateReqDto>(emptyApplicant);
+    const [newCourse, setNewCourse] = useState<ICourseCreateReqDto>(emptyApplicant);
 
     useEffect(() => {
         const listener = (event: KeyboardEvent) => {
@@ -30,34 +34,30 @@ export default function CourseAddForm(props: { title: string }) {
     }, [buttonRef]);
 
     const cleanInputValues = () => {
-        setNewApplicant(emptyApplicant);
+        setNewCourse(emptyApplicant);
     }
 
     const saveApplicant = async () => {
         let message;
         if (
-            !newApplicant.dni ||
-            !newApplicant.apellido ||
-            !newApplicant.nombres ||
-            !newApplicant.email ||
-            !newApplicant.tel
+            !newCourse.CodNivel ||
+            !newCourse.comision
         ) {
             message = "Por favor complete los campos requeridos";
             alert(message);
             return;
         }
-        const newApplicantPost: IApplicantCreateReqDto = {
-            apellido: newApplicant.apellido,
-            dni: newApplicant.dni,
-            email: newApplicant.email,
-            nombres: newApplicant.nombres,
-            tel: newApplicant.tel,
+        const newCoursePost: ICourseCreateReqDto = {
+            comision: newCourse.comision,
+            CodAula: newCourse.CodAula,
+            CodDocente: newCourse.CodDocente,
+            CodNivel: newCourse.CodNivel,
         };
 
-        alumnoService
-            .create(newApplicantPost)
-            .then(createdApplicant => {
-                alert(`La información de alumno "${newApplicant.nombres} ${newApplicant.apellido}" se persistió correctamente`);
+        courseAddService
+            .create(newCoursePost as ICourseCreateReqDto)
+            .then(createdCourse => {
+                alert(`El curso para "${createdCourse.CodNivel}" se persistió correctamente`);
                 cleanInputValues();
             })
             .catch(err => {
@@ -81,124 +81,59 @@ export default function CourseAddForm(props: { title: string }) {
                 >
                     {props?.title}
                 </Typography>
-                {/*<h1 className={classes.titulo}>{props?.title || "Alta de registro"}</h1>*/}
+                {/*<h1 className={classes.CodNivel}>{props?.title || "Alta de registro"}</h1>*/}
             </Grid>
 
             <Container className={classes.root} maxWidth="xs">
                 <Grid item xs={12}>
                     <Grid container spacing={2}>
-                        {/*dni*/}
+                        {/*nivel*/}
                         <Grid item xs={12}>
                             <TextField
-                                className={`dni`}
-                                style={{background: newApplicant.dni ? '#e8ffe9' : 'inherit'}}
+                                className={`CodNivel`}
+                                style={{background: newCourse.CodNivel ? '#e8ffe9' : 'inherit'}}
                                 autoComplete={"off"}
                                 fullWidth
-                                value={newApplicant?.dni || ""}
-                                error={!newApplicant?.dni }
-                                onChange={(e) => {
-                                    setNewApplicant({
-                                        ...newApplicant,
-                                        dni:  parseInt(e.target.value),
-                                    });
-                                }}
-                                label="DNI"
-                                type={"number"}
-                                name="dni"
-                                size="small"
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        {/*apellido*/}
-                        <Grid item xs={12}>
-                            <TextField
-                                className={`apellido`}
-                                style={{background: newApplicant.apellido ? '#e8ffe9' : 'inherit'}}
-                                autoComplete={"off"}
-                                fullWidth
-                                disabled={!newApplicant.dni}
-                                value={!!newApplicant?.dni && newApplicant?.apellido || ""}
-                                error={!!newApplicant?.nombres && !newApplicant?.apellido }
-
-                                onChange={(e) => {
-                                    setNewApplicant({
-                                        ...newApplicant,
-                                        apellido:  e.target.value,
-                                    });
-                                }}
-                                label="Apellido"
-                                name="apellido"
-                                size="small"
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        {/*nombres*/}
-                        <Grid item xs={12}>
-                            <TextField
-                                className={`nombres`}
-                                style={{background: newApplicant.nombres ? '#e8ffe9' : 'inherit'}}
-                                autoComplete={"off"}
-                                fullWidth
-                                disabled={!newApplicant?.apellido}
-                                value={!!newApplicant?.apellido && newApplicant?.nombres || ""}
-                                error={!!newApplicant?.apellido && !newApplicant?.nombres }
-
-                                onChange={(e) => {
-                                    setNewApplicant({
-                                        ...newApplicant,
-                                        nombres:  e.target.value,
-                                    });
-                                }}
-                                label="Nombres"
-                                name="apellido"
-                                size="small"
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        {/*tel*/}
-                        <Grid item xs={12}>
-                            <TextField
-                                className={`tel`}
-                                style={{background: newApplicant.tel ? '#e8ffe9' : 'inherit'}}
-                                autoComplete={"off"}
-                                fullWidth
-                                disabled={!newApplicant?.nombres}
-                                value={!!newApplicant?.nombres && newApplicant?.tel || ""}
-                                error={!!newApplicant?.nombres && !newApplicant?.tel}
-                                onChange={(e) => setNewApplicant({
-                                    ...newApplicant,
-                                    tel:  e.target.value,
-                                })}
-                                label="Teléfono"
-                                name="email"
-                                size="small"
+                                value={newCourse?.CodNivel > 0 ? newCourse?.CodNivel : ""}
+                                error={!newCourse?.CodNivel}
                                 type="number"
+                                InputProps={{ inputProps: { min: 1, max: 5 } }}
+                                onChange={(e) => {
+                                    setNewCourse({
+                                        ...newCourse,
+                                        CodNivel: parseInt(e.target.value),
+                                    });
+                                }}
+                                label="Nivel"
+                                name="CodNivel"
+                                size="small"
                                 variant="outlined"
                             />
                         </Grid>
 
-                        {/*email*/}
+                        {/*comisión*/}
                         <Grid item xs={12}>
                             <TextField
-                                className={`email`}
-                                style={{background: newApplicant.email  ? '#e8ffe9' : 'inherit'}}
+                                className={`comision`}
+                                style={{background: newCourse.comision ? '#e8ffe9' : 'inherit'}}
                                 autoComplete={"off"}
                                 fullWidth
-                                disabled={!newApplicant?.tel}
-                                value={!!newApplicant?.tel && newApplicant?.email || ""}
-                                error={!!newApplicant?.tel && !newApplicant?.email}
-                                onChange={(e) => setNewApplicant({
-                                    ...newApplicant,
-                                    email: e.target.value === "" ? newApplicant.email : e.target.value.toLowerCase()
-                                })}
-                                label="Correo electrónico"
-                                name="email"
+                                disabled={!newCourse.CodNivel}
+                                value={!!newCourse?.CodNivel && newCourse?.comision || ""}
+                                error={!!newCourse?.CodNivel && !newCourse?.comision}
+
+                                onChange={(e) => {
+                                    setNewCourse({
+                                        ...newCourse,
+                                        comision: e.target.value,
+                                    });
+                                }}
+                                label="Comisión"
+                                type="text"
+                                name="comision"
                                 size="small"
-                                type="email"
                                 variant="outlined"
+                                multiline
                             />
                         </Grid>
                     </Grid>
@@ -212,11 +147,8 @@ export default function CourseAddForm(props: { title: string }) {
                             color={"primary"}
                             fullWidth type="submit" variant="contained"
                             disabled={
-                                !newApplicant.dni ||
-                                !newApplicant.apellido ||
-                                !newApplicant.nombres ||
-                                !newApplicant.email || 
-                                !newApplicant.tel 
+                                !newCourse.CodNivel ||
+                                !newCourse.comision
                             }
                             onClick={saveApplicant}
                         >

@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    comision: { //NOMBRE DEL CURSO
+    comision: {
       type: DataTypes.STRING(10),
       allowNull: true
     },
@@ -21,27 +21,24 @@ module.exports = function(sequelize, DataTypes) {
     },
     CodIdioma: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: 1,
       references: {
         model: 'Idioma',
         key: 'CodIdioma'
       }
     },
     CodDocente: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
       references: {
-        model: 'Docente',
-        key: 'CodDocente'
+        model: 'usuarios',
+        key: 'id'
       }
     },
     CodNivel: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'Nivel_Idioma',
-        key: 'Cod_Nivel'
-      }
+      allowNull: true
     }
   }, {
     sequelize,
@@ -75,13 +72,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "CodIdioma" },
-        ]
-      },
-      {
-        name: "Nivel_IdiomaCurso",
-        using: "BTREE",
-        fields: [
-          { name: "CodNivel" },
         ]
       },
     ]

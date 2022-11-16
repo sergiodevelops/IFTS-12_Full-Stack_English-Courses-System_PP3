@@ -1,10 +1,16 @@
 # dependencies
-*/node_modules
+node_modules
+package-lock.json
+/pa
+/.vscode/
+yarn.lock
 /.pnp
 .pnp.js
 .idea/*
 */.idea
-
+*.iml
+.yarn
+/yarn.lock
 # testing
 /coverage
 

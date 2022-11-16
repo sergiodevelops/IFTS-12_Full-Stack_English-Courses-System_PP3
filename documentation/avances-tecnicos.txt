@@ -217,3 +217,18 @@ https://stackoverflow.com/questions/63690695/react-redirect-is-not-exported-from
 al 20/09/2022
 --------------------------
 https://blog.greenroots.info/3-quick-ways-to-add-fonts-to-your-react-app
+
+-------------
+al 01/10/22
+--------------------------
+https://appletenhtml.blogspot.com/2020/10/solucion-al-error-collation-desconocida.html
+https://www.freakyjolly.com/resolved-when-i-faced-1273-unknown-collation-utf8mb4_0900_ai_ci-error/#.X5wu14hKiUk
+
+-------------
+al x/10/22
+--------------------------
+
+
+-------------
+al x/10/22
+--------------------------

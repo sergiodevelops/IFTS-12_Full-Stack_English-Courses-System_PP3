@@ -43,21 +43,22 @@ export function PublicNavBar() {
             <Box className={classes.tabs} sx={{ borderBottom: 1, borderColor: 'divider', color: "white" }}>
                 <Tabs value={homeTabValue} onChange={handleChange} aria-label="basic tabs example">
                     <Tab style={{color: "white"}} tabIndex={0}
-                         label="inicio" {...a11yProps(0)} />
+                         label="inicio" {...a11yProps(0)} href={"/#"}/>
 
                     <Tab style={{color: "white"}} tabIndex={1}
-                         label="nosotros" {...a11yProps(1)} />
+                         label="nosotros" {...a11yProps(1)} href={"/#nosotros"}/>
 
                     <Tab style={{color: "white"}} tabIndex={2}
-                         label="novedades" {...a11yProps(2)} />
+                         label="novedades" {...a11yProps(2)} href={"/#news"}/>
 
                     <Tab style={{color: "white"}} tabIndex={3}
-                         label="contacto" {...a11yProps(3)} />
+                         label="contacto" {...a11yProps(3)} href={"/#contacto"}/>
                 </Tabs>
             </Box>
 
             <Button
-                style={{fontWeight: homeTabValue === 4 ? "bolder" : "inherit"}}
+                disabled
+                style={{visibility: "hidden", fontWeight: homeTabValue === 4 ? "bolder" : "inherit"}}
                 onClick={() => setHomeTabValue(4)}
                 color="inherit">login</Button>
         </Toolbar>

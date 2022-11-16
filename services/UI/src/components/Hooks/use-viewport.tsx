@@ -11,7 +11,7 @@ interface IViewport {
 const ViewportContext = createContext<IViewport>({
     width: window.innerWidth,
 })
-export const ViewportProvider: FC = ({ children }) => {
+export const ViewportProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [width, setWidth] = useState(window.innerWidth)
     const handleResize = () => setWidth(window.innerWidth)
     useEffect(() => {
