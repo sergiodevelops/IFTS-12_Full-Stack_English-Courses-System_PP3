@@ -14,7 +14,7 @@ services:
     # command: '--init-file /docker-entrypoint-initdb.d/init.sql'
     volumes:
       # - './DATABASE/init.sql:/docker-entrypoint-initdb.d/init.sql'
-      - './DATABASE/init-instituto.sql:/docker-entrypoint-initdb.d/init-instituto.sql'
+      - './DATABASE/init.sql:/docker-entrypoint-initdb.d/init-instituto.sql'
       - './DATABASE/init-grafana.sql:/docker-entrypoint-initdb.d/init-grafana.sql'
       - 'volume_pp3:/var/lib/mysql'
     hostname: 'localhost'
