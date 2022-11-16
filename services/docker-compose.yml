@@ -111,8 +111,8 @@ services:
     image: 'grafana/grafana:latest' #:7.5.4
     volumes:
       - './REPORTING/grafana-data:/var/lib/grafana'
-      - './REPORTING/img/chester-institute-icon-2.png:/usr/share/grafana/public/img/fav32.png'
-      - './REPORTING/img/chester-institute-icon-2.svg:/usr/share/grafana/public/img/grafana_icon.svg'
+      - './REPORTING/img/chester-institute-icon.png:/usr/share/grafana/public/img/fav32.png'
+      - './REPORTING/img/chester-institute-icon.svg:/usr/share/grafana/public/img/grafana_icon.svg'
     env_file:
       - './.env'
       - './REPORTING/.env'
