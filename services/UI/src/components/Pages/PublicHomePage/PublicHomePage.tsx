@@ -22,6 +22,7 @@ import {
     nosotrosInfo,
 } from '@constants/contentData';
 import layoutActions from "@redux/actions/layoutActions";
+import Contacto from "@components/Pages/Contacto/Contacto";
 
 //!importar datos para  inicio:
 const { titulo, descripcion } = presInicio;
@@ -121,7 +122,7 @@ export default function PublicHomePage(props: {isAdmin?: boolean}): JSX.Element 
                 <TabPanel value={Number(homeTabValue)} index={3}>
                     <Grid item xs={12}>
                         <h1 className={classes.contactTitle}>{"Contacto"}</h1>
-                        <Building />
+                        <Contacto />
                     </Grid>
                 </TabPanel>
                 {/* login sección oculta */}

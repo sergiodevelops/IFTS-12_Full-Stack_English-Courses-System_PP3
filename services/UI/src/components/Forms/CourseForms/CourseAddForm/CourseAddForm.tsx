@@ -94,10 +94,10 @@ export default function CourseAddForm(props: { title: string }) {
                                 style={{background: newCourse.CodNivel ? '#e8ffe9' : 'inherit'}}
                                 autoComplete={"off"}
                                 fullWidth
-                                value={newCourse?.CodNivel}
+                                value={newCourse?.CodNivel > 0 ? newCourse?.CodNivel : ""}
                                 error={!newCourse?.CodNivel}
                                 type="number"
-                                InputProps={{ inputProps: { min: 0, max: 5 } }}
+                                InputProps={{ inputProps: { min: 1, max: 5 } }}
                                 onChange={(e) => {
                                     setNewCourse({
                                         ...newCourse,
