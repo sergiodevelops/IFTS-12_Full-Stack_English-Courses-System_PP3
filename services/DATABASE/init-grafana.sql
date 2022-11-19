@@ -20,7 +20,7 @@ CREATE TABLE `alert` (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `state` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `settings` mediumtext COLLATE utf8mb4_unicode_ci,
+  `settings` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `frequency` bigint NOT NULL,
   `handler` bigint NOT NULL,
   `severity` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE `alert` (
 
 CREATE TABLE `alert_configuration` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `alertmanager_configuration` mediumtext COLLATE utf8mb4_unicode_ci,
+  `alertmanager_configuration` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `configuration_version` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` int NOT NULL,
   `default` tinyint(1) NOT NULL DEFAULT '0',
@@ -59,7 +59,7 @@ CREATE TABLE `alert_image` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `token` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `path` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(2048) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL,
   `expires_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -69,7 +69,7 @@ CREATE TABLE `alert_image` (
 
 CREATE TABLE `alert_instance` (
   `rule_org_id` bigint NOT NULL,
-  `rule_uid` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rule_uid` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `labels` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `labels_hash` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `current_state` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE `alert_rule` (
   `org_id` bigint NOT NULL,
   `title` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `condition` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data` mediumtext COLLATE utf8mb4_unicode_ci,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `updated` datetime NOT NULL,
   `interval_seconds` bigint NOT NULL DEFAULT '60',
   `version` int NOT NULL DEFAULT '0',
@@ -167,7 +167,7 @@ CREATE TABLE `alert_rule_version` (
   `created` datetime NOT NULL,
   `title` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `condition` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data` mediumtext COLLATE utf8mb4_unicode_ci,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `interval_seconds` bigint NOT NULL,
   `no_data_state` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NoData',
   `exec_err_state` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Alerting',
@@ -405,7 +405,7 @@ CREATE TABLE `dashboard_version` (
   `created` datetime NOT NULL,
   `created_by` bigint NOT NULL,
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data` mediumtext COLLATE utf8mb4_unicode_ci,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQE_dashboard_version_dashboard_id_version` (`dashboard_id`,`version`),
   KEY `IDX_dashboard_version_dashboard_id` (`dashboard_id`)
@@ -430,7 +430,8 @@ CREATE TABLE `data_keys` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `data_keys` (`name`, `active`, `scope`, `provider`, `encrypted_data`, `created`, `updated`, `label`) VALUES
-('e8w0kdVVz',	1,	'root',	'secretKey.v1',	'lEgKLXnylï¿½>ï¿½ï¿½ï¿½{7Qï¿½dï¿½ï¿½\0\Ziyï¿½FD+nï¿½}qï¿½ï¿½\'d',	'2022-09-30 13:27:04',	'2022-09-30 13:27:04',	'2022-09-30/root@secretKey.v1');
+('e8w0kdVVz',	1,	'root',	'secretKey.v1',	'lEgKLXnylï¿½>ï¿½ï¿½ï¿½{7Qï¿½dï¿½ï¿½\0\Ziyï¿½FD+nï¿½}qï¿½ï¿½\'d',	'2022-09-30 13:27:04',	'2022-09-30 13:27:04',	'2022-09-30/root@secretKey.v1'),
+('nPZ0niOVz',	1,	'root',	'secretKey.v1',	'nkJltirC‡&[~ÏðÈ¡öh8{–ãÄÉo¸HD4èj3\nQð±',	'2022-11-16 05:05:28',	'2022-11-16 05:05:28',	'2022-11-16/root@secretKey.v1');
 
 CREATE TABLE `data_source` (
   `id` bigint NOT NULL AUTO_INCREMENT,
@@ -462,7 +463,7 @@ CREATE TABLE `data_source` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `data_source` (`id`, `org_id`, `version`, `type`, `name`, `access`, `url`, `password`, `user`, `database`, `basic_auth`, `basic_auth_user`, `basic_auth_password`, `is_default`, `json_data`, `created`, `updated`, `with_credentials`, `secure_json_data`, `read_only`, `uid`) VALUES
-(1,	1,	4,	'mysql',	'Institutoidiomas',	'proxy',	'mysql_service_main:3306',	'',	'root',	'InstitutoIdiomas',	0,	'',	'',	1,	'{\"maxOpenConns\":10,\"timezone\":\"America/Argentina/Buenos_Aires\"}',	'2022-09-30 13:27:04',	'2022-09-30 13:35:05',	0,	'{\"password\":\"I1pUaDNNR3RrVmxaNiNzYW5jQ3kxQp/zFYm/SMp/BeqciN3p/cp/rTjB\"}',	0,	'7UwAkOVVk');
+(1,	1,	6,	'mysql',	'Institutoidiomas',	'proxy',	'mysql_service_main:3306',	'',	'root',	'InstitutoIdiomas',	0,	'',	'',	1,	'{\"maxOpenConns\":10,\"timezone\":\"America/Argentina/Buenos_Aires\"}',	'2022-09-30 13:27:04',	'2022-11-16 05:05:43',	0,	'{\"password\":\"I2JsQmFNRzVwVDFaNiM1cHAySHBvN+sADFtsM8co+GZACD10ZZ7Ewgmn\"}',	0,	'7UwAkOVVk');
 
 CREATE TABLE `entity_event` (
   `id` bigint NOT NULL AUTO_INCREMENT,
@@ -1141,7 +1142,7 @@ CREATE TABLE `preferences` (
   `updated` datetime NOT NULL,
   `team_id` bigint DEFAULT NULL,
   `week_start` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `json_data` mediumtext COLLATE utf8mb4_unicode_ci,
+  `json_data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1170,12 +1171,6 @@ CREATE TABLE `query_history` (
   KEY `IDX_query_history_org_id_created_by_datasource_uid` (`org_id`,`created_by`,`datasource_uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `query_history` (`id`, `uid`, `org_id`, `datasource_uid`, `created_by`, `created_at`, `comment`, `queries`) VALUES
-(1,	'lqLezdVVz',	1,	'7UwAkOVVk',	1,	1664544912,	'',	'[{\"datasource\":{\"type\":\"mysql\",\"uid\":\"7UwAkOVVk\"},\"format\":\"time_series\",\"group\":[],\"key\":\"Q-8edd0116-3a0b-48f6-b678-537730b4e3ec-0\",\"metricColumn\":\"none\",\"rawQuery\":false,\"rawSql\":\"SELECT\\n  fecha_alta AS \\\"time\\\",\\n  id\\nFROM Anuncio\\nWHERE\\n  $__timeFilter(fecha_alta)\\nORDER BY fecha_alta\",\"refId\":\"A\",\"select\":[[{\"params\":[\"id\"],\"type\":\"column\"}]],\"table\":\"Anuncio\",\"timeColumn\":\"fecha_alta\",\"timeColumnType\":\"timestamp\",\"where\":[{\"name\":\"$__timeFilter\",\"params\":[],\"type\":\"macro\"}]}]'),
-(2,	'GSpgidVVz',	1,	'7UwAkOVVk',	1,	1664544936,	'',	'[{\"datasource\":{\"type\":\"mysql\",\"uid\":\"7UwAkOVVk\"},\"format\":\"time_series\",\"group\":[],\"key\":\"Q-8edd0116-3a0b-48f6-b678-537730b4e3ec-0\",\"metricColumn\":\"none\",\"rawQuery\":false,\"rawSql\":\"SELECT\\n  fecha_alta AS \\\"time\\\",\\n  id\\nFROM Usuario\\nORDER BY fecha_alta\",\"refId\":\"A\",\"select\":[[{\"params\":[\"id\"],\"type\":\"column\"}]],\"table\":\"Usuario\",\"timeColumn\":\"fecha_alta\",\"timeColumnType\":\"timestamp\",\"where\":[]}]'),
-(3,	'TrzmmOV4z',	1,	'7UwAkOVVk',	1,	1664544990,	'',	'[{\"datasource\":{\"type\":\"mysql\",\"uid\":\"7UwAkOVVk\"},\"format\":\"time_series\",\"group\":[],\"key\":\"Q-8edd0116-3a0b-48f6-b678-537730b4e3ec-0\",\"metricColumn\":\"none\",\"rawQuery\":false,\"rawSql\":\"SELECT\\n  fecha_alta AS \\\"time\\\",\\n  id\\nFROM Alumno\\nORDER BY fecha_alta\",\"refId\":\"A\",\"select\":[[{\"params\":[\"id\"],\"type\":\"column\"}]],\"table\":\"Alumno\",\"timeColumn\":\"fecha_alta\",\"timeColumnType\":\"timestamp\",\"where\":[]}]'),
-(4,	'Itdmmd4Vk',	1,	'7UwAkOVVk',	1,	1664544998,	'',	'[{\"datasource\":{\"type\":\"mysql\",\"uid\":\"7UwAkOVVk\"},\"format\":\"time_series\",\"group\":[],\"key\":\"Q-8edd0116-3a0b-48f6-b678-537730b4e3ec-0\",\"metricColumn\":\"none\",\"rawQuery\":false,\"rawSql\":\"SELECT\\n  fecha_alta AS \\\"time\\\",\\n  id\\nFROM Usuario\\nORDER BY fecha_alta\",\"refId\":\"A\",\"select\":[[{\"params\":[\"id\"],\"type\":\"column\"}]],\"table\":\"Usuario\",\"timeColumn\":\"fecha_alta\",\"timeColumnType\":\"timestamp\",\"where\":[]}]'),
-(5,	'vBkMLKVVz',	1,	'7UwAkOVVk',	1,	1664598532,	'',	'[{\"datasource\":{\"type\":\"mysql\",\"uid\":\"7UwAkOVVk\"},\"format\":\"time_series\",\"group\":[],\"key\":\"Q-edf016a2-4ef8-4128-a348-8b7435712af0-0\",\"metricColumn\":\"none\",\"rawQuery\":false,\"rawSql\":\"SELECT\\n  fecha_alta AS \\\"time\\\",\\n  id\\nFROM Anuncio\\nWHERE\\n  $__timeFilter(fecha_alta)\\nORDER BY fecha_alta\",\"refId\":\"A\",\"select\":[[{\"params\":[\"id\"],\"type\":\"column\"}]],\"table\":\"Anuncio\",\"timeColumn\":\"fecha_alta\",\"timeColumnType\":\"timestamp\",\"where\":[{\"name\":\"$__timeFilter\",\"params\":[],\"type\":\"macro\"}]}]');
 
 CREATE TABLE `query_history_star` (
   `id` bigint NOT NULL AUTO_INCREMENT,
@@ -1235,7 +1230,7 @@ CREATE TABLE `secrets` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `secrets` (`id`, `org_id`, `namespace`, `type`, `value`, `created`, `updated`) VALUES
-(1,	1,	'Institutoidiomas',	'datasource',	'I1pUaDNNR3RrVmxaNiNrSDYzcjJzYzxnFDGfKgmIYpGZtkrE6o61BMUs6tHKYk+ceT/P+8qkAsS0',	'2022-09-30 13:27:04',	'2022-09-30 13:35:05');
+(1,	1,	'Institutoidiomas',	'datasource',	'I2JsQmFNRzVwVDFaNiNtTlpKZ3lPaBXuB5VKp16jdiM+gSilu0UrQ8CP/YEqOaI5gC8OrUFuSzVQ',	'2022-09-30 13:27:04',	'2022-11-16 05:05:43');
 
 CREATE TABLE `seed_assignment` (
   `builtin_role` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1254,9 +1249,9 @@ CREATE TABLE `server_lock` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `server_lock` (`id`, `operation_uid`, `version`, `last_execution`) VALUES
-(1,	'migrate secrets to unified secrets',	2,	1664594082),
-(2,	'cleanup expired auth tokens',	2,	1664575259),
-(3,	'delete old login attempts',	81,	1664598892);
+(1,	'migrate secrets to unified secrets',	3,	1668573831),
+(2,	'cleanup expired auth tokens',	3,	1668573831),
+(3,	'delete old login attempts',	82,	1668574433);
 
 CREATE TABLE `session` (
   `key` char(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1404,13 +1399,13 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `user` (`id`, `version`, `login`, `email`, `name`, `password`, `salt`, `rands`, `company`, `org_id`, `is_admin`, `email_verified`, `theme`, `created`, `updated`, `help_flags1`, `last_seen_at`, `is_disabled`, `is_service_account`) VALUES
-(1,	0,	'admin',	'admin@localhost',	'',	'0d191750dfe93d5bbe5260215e4209e299bfcb3f124ef87991e1578d19c5e651ef1755386fbf95af6dfdf905dcd409a1017e',	'QdiKLRuLbI',	'Tsv0qq4xf4',	'',	1,	1,	0,	'',	'2022-09-30 09:54:57',	'2022-09-30 09:54:57',	0,	'2022-10-01 04:39:09',	0,	0);
+(1,	0,	'admin',	'admin@localhost',	'',	'0d191750dfe93d5bbe5260215e4209e299bfcb3f124ef87991e1578d19c5e651ef1755386fbf95af6dfdf905dcd409a1017e',	'QdiKLRuLbI',	'Tsv0qq4xf4',	'',	1,	1,	0,	'',	'2022-09-30 09:54:57',	'2022-09-30 09:54:57',	0,	'2022-11-16 05:07:25',	0,	0);
 
 CREATE TABLE `user_auth` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `user_id` bigint NOT NULL,
   `auth_module` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `auth_id` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `auth_id` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created` datetime NOT NULL,
   `o_auth_access_token` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `o_auth_refresh_token` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
@@ -1440,10 +1435,10 @@ CREATE TABLE `user_auth_token` (
   UNIQUE KEY `UQE_user_auth_token_auth_token` (`auth_token`),
   UNIQUE KEY `UQE_user_auth_token_prev_auth_token` (`prev_auth_token`),
   KEY `IDX_user_auth_token_user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `user_auth_token` (`id`, `user_id`, `auth_token`, `prev_auth_token`, `user_agent`, `client_ip`, `auth_token_seen`, `seen_at`, `rotated_at`, `created_at`, `updated_at`, `revoked_at`) VALUES
-(1,	1,	'25e9c21962de2fdd925079ab9c6e2883a033c41acfccf9ba9479e7919e3ee9fc',	'e6c2962d79f81c54da7a73282a011f1b409906232f0a4b2dea7651d65365928f',	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',	'172.21.0.1',	1,	1664598168,	1664598167,	1664544092,	1664544092,	0);
+(2,	1,	'104a5565771da9f195438d3b4c432d3fbc02255721c7ce9d657bc0c49a677f12',	'104a5565771da9f195438d3b4c432d3fbc02255721c7ce9d657bc0c49a677f12',	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',	'172.22.0.1',	1,	1668574895,	1668574890,	1668574890,	1668574890,	0);
 
 CREATE TABLE `user_role` (
   `id` bigint NOT NULL AUTO_INCREMENT,
@@ -1460,6 +1455,4 @@ CREATE TABLE `user_role` (
 INSERT INTO `user_role` (`id`, `org_id`, `user_id`, `role_id`, `created`) VALUES
 (1,	1,	1,	1,	'2022-09-30 19:26:37');
 
--- 2022-10-01 04:42:38
-
-SET FOREIGN_KEY_CHECKS = 1;
+-- 2022-11-16 05:10:17
