@@ -162,7 +162,8 @@ CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Notas`
 CREATE TABLE IF NOT EXISTS `InstitutoIdiomas`.`Usuario`
 (
     `IdUsuario`      INT(10)      NOT NULL AUTO_INCREMENT,
-    `contrasenia`    VARCHAR(100) NULL,
+
+    `password`    VARCHAR(100) NULL,
     `fecha_creacion` DATE         NULL,
     `vencimiento`    DATE         NULL,
     `estado`         TINYINT(1)   NULL,

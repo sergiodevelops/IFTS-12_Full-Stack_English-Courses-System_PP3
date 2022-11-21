@@ -11,9 +11,11 @@ services:
   mysql_service_main:
     container_name: 'mysql_container_main'
     image: 'mysql:latest'
-    command: '--init-file /docker-entrypoint-initdb.d/init.sql'
+    # command: '--init-file /docker-entrypoint-initdb.d/init.sql'
     volumes:
-      - './DATABASE/init.sql:/docker-entrypoint-initdb.d/init.sql'
+      # - './DATABASE/init.sql:/docker-entrypoint-initdb.d/init.sql'
+      - './DATABASE/init.sql:/docker-entrypoint-initdb.d/init-instituto.sql'
+      - './DATABASE/init-grafana.sql:/docker-entrypoint-initdb.d/init-grafana.sql'
       - 'volume_pp3:/var/lib/mysql'
     hostname: 'localhost'
     env_file:
@@ -96,5 +98,28 @@ services:
     tty: true
     stdin_open: true
     restart: 'always'
+
+  # -------------------------------------------------------------
+  # REPORTING - GRAFANA
+  # -------------------------------------------------------------
+ 
+  grafana:
+    container_name: 'grafana_container_main'
+    depends_on:
+      mysql_service_main:
+        condition: service_healthy
+    image: 'grafana/grafana:latest' #:7.5.4
+    volumes:
+      - './REPORTING/grafana-data:/var/lib/grafana'
+      - './REPORTING/img/chester-institute-icon.png:/usr/share/grafana/public/img/fav32.png'
+      - './REPORTING/img/chester-institute-icon.svg:/usr/share/grafana/public/img/grafana_icon.svg'
+    env_file:
+      - './.env'
+      - './REPORTING/.env'
+    ports:
+      - ${OS_GF_PORT}:${DOCKER_GF_PORT}
+    user: '1000' # Cambiar por el resultado de: "id -u"
+    restart: 'always'
+
 
 # -------------------------------------------------------------
