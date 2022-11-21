@@ -57,10 +57,12 @@ export function PublicNavBar() {
             </Box>
 
             <Button
-                disabled
-                style={{visibility: "hidden", fontWeight: homeTabValue === 4 ? "bolder" : "inherit"}}
+                style={{
+                    // visibility: "hidden",
+                    fontWeight: homeTabValue === 4 ? "bolder" : "inherit"
+                }}
                 onClick={() => setHomeTabValue(4)}
-                color="inherit">login</Button>
+                color="inherit">{"login"}</Button>
         </Toolbar>
     </AppBar>;
 }

@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import moment from "moment";
 import useStyles from "./styles";
 import {Item} from "@components/Nosotros/Nosotros";
+import NewCard from "@components/New/New";
 
 export default function NewsPosts(props: {tab: boolean}) {
     const classes = useStyles();
@@ -34,8 +35,14 @@ export default function NewsPosts(props: {tab: boolean}) {
         props.tab && getNewsByFilters();
     }, [props.tab])
 
+
+
+
+
+
+
     return <Grid container display={"flex"} justifyContent={"center"} justifyItems={"center"}>
-            <h1 className={classes.newsTitle}>{"Novedades y más"}</h1>
+            <h1 className={classes.newsTitle}>{"Novedades"}</h1>
             <Grid item xs={12} >
                 {!newsPosts.length  &&
                     <Typography
@@ -49,32 +56,44 @@ export default function NewsPosts(props: {tab: boolean}) {
                         No existe aun registros en la base para esta solicitud
                     </Typography>}
             </Grid>
-            {newsPosts && newsPosts.map((elem: INewCreateResDto, idx: number) =>
-                <Grid item key={`${idx}-${elem.titulo}`} xs={12} justifyContent={"center"}>
-                        <Paper elevation={5} className={classes.container}>
-                            <Typography
-                                textAlign={'center'}
-                                variant={'h4'}
-                                // className={classes.title}
-                            >
-                                {elem.titulo.toUpperCase()}
-                            </Typography>
-                            <Typography
-                                textAlign={'center'}
-                                variant={'body1'}
-                                // className={classes.desc}
-                            >
-                                {elem.descripcion}
-                            </Typography>
-                            <Typography
-                                textAlign={'center'}
-                                variant={'body1'}
-                                // className={classes.date}
-                            >
-                                {moment(elem.fecha_alta).format("DD-MM-YYYY HH:mm")}
-                            </Typography>
-                        </Paper>
-                </Grid>
+            {newsPosts &&
+                newsPosts.map((elem: INewCreateResDto, idx: number) =>
+                 <NewCard
+                     index={idx}
+                     title={elem.titulo}
+                     description={elem.descripcion}
+                     date={moment(elem.fecha_alta)
+                         .format("DD-MM-YYYY HH:mm")}
+                 />
+
+
+                // <Grid item key={`${idx}-${elem.titulo}`} xs={12} justifyContent={"center"}>
+                //         <Paper
+                //             elevation={5}
+                //             className={classes.container}
+                //         >
+                //             <Typography
+                //                 textAlign={'center'}
+                //                 variant={'h4'}
+                //             >
+                //                 {elem.titulo.toUpperCase()}
+                //             </Typography>
+                //             <Typography
+                //                 textAlign={'center'}
+                //                 variant={'body1'}
+                //                 // className={classes.desc}
+                //             >
+                //                 {elem.descripcion}
+                //             </Typography>
+                //             <Typography
+                //                 textAlign={'center'}
+                //                 variant={'body1'}
+                //                 // className={classes.date}
+                //             >
+                //                 {moment(elem.fecha_alta).format("DD-MM-YYYY HH:mm")}
+                //             </Typography>
+                //         </Paper>
+                // </Grid>
             )}
         </Grid>
 };

@@ -12,6 +12,7 @@ import IPaginationSetDto
     from "@src/usecases/pagination/set/IPaginationSetDto";
 import IFilterSetDto from "@src/usecases/filter/add/IFilterSetDto";
 import useStyles from "./styles";
+import NewCard from "@components/New/New";
 
 export default function Contacto() {
     const classes = useStyles();
@@ -54,15 +55,27 @@ export default function Contacto() {
     }, [userIsLoggedIn])
 
     return (
-        <div style={{textAlign: "center"}}>
-            <div>
-                <h2>Dirección:</h2>
-                <p>Av. Frey 1637, Chester, UK</p>
-            </div>
-            <div>
-                <h2>Email:</h2>
-                <p>contact@chesterinstitute.com</p>
-            </div>
+        <div  style={{textAlign: "center"}}>
+            <NewCard
+                title={"Dirección:"}
+                description={"Av. Frey 1637, Chester, UK"}
+                avatar={false}
+            />
+            <NewCard
+                title={"Email:"}
+                description={"contact@chesterinstitute.com"}
+                avatar={false}
+            />
         </div>
+        // <div style={{textAlign: "center"}}>
+        //     <div>
+        //         <h2>Dirección:</h2>
+        //         <p>Av. Frey 1637, Chester, UK</p>
+        //     </div>
+        //     <div>
+        //         <h2>Email:</h2>
+        //         <p>contact@chesterinstitute.com</p>
+        //     </div>
+        // </div>
     );
 };

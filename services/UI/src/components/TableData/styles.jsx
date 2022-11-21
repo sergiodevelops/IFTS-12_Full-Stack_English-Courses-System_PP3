@@ -18,7 +18,8 @@ export default makeStyles(() => ({
         cursor:'pointer',
         '&:hover':{
             outline: '-webkit-focus-ring-color auto 1px',
-            background: 'rgba(188,255,233,0.39)',
+            outlineColor: '#96acac',
+            background: 'rgba(232,226,255,0.22)',
         },
     },
     tableCell:{
