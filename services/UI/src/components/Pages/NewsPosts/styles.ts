@@ -10,6 +10,7 @@ export default makeStyles(theme => ({
     container: {
         margin: theme.spacing(1),
         backgroundColor: "#4a3bb60f",
+        minHeight: "30vh",
     },
     main: {
         height: "100vh",
