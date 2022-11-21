@@ -65,35 +65,6 @@ export default function NewsPosts(props: {tab: boolean}) {
                      date={moment(elem.fecha_alta)
                          .format("DD-MM-YYYY HH:mm")}
                  />
-
-
-                // <Grid item key={`${idx}-${elem.titulo}`} xs={12} justifyContent={"center"}>
-                //         <Paper
-                //             elevation={5}
-                //             className={classes.container}
-                //         >
-                //             <Typography
-                //                 textAlign={'center'}
-                //                 variant={'h4'}
-                //             >
-                //                 {elem.titulo.toUpperCase()}
-                //             </Typography>
-                //             <Typography
-                //                 textAlign={'center'}
-                //                 variant={'body1'}
-                //                 // className={classes.desc}
-                //             >
-                //                 {elem.descripcion}
-                //             </Typography>
-                //             <Typography
-                //                 textAlign={'center'}
-                //                 variant={'body1'}
-                //                 // className={classes.date}
-                //             >
-                //                 {moment(elem.fecha_alta).format("DD-MM-YYYY HH:mm")}
-                //             </Typography>
-                //         </Paper>
-                // </Grid>
             )}
         </Grid>
 };
