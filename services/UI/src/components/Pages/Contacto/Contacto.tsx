@@ -67,15 +67,5 @@ export default function Contacto() {
                 avatar={false}
             />
         </div>
-        // <div style={{textAlign: "center"}}>
-        //     <div>
-        //         <h2>Dirección:</h2>
-        //         <p>Av. Frey 1637, Chester, UK</p>
-        //     </div>
-        //     <div>
-        //         <h2>Email:</h2>
-        //         <p>contact@chesterinstitute.com</p>
-        //     </div>
-        // </div>
     );
 };
