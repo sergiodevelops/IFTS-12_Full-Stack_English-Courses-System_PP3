@@ -36,6 +36,8 @@ import Button from "@mui/material/Button";
 
 
 export default function PrivateCampus() {
+// const grafanaURL = "http://grafana-pp3.herokuapp.com/";
+const grafanaURL = "http://localhost:3000";
 
     const theme = useTheme();
     const classes = useStyles();
@@ -359,7 +361,7 @@ export default function PrivateCampus() {
                                             colorCurrentButtonMenu :
                                             "inherit",
                                     }}*/
-                                    onClick={() => window.open("http://grafana-pp3.herokuapp.com/")}
+                                    onClick={() => window.open(grafanaURL)}
                                 >
                                     {/*<ListItemIcon>
                                      {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
