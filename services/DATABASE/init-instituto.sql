@@ -1,4 +1,4 @@
--- Adminer 4.8.1 MySQL 8.0.30 dump
+-- Adminer 4.8.1 MySQL 8.0.31 dump
 
 SET NAMES utf8;
 SET time_zone = '+00:00';
@@ -17,16 +17,13 @@ CREATE TABLE `Alumno` (
   PRIMARY KEY (`Legajo`),
   UNIQUE KEY `IdPersona` (`IdPersona`),
   CONSTRAINT `PersonaAlumno` FOREIGN KEY (`IdPersona`) REFERENCES `Persona` (`IdPersona`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `Alumno` (`Legajo`, `IdPersona`) VALUES
-(1,	2),
-(2,	4);
 
 CREATE TABLE `Anuncio` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(50) NOT NULL COMMENT 'Descripción resumida del puesto a cubrir',
-  `descripcion` varchar(300) NOT NULL COMMENT 'Breve descripción de las tareas a complir',
+  `titulo` varchar(50) NOT NULL COMMENT 'DescripciÃ³n resumida del puesto a cubrir',
+  `descripcion` varchar(300) NOT NULL COMMENT 'Breve descripciÃ³n de las tareas a complir',
   `fecha_alta` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha en que se da el alta al anuncio',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -36,32 +33,35 @@ CREATE TABLE `Aula` (
   `CodAula` int NOT NULL AUTO_INCREMENT,
   `capacidad` int DEFAULT NULL,
   PRIMARY KEY (`CodAula`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `Aula` (`CodAula`, `capacidad`) VALUES
-(1,	10);
+(1,	30),
+(2,	20),
+(3,	20),
+(4,	30);
 
 CREATE TABLE `Curso` (
   `CodCurso` int NOT NULL AUTO_INCREMENT,
   `comision` varchar(10) DEFAULT NULL,
   `CodAula` int DEFAULT NULL,
-  `CodIdioma` int DEFAULT NULL,
-  `CodDocente` int DEFAULT NULL,
+  `CodIdioma` int NOT NULL DEFAULT '1',
+  `CodDocente` int unsigned DEFAULT NULL,
   `CodNivel` int DEFAULT NULL,
   PRIMARY KEY (`CodCurso`),
+  UNIQUE KEY `Nivel_comision` (`CodNivel`,`comision`),
   KEY `AulaCurso` (`CodAula`),
   KEY `DocenteCurso` (`CodDocente`),
   KEY `IdiomaCurso` (`CodIdioma`),
-  KEY `Nivel_IdiomaCurso` (`CodNivel`),
   CONSTRAINT `AulaCurso` FOREIGN KEY (`CodAula`) REFERENCES `Aula` (`CodAula`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `DocenteCurso` FOREIGN KEY (`CodDocente`) REFERENCES `Docente` (`CodDocente`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `IdiomaCurso` FOREIGN KEY (`CodIdioma`) REFERENCES `Idioma` (`CodIdioma`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Nivel_IdiomaCurso` FOREIGN KEY (`CodNivel`) REFERENCES `Nivel_Idioma` (`Cod_Nivel`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `DocenteCurso` FOREIGN KEY (`CodDocente`) REFERENCES `usuarios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `IdiomaCurso` FOREIGN KEY (`CodIdioma`) REFERENCES `Idioma` (`CodIdioma`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `Curso` (`CodCurso`, `comision`, `CodAula`, `CodIdioma`, `CodDocente`, `CodNivel`) VALUES
-(1,	'A-TN',	1,	1,	1,	2),
-(2,	'B-TM',	1,	1,	1,	1);
+(1,	'A',	1,	1,	2,	1),
+(3,	'A',	2,	1,	3,	2),
+(6,	'B',	4,	1,	4,	1);
 
 CREATE TABLE `Docente` (
   `CodDocente` int NOT NULL AUTO_INCREMENT,
@@ -69,10 +69,8 @@ CREATE TABLE `Docente` (
   PRIMARY KEY (`CodDocente`),
   UNIQUE KEY `IdPerona` (`IdPersona`),
   CONSTRAINT `PersonaDocente` FOREIGN KEY (`IdPersona`) REFERENCES `Persona` (`IdPersona`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `Docente` (`CodDocente`, `IdPersona`) VALUES
-(1,	1);
 
 CREATE TABLE `Empleado` (
   `CodEmpleado` int NOT NULL AUTO_INCREMENT,
@@ -101,21 +99,18 @@ CREATE TABLE `Horario` (
   PRIMARY KEY (`IdHorario`),
   KEY `CursoHorario` (`CodCurso`),
   CONSTRAINT `CursoHorario` FOREIGN KEY (`CodCurso`) REFERENCES `Curso` (`CodCurso`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `Horario` (`IdHorario`, `anio`, `periodo`, `turno`, `dia`, `hora_inicio`, `horas_catedra`, `CodCurso`) VALUES
-(1,	2022,	NULL,	'Noche',	NULL,	NULL,	NULL,	1),
-(3,	2021,	NULL,	'Mañana',	NULL,	NULL,	NULL,	2);
 
 CREATE TABLE `Idioma` (
   `CodIdioma` int NOT NULL AUTO_INCREMENT,
-  `idioma` varchar(50) DEFAULT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`CodIdioma`),
-  KEY `idioma` (`idioma`)
+  KEY `idioma` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `Idioma` (`CodIdioma`, `idioma`) VALUES
-(1,	'Inglés');
+INSERT INTO `Idioma` (`CodIdioma`, `nombre`) VALUES
+(1,	'INGLES');
 
 CREATE TABLE `Idioma_Docente` (
   `CodIdioma` int NOT NULL,
@@ -129,30 +124,26 @@ CREATE TABLE `Idioma_Docente` (
 
 CREATE TABLE `Matricula` (
   `IdMatricula` int NOT NULL AUTO_INCREMENT,
-  `fecha` date DEFAULT NULL,
-  `estado` varchar(20) DEFAULT NULL,
+  `fecha` date DEFAULT (curdate()),
+  `estado` varchar(30) DEFAULT 'ACTIVO',
   `CodCurso` int DEFAULT NULL,
-  `Legajo` int DEFAULT NULL,
+  `Legajo` int unsigned DEFAULT NULL,
   PRIMARY KEY (`IdMatricula`),
+  UNIQUE KEY `Curso_Legajo` (`CodCurso`,`Legajo`),
   KEY `AlumnoMatricula` (`Legajo`),
-  KEY `CursoMatricula` (`CodCurso`),
-  CONSTRAINT `AlumnoMatricula` FOREIGN KEY (`Legajo`) REFERENCES `Alumno` (`Legajo`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `AlumnoMatricula` FOREIGN KEY (`Legajo`) REFERENCES `usuarios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `CursoMatricula` FOREIGN KEY (`CodCurso`) REFERENCES `Curso` (`CodCurso`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `Matricula` (`IdMatricula`, `fecha`, `estado`, `CodCurso`, `Legajo`) VALUES
-(1,	'2022-09-30',	'ACTIVO',	1,	1),
-(2,	'2021-03-12',	'ACTIVO',	2,	2);
-
-CREATE TABLE `Nivel_Idioma` (
-  `Cod_Nivel` int NOT NULL AUTO_INCREMENT,
-  `nivel` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`Cod_Nivel`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `Nivel_Idioma` (`Cod_Nivel`, `nivel`) VALUES
-(1,	'A1'),
-(2,	'A2');
+(1,	'2022-11-22',	'ACTIVO',	1,	5),
+(2,	'2022-11-22',	'BAJA',	1,	6),
+(3,	'2022-11-22',	'ACTIVO',	1,	7),
+(5,	'2022-11-22',	'ACTIVO',	3,	8),
+(6,	'2022-11-22',	'ACTIVO',	6,	9),
+(7,	'2022-11-22',	'ACTIVO',	6,	10),
+(8,	'2022-11-22',	'ACTIVO',	6,	11),
+(9,	'2022-11-22',	'ACTIVO',	6,	13);
 
 CREATE TABLE `Notas` (
   `IdNota` int NOT NULL AUTO_INCREMENT,
@@ -215,14 +206,9 @@ CREATE TABLE `Persona` (
   `provincia` varchar(100) DEFAULT NULL,
   `pais` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`IdPersona`),
-  UNIQUE KEY `IdPersona` (`IdPersona`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `IdPersona` (`IdPersona`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `Persona` (`IdPersona`, `documento`, `tipo_documento`, `nombre`, `apellido`, `sexo`, `fecha_nac`, `email`, `calle`, `numero`, `departamento`, `localidad`, `provincia`, `pais`) VALUES
-(1,	NULL,	NULL,	'Nahuel',	'Tarello',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(2,	NULL,	NULL,	'Danlois',	'Tovar',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(3,	NULL,	NULL,	'Sergio',	'Suarez',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(4,	NULL,	NULL,	'Ulices',	'Lopez',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL);
 
 CREATE TABLE `Telefonos` (
   `IdTelefono` int NOT NULL AUTO_INCREMENT,
@@ -239,23 +225,17 @@ CREATE TABLE `Telefonos` (
 
 CREATE TABLE `Usuario` (
   `IdUsuario` int NOT NULL AUTO_INCREMENT,
-  `contrasenia` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
   `fecha_creacion` date DEFAULT NULL,
   `vencimiento` date DEFAULT NULL,
   `estado` tinyint(1) DEFAULT NULL,
-  `es_admin` tinyint NOT NULL,
+  `es_admin` tinyint(1) NOT NULL,
   `IdPersona` int NOT NULL,
   PRIMARY KEY (`IdUsuario`),
-  UNIQUE KEY `PersonaUsuario` (`IdPersona`),
-  UNIQUE KEY `IdPersona` (`IdPersona`) USING BTREE,
-  CONSTRAINT `Usuario_ibfk_1` FOREIGN KEY (`IdPersona`) REFERENCES `Persona` (`IdPersona`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `IdPersona` (`IdPersona`),
+  CONSTRAINT `PersonaUsuario` FOREIGN KEY (`IdPersona`) REFERENCES `Persona` (`IdPersona`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `Usuario` (`IdUsuario`, `contrasenia`, `fecha_creacion`, `vencimiento`, `estado`, `es_admin`, `IdPersona`) VALUES
-(2,	'admin',	NULL,	NULL,	NULL,	2,	1),
-(3,	NULL,	NULL,	NULL,	NULL,	3,	2),
-(4,	NULL,	NULL,	NULL,	NULL,	1,	3),
-(5,	NULL,	'2022-09-30',	NULL,	NULL,	3,	4);
 
 CREATE TABLE `Usuario_Perfil` (
   `IdUsuario` int NOT NULL,
@@ -278,7 +258,7 @@ CREATE TABLE `Usuario_Permiso` (
 
 
 CREATE TABLE `usuarios` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del usuario',
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Identificador Ãºnico del usuario',
   `tipo_usuario` tinyint NOT NULL COMMENT 'Si el usuario es un postulante =1 , o es un solicitante = 2 , o es Administrativo = 3',
   `nombre_completo` varchar(50) NOT NULL COMMENT 'Nombres y apellidos del usuario',
   `username` char(20) NOT NULL COMMENT 'Alias con el que ingresa al sistema',
@@ -286,9 +266,20 @@ CREATE TABLE `usuarios` (
   `fecha_alta` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha en que se da el alta al usuario',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+INSERT INTO `usuarios` (`id`, `tipo_usuario`, `nombre_completo`, `username`, `password`, `fecha_alta`) VALUES
+(1,	2,	'Juan Pérez',	'jperez',	'jperez',	'2022-11-22 00:19:14'),
+(2,	2,	'María Fernanda Fofa',	'mf_fofa',	'mf_fofa',	'2022-11-22 00:21:04'),
+(3,	2,	'Enrique Noguera',	'enoguera',	'enoguera',	'2022-11-22 00:22:30'),
+(4,	2,	'Florencia Moyano',	'fmoyano',	'fmoyano',	'2022-11-22 00:23:06'),
+(5,	3,	'Danlois Tovar',	'dtovar',	'dtovar',	'2022-11-22 00:37:46'),
+(6,	3,	'Sergio Juárez',	'sjuarez',	'sjuarez',	'2022-11-22 00:38:39'),
+(7,	3,	'Juan Pablo Alvarez',	'jp_alvarez',	'jp_alvarez',	'2022-11-22 00:40:32'),
+(8,	3,	'Sebastián Vargas',	'svargas',	'svargas',	'2022-11-22 00:41:23'),
+(9,	3,	'Uriel Carvallo',	'ucarvallo',	'ucarvallo',	'2022-11-22 00:41:54'),
+(10,	3,	'Nahuel Tarello',	'ntarello',	'ntarello',	'2022-11-22 00:42:29'),
+(11,	3,	'Sebastián Torres',	'storres',	'storres',	'2022-11-22 00:44:14'),
+(13,	3,	'Lionel Messi',	'lmessi',	'lmessi',	'2022-11-22 00:44:38');
 
--- 2022-10-01 06:07:44
-
-SET foreign_key_checks = 1;
+-- 2022-11-23 08:22:04
